@@ -1,0 +1,32 @@
+{
+  "name": "barterit-mern",
+  "version": "1.0.0",
+  "description": "bsit capstone thesis project",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server"
+  },
+  "keywords": [
+    "barter",
+    "mern"
+  ],
+  "author": "Team Realme",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.25.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.6.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.7",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "twilio": "^3.62.0",
+    "validator": "^13.6.0"
+  }
+}
