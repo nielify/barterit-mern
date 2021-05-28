@@ -15,6 +15,7 @@ router.get('/facebook', passport.authenticate('facebook', {
   scope: ['public_profile']
 }));
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
+  //console.log(req.user);
   res.redirect('http://localhost:3000/');
 });
 

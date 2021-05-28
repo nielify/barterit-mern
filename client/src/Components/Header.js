@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   avatar: {
-    margin: theme.spacing(2)
+    marginLeft: theme.spacing(1)
   },
   iconButton: {
     color: '#fff'
@@ -68,9 +68,9 @@ const Header = () => {
           Barter.it
         </Typography>
         { email && <Typography variant="subtitle2">
-          Welcome, {email}
+          {email}
         </Typography> }
-        <Avatar className={classes.avatar}>Z</Avatar>
+        <Avatar className={classes.avatar} src='https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1206135789808505&height=50&width=50&ext=1624767411&hash=AeTkdK_axOBhSBlKUx0'>Z</Avatar>
         <IconButton 
           className={classes.iconButton}
           onClick={handleLogout}

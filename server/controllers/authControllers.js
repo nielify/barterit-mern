@@ -73,13 +73,20 @@ module.exports.login_post = async (req, res) => {
   }
 }
 
-module.exports.logout_get = (req, res) => {
-  const token = req.cookies.jwt;
-  res.cookie('jwt', '', { 
-    maxAge: 1, 
-    httpOnly: true, 
-    secure: process.env.ENVIRONMENT === 'dev' ? false : true 
-  });
-  res.status(200).send({ logoutSuccess: true });
-}
+module.exports.logout_get = (req, res) => { 
+  const token = req.cookies.jwt; 
+  
+  if (token) { 
+    res.cookie('jwt', '', { 
+      maxAge: 1, 
+      httpOnly: true, 
+      secure: process.env.ENVIRONMENT === 'dev' ? false : true 
+    }); 
+  } 
+  
+  if (req.user) { 
+    req.logout(); 
+  } 
 
+  res.status(200).send({ logoutSuccess: true }); 
+}
