@@ -30,6 +30,7 @@ const Header = () => {
   const history = useHistory();
   
   const [ email, setEmail ] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3001/', { credentials: 'include' })
@@ -43,7 +44,7 @@ const Header = () => {
         }
         else {
           setEmail(data.email || data.firstName);
-          console.log(email);
+          setProfilePicture(data.profilePicture);
         }
       })
       .catch(err => {
@@ -70,7 +71,7 @@ const Header = () => {
         { email && <Typography variant="subtitle2">
           {email}
         </Typography> }
-        <Avatar className={classes.avatar} src='https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1206135789808505&height=50&width=50&ext=1624767411&hash=AeTkdK_axOBhSBlKUx0'>Z</Avatar>
+        <Avatar className={classes.avatar} src={profilePicture}>Z</Avatar>
         <IconButton 
           className={classes.iconButton}
           onClick={handleLogout}

@@ -20,7 +20,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'last_name', 'first_name', 'middle_name', 'photos']
   },
   (accessToken, refreshToken, profile, cb) => {
-    //console.log(profile); 
+    console.log(profile); 
     //console.log(profile.photos[0].value);
     FacebookUser.findOne({ facebookID: profile.id }, (err, user) => {
       if (user) {
@@ -31,6 +31,7 @@ passport.use(new FacebookStrategy({
           lastName: profile.name.familyName,
           firstName: profile.name.givenName,
           middleName: profile.name.middleName,
+          profilePicture: profile.photos[0].value
         }, (err, user) => {
           return cb(err, user); 
         });

@@ -7,7 +7,8 @@ const facebookUserSchema = mongoose.Schema({
   },
   lastName: String,
   firstName: String,
-  middleName: String
+  middleName: String,
+  profilePicture: String
 });
 
 const FacebookUser = mongoose.model('facebookUser', facebookUserSchema);
