@@ -22,11 +22,15 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const requireAuth = (nextState, replace) => {
+    replace('/sms');
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/" render={requireAuth}>
             <Header />
             <PostList />
           </Route>
