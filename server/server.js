@@ -11,7 +11,7 @@ const app = express();
 
 //utils
 const upload = require('./utils/multer');
-const passportfb = require('./utils/passportFacebook');
+const passportStrategies = require('./utils/passportStrategies');
 
 //controllers
 const serverController = require('./controllers/serverController');

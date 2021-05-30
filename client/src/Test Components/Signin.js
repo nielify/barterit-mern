@@ -47,13 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
-  },
-  fbLink: {
-    textDecoration: 'none',
     display: 'block',
     width: '100%',
   },
-
 }));
 
 const FacebookButton = withStyles((theme) => ({
@@ -173,25 +169,24 @@ const Signin = () => {
         </Grid>
         <Typography variant="subtitle2" className={classes.or}>Or</Typography>
       </form>
-      <a href="http://localhost:3001/auth/facebook" variant="body2" className={classes.fbLink} >
-      <FacebookButton
-        fullWidth
-        startIcon={<FacebookIcon />}
-        className={classes.facebook}
-        
-      >
-        Sign in with facebook
-      </FacebookButton>
+      <a href="http://localhost:3001/auth/facebook" variant="body2" className={classes.link} >
+        <FacebookButton
+          fullWidth
+          startIcon={<FacebookIcon />}
+          className={classes.facebook}
+        >
+          Sign in with facebook
+        </FacebookButton>
       </a>
-      <GoogleButton
-        fullWidth
-        
-        className={classes.google}
-        onClick={handleGoogle}
-      > 
-        <i className="fab fa-google fa-1x"></i>
-        Sign in with Google
-      </GoogleButton>
+      <a href="http://localhost:3001/auth/google" variant="body2" className={classes.link}>
+        <GoogleButton
+          fullWidth
+          className={classes.google}
+        > 
+          <i className="fab fa-google fa-1x"></i>
+          Sign in with Google
+        </GoogleButton>
+      </a>
     </Container>
   );
 }

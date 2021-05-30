@@ -71,7 +71,7 @@ const Header = () => {
         { email && <Typography variant="subtitle2">
           {email}
         </Typography> }
-        <Avatar className={classes.avatar} src={profilePicture}>Z</Avatar>
+        <Avatar className={classes.avatar} src={profilePicture}></Avatar>
         <IconButton 
           className={classes.iconButton}
           onClick={handleLogout}
