@@ -8,9 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FacebookIcon from '@material-ui/icons/Facebook';
 
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FacebookButton = withStyles((theme) => ({
+/*const FacebookButton = withStyles((theme) => ({
   root: {
     color: '#fff',
     backgroundColor: '#4267B2',
@@ -70,7 +69,7 @@ const GoogleButton = withStyles((theme) => ({
       backgroundColor: '#b1b1b1',
     },
   },
-}))(Button);
+}))(Button);*/
 
 const Signin = () => {
   const classes = useStyles();
@@ -95,12 +94,6 @@ const Signin = () => {
     if (data.loginSuccess) {
       history.push('/');
     }
-  }
-
-  const handleGoogle = async (e) => {
-    e.preventDefault();
-    console.log('Logging in with Google');
-    //fetch('http://localhost:3001/');
   }
 
   return (
@@ -167,8 +160,9 @@ const Signin = () => {
             </Link>
           </Grid>
         </Grid>
-        <Typography variant="subtitle2" className={classes.or}>Or</Typography>
+        {/*<Typography variant="subtitle2" className={classes.or}>Or</Typography>*/}
       </form>
+      {/*
       <a href="http://localhost:3001/auth/facebook" variant="body2" className={classes.link} >
         <FacebookButton
           fullWidth
@@ -186,7 +180,7 @@ const Signin = () => {
           <i className="fab fa-google fa-1x"></i>
           Sign in with Google
         </GoogleButton>
-      </a>
+      </a>*/}
     </Container>
   );
 }
