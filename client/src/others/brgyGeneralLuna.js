@@ -1,0 +1,31 @@
+const GeneralLuna = [
+  "Bacong Ibaba",
+  "Bacong Ilaya",
+  "Barangay 1 (Poblacion)",
+  "Barangay 2 (Poblacion)",
+  "Barangay 3 (Poblacion)",
+  "Barangay 4 (Poblacion)",
+  "Barangay 5 (Poblacion)",
+  "Barangay 6 (Poblacion)",
+  "Barangay 7 (Poblacion)",
+  "Barangay 8 (Poblacion)",
+  "Barangay 9 (Poblacion)",
+  "Lavides",
+  "Magsaysay",
+  "Malaya",
+  "Nieva",
+  "Recto",
+  "San Ignacio Ibaba",
+  "San Ignacio Ilaya",
+  "San Isidro Ibaba",
+  "San Isidro Ilaya",
+  "San Jose",
+  "San Nicolas",
+  "San Vicente",
+  "Santa Maria Ibaba",
+  "Santa Maria Ilaya",
+  "Sumilang",
+  "Villarica"
+];
+
+module.exports = GeneralLuna;

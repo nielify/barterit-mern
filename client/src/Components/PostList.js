@@ -6,7 +6,7 @@ const PostList = () => {
   return (
     <Grid container >
       <Grid item lg={1}></Grid>
-      <Grid container lg={10}>
+      <Grid container item lg={10}>
         <Grid item xs={6} sm={4} lg={3}>
           <CardPost />
         </Grid>

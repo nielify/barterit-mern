@@ -27,27 +27,17 @@ const useStyles = makeStyles((theme) => ({
   typography: {
     textAlign: 'center',
     fontWeight: 'bold',
+    marginBottom: theme.spacing(2.5),
+  },
+  textfield: {
+    marginBottom: theme.spacing(3),
   },
   login: {
-    marginTop: theme.spacing(1.5),
-    marginBottom: theme.spacing(1),
-  },
-  or: {
-    textAlign: 'center',
-    marginTop: theme.spacing(1.5),
-    color: '#c5c5c5',
-  },
-  facebook: {
-    marginTop: theme.spacing(1.5),
-    marginBottom: theme.spacing(2),
-  },
-  google: {
+    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
   link: {
     textDecoration: 'none',
-    display: 'block',
-    width: '100%',
   },
 }));
 
@@ -77,9 +67,17 @@ const Signin = () => {
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ emailError, setEmailError ] = useState(false);
+  const [ passwordError, setPasswordError ] = useState(false);
+  const [ emailTextHelper, setEmailTextHelper ] = useState('');
+  const [ passwordTextHelper, setPasswordTextHelper ] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setEmailError(false);
+    setPasswordError(false);
+    setEmailTextHelper('');
+    setPasswordTextHelper('');
 
     const res = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
@@ -88,9 +86,15 @@ const Signin = () => {
       body: JSON.stringify({ email, password })
     }); 
     const data = await res.json();
-
     console.log(data);
-    
+    if (data.email) {
+      setEmailError(true);
+      setEmailTextHelper(data.email);
+    }
+    if (data.password) {
+      setPasswordError(true);
+      setPasswordTextHelper(data.password);
+    }
     if (data.loginSuccess) {
       history.push('/');
     }
@@ -111,27 +115,25 @@ const Signin = () => {
       <form className={classes.form} noValidate>
         <TextField
           variant="outlined"
-          margin="normal"
+          //margin="dense"
           size="small"
-          required
           fullWidth
-          id="email"
           label="Email Address"
-          name="email"
-          autoComplete="email"
+          error={emailError}
+          helperText={emailTextHelper}
+          className={classes.textfield}
           onChange={e => setEmail(e.target.value)}
         />
         <TextField
           variant="outlined"
-          margin="normal"
+          //margin="dense"
           size="small"
-          required
           fullWidth
-          name="password"
           label="Password"
           type="password"
-          id="password"
-          autoComplete="current-password"
+          error={passwordError}
+          helperText={passwordTextHelper}
+          className={classes.textfield}
           onChange={e => setPassword(e.target.value)}
         />
         <Button
@@ -160,27 +162,7 @@ const Signin = () => {
             </Link>
           </Grid>
         </Grid>
-        {/*<Typography variant="subtitle2" className={classes.or}>Or</Typography>*/}
       </form>
-      {/*
-      <a href="http://localhost:3001/auth/facebook" variant="body2" className={classes.link} >
-        <FacebookButton
-          fullWidth
-          startIcon={<FacebookIcon />}
-          className={classes.facebook}
-        >
-          Sign in with facebook
-        </FacebookButton>
-      </a>
-      <a href="http://localhost:3001/auth/google" variant="body2" className={classes.link}>
-        <GoogleButton
-          fullWidth
-          className={classes.google}
-        > 
-          <i className="fab fa-google fa-1x"></i>
-          Sign in with Google
-        </GoogleButton>
-      </a>*/}
     </Container>
   );
 }

@@ -1,17 +1,18 @@
 //basic server setups
 require('dotenv').config();
+require('isomorphic-fetch');
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const session = require('express-session');
+//const passport = require('passport');
+//const session = require('express-session');
 const cors = require('cors');
 
 const app = express();
 
 //utils
 const upload = require('./utils/multer');
-const passportStrategies = require('./utils/passportStrategies');
+//const passportStrategies = require('./utils/passportStrategies');
 
 //controllers
 const serverController = require('./controllers/serverController');
@@ -19,21 +20,22 @@ const serverController = require('./controllers/serverController');
 //middlewares
 const requireAuth = require('./middlewares/requireAuth');
 app.use(cookieParser());
-app.use(session({ 
+/*app.use(session({ 
   secret: 'TeamRealme',
   resave: false,
   saveUninitialized: true
-}));
+}));*/
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
   origin: ['http://localhost:3000'],
   credentials: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 //import routes
 const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 //database and server connection
 const PORT = process.env.PORT || 3001;
@@ -65,3 +67,4 @@ app.use('/auth', authRoutes);
 app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
 app.post('/api/upload', serverController.upload_post);
 app.post('/api/sms', serverController.sms_post);
+app.use('/api', apiRoutes);

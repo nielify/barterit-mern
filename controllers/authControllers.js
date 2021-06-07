@@ -23,8 +23,8 @@ const handleErrors = (err) => {
     errors.password = 'Password is required';
   }
   if (err.message === 'Email or password is incorrect') {
-    errors.email = err.message; 
-    errors.password = err.message;
+    errors.email = 'Email might be incorrect'; 
+    errors.password = 'Password might be incorrect';
   }
   if (err.message === 'Email is required') {
     errors.email = err.message;
