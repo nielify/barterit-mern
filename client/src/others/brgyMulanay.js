@@ -1,0 +1,32 @@
+const brgyMulanay = [
+  "Ajos",
+  "Amuguis",
+  "Anonang",
+  "Bagong Silang",
+  "Bagupaye",
+  "Barangay 1 (Poblacion)",
+  "Barangay 2 (Poblacion)",
+  "Barangay 3 (Poblacion)",
+  "Barangay 4 (Poblacion)",
+  "Bolo",
+  "Buenavista",
+  "Burgos",
+  "Butanyog",
+  "Canuyep",
+  "F. Nanadiego",
+  "Ibabang Cambuga",
+  "Ibabang Yuni",
+  "Ilayang Cambuga (Mabini)",
+  "Ilayang Yuni",
+  "Latangan",
+  "Magsaysay",
+  "Matataja",
+  "Pakiing",
+  "Patabog",
+  "Sagongon",
+  "San Isidro",
+  "San Pedro",
+  "Santa Rosa"
+];
+
+module.exports = brgyMulanay;

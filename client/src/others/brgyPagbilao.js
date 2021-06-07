@@ -1,0 +1,31 @@
+const brgyPagbilao = [
+  "Alupaye",
+  "Añato",
+  "Antipolo",
+  "Bantigue",
+  "Barangay 1 Castillo (Poblacion)",
+  "Barangay 2 Daungan (Poblacion)",
+  "Barangay 3 del Carmen (Poblacion)",
+  "Barangay 4 Parang (Poblacion)",
+  "Barangay 5 Santa Catalina (Poblacion)",
+  "Barangay 6 Tambak (Poblacion)",
+  "Bigo",
+  "Binahaan",
+  "Bukal",
+  "Ibabang Bagumbungan",
+  "Ibabang Palsabangon",
+  "Ibabang Polo",
+  "Ikirin",
+  "Ilayang Bagumbungan",
+  "Ilayang Palsabangon",
+  "Ilayang Polo",
+  "Kanluran Malicboy",
+  "Mapagong",
+  "Mayhay",
+  "Pinagbayanan",
+  "Silangan Malicboy",
+  "Talipan",
+  "Tukalan"
+];
+
+module.exports = brgyPagbilao;

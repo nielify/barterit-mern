@@ -6,7 +6,7 @@ import Upload from './Test Components/Upload';
 import Cloudinary from './Test Components/Cloudinary';
 import SMSForm from './Test Components/SMSForm';
 import Signin from './Test Components/Signin';
-import Signup from './Test Components/Signup';
+import Signup from './Test Components/Signup/Signup';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
