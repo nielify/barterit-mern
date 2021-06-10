@@ -44,13 +44,14 @@ import brgyTayabas from '../../others/brgyTayabas';
 import brgyTiaong from '../../others/brgyTiaong';
 import brgyUnisan from '../../others/brgyUnisan';
 
-const SelectBaranggay = ({town, brgy, isTownSelected, handleBrgyChange, classes}) => {
+const SelectBaranggay = ({town, brgy, isTownSelected, brgyError, handleBrgyChange, classes}) => {
   return (
     <FormControl required fullWidth className={classes.formControl}>
       <InputLabel>Baranggay</InputLabel>
       <Select 
         disabled={!isTownSelected}
         value={brgy}
+        error={brgyError}
         onChange={handleBrgyChange}
       >
         {town === 'Agdangan' && brgyAgdangan.map((brgy) => (
