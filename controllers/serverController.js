@@ -13,7 +13,7 @@ module.exports.index_get = (req, res) => {
       const userId = decodedToken.id;
       try {
         const user = await User.findById(userId);
-        res.status(200).send({ email: user.email });
+        res.status(200).send(user);
       } catch (err) {
         console.log(err);
       }

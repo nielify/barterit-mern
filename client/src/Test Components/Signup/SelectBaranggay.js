@@ -20,6 +20,7 @@ import brgyInfanta from '../../others/brgyInfanta';
 import brgyJomalig from '../../others/brgyJomalig';
 import brgyLopez from '../../others/brgyLopez';
 import brgyLucban from '../../others/brgyLucban';
+import brgyLucena from '../../others/brgyLucena';
 import brgyMacalelon from '../../others/brgyMacalelon';
 import brgyMauban from '../../others/brgyMauban';
 import brgyMulanay from '../../others/brgyMulanay';
@@ -103,6 +104,9 @@ const SelectBaranggay = ({town, brgy, isTownSelected, brgyError, handleBrgyChang
           <MenuItem value={brgy} key={brgy}>{brgy}</MenuItem>
         ))}
         {town === 'Lucban' && brgyLucban.map((brgy) => (
+          <MenuItem value={brgy} key={brgy}>{brgy}</MenuItem>
+        ))}
+        {town === 'Lucena' && brgyLucena.map((brgy) => (
           <MenuItem value={brgy} key={brgy}>{brgy}</MenuItem>
         ))}
         {town === 'Macalelon' && brgyMacalelon.map((brgy) => (

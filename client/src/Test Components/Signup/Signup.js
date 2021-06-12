@@ -86,9 +86,9 @@ const Signup = () => {
   
   const [ lastName, setLastName ] = useState('');
   const [ firstName, setFirstName ] = useState('');
-  const [ MiddleName, setMiddleName ] = useState('');
+  const [ middleName, setMiddleName ] = useState('');
   const [ gender, setGender ] = useState(''); 
-  const [ date, setDate ] = useState(new Date(2010, 11, 31));
+  const [ dateOfBirth, setDate ] = useState(new Date(2010, 2, 21));
   const [ town, setTown ] = useState('');
   const [ brgy, setBrgy ] = useState('');
   const [ specificAddress, setSpecificAddress ] = useState('');
@@ -99,23 +99,23 @@ const Signup = () => {
   const [ isChecked, setIsChecked] = useState(false);
   const [ isTownSelected, setIsTownSelected ] = useState(false);
   
-  const isFirstRender = useRef(true);
-  const errorsRef = useRef([]);
+  const isErrorRef = useRef(false);
+  const [ errors, setErrors ] = useState([]);
   //const [ showErrors, setShowErrors] = useState(null);
 
-  const [ lastNameError, setLastNameError ] = useState(false);
-  const [ firstNameError, setFirstNameError ] = useState(false);
+  const [ lastNameError, setLastNameError ] = useState(false); 
+  const [ firstNameError, setFirstNameError ] = useState(false); 
   const [ genderError, setGenderError ] = useState(false); 
   //const [ dateError, setDateError ] = useState(false); 
-  const [ townError, setTownError ] = useState(false);
-  const [ brgyError, setBrgyError ] = useState(false);
-  const [ specificAddressError, setSpecificAddressError ] = useState(false);
-  const [ emailError, setEmailError ] = useState(false);
-  const [ passwordError, setPasswordError ] = useState(false);
-  const [ confirmPasswordError, setConfirmPasswordError ] = useState(false);
-  const [ captchaError, setCaptchaError] = useState(false);
-  const [ isCheckedError, setIsCheckedError] = useState(false);
- 
+  const [ townError, setTownError ] = useState(false); 
+  const [ brgyError, setBrgyError ] = useState(false); 
+  const [ specificAddressError, setSpecificAddressError ] = useState(false); 
+  const [ emailError, setEmailError ] = useState(false); 
+  const [ passwordError, setPasswordError ] = useState(false); 
+  const [ confirmPasswordError, setConfirmPasswordError ] = useState(false); 
+  const [ captchaError, setCaptchaError] = useState(false); 
+  const [ isCheckedError, setIsCheckedError] = useState(false); 
+
   const siteKey = "6LcVEhkbAAAAADDdH5zfokSSOf8xYAxd-UO6k9VQ";
   const handleToken = async (token) => {
     const res = await fetch(
@@ -126,10 +126,16 @@ const Signup = () => {
       }
     );
     const data = await res.json();
-    setCaptcha(data);
+    if (data) {
+      setCaptcha(data);
+      setCaptchaError(false);
+      setErrors(errors.filter(error => error !== 'CAPTCHA verification is required'));
+    }
+    else console.log("You are not a human");
   }
   const handleExpire = () => {
     setCaptcha(false);
+    setErrors(errors => [...errors, 'CAPTCHA verification is required']); 
   }
 
   const handleTownChange = (e) => {
@@ -151,7 +157,8 @@ const Signup = () => {
     setConfirmPasswordError(false);
     setIsCheckedError(false);
     setCaptchaError(false);
-    errorsRef.current = [];
+    setErrors([]);
+    isErrorRef.current = false;
 
     const formData = {
       lastName,
@@ -167,19 +174,33 @@ const Signup = () => {
       isChecked
     }
     validateFields(formData);
-    if (!errorsRef.current[0]) {
-      console.log('sending data to server...');
-      /*const res = await fetch('http://localhost:3001/auth/signup', {
+    if (!isErrorRef.current) {
+      const registrationData = {
+        lastName,
+        firstName,
+        middleName,
+        gender,
+        dateOfBirth,
+        town,
+        brgy,
+        specificAddress,
+        email,
+        password,
+        confirmPassword,
+      }
+      
+      const res = await fetch('http://localhost:3001/auth/signup', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify(registrationData)
       });
       const data = await res.json();
-      console.log(data);
+
       if (data.success) {
        history.push('/signin');
-      }*/
+      }
+
     } else {
       window.scrollTo(0, 0);
     }
@@ -187,73 +208,73 @@ const Signup = () => {
 
   const validateFields = (formData) => {
     if (!formData.lastName) {
-      //setErrors(errors => [...errors, 'Last Name is required']);  
+      setErrors(errors => [...errors, 'Last Name is required']);  
       setLastNameError(true);
-      errorsRef.current.push('Last Name is required');  
+      isErrorRef.current = true; 
     }
     if (!formData.firstName) {
-      //setErrors(errors => [...errors, 'First Name is required']);  
+      setErrors(errors => [...errors, 'First Name is required']);  
       setFirstNameError(true);
-      errorsRef.current.push('First Name is required');
+      isErrorRef.current = true; 
     }
     if (!formData.gender) {
-      //setErrors(errors => [...errors, 'Select your Gender']);
+      setErrors(errors => [...errors, 'Select your Gender']);
       setGenderError(true);
-      errorsRef.current.push('Select your Gender'); 
+      isErrorRef.current = true; 
     }
     if (!formData.town) {
-      //setErrors(errors => [...errors, 'Select your Town']);
+      setErrors(errors => [...errors, 'Select your Town']);
       setTownError(true);
-      errorsRef.current.push('Select your Town'); 
+      isErrorRef.current = true; 
     }
     if (!formData.brgy) {
-      //setErrors(errors => [...errors, 'Select your Baranggay']);
+      setErrors(errors => [...errors, 'Select your Baranggay']);
       setBrgyError(true);
-      errorsRef.current.push('Select your Baranggay'); 
+      isErrorRef.current = true; 
     }
     if (!formData.specificAddress) {
-      //setErrors(errors => [...errors, 'Specific Address is required']);
+      setErrors(errors => [...errors, 'Specific Address is required']);
       setSpecificAddressError(true);
-      errorsRef.current.push('Specific Address is required'); 
+      isErrorRef.current = true; 
     }
     if (!formData.email) {
-      //setErrors(errors => [...errors, 'Email is required']);
+      setErrors(errors => [...errors, 'Email is required']);
       setEmailError(true);
-      errorsRef.current.push('Email is required'); 
+      isErrorRef.current = true; 
     } else if (!emailIsValid(formData.email)) {
-      //setErrors(errors => [...errors, 'Email is invalid']);
+      setErrors(errors => [...errors, 'Email is invalid']);
       setEmailError(true);
-      errorsRef.current.push('Email is invalid'); 
+      isErrorRef.current = true; 
     }
     if (!formData.password) {
-      //setErrors(errors => [...errors, 'Password is required']);
+      setErrors(errors => [...errors, 'Password is required']);
       setPasswordError(true);
-      errorsRef.current.push('Password is required'); 
+      isErrorRef.current = true; 
     } else if (!passwordIsValid(formData.password)) {
-      //setErrors(errors => [...errors, 'Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number']);
+      setErrors(errors => [...errors, 'Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number']);
       setPasswordError(true);
-      errorsRef.current.push('Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number'); 
+      isErrorRef.current = true; 
     }
     if (!formData.confirmPassword) {
-      //setErrors(errors => [...errors, 'Confirm your password']);
+      setErrors(errors => [...errors, 'Confirm your password']);
       setConfirmPasswordError(true);
-      errorsRef.current.push('Confirm your password'); 
+      isErrorRef.current = true; 
     }
     if (formData.password !== formData.confirmPassword) {
-      //setErrors(errors => [...errors, 'Password does not match']);
+      setErrors(errors => [...errors, 'Password does not match']);
       setPasswordError(true);
       setConfirmPasswordError(true);
-      errorsRef.current.push('Password does not match'); 
+      isErrorRef.current = true;  
     }
     if (!formData.captcha) {
-      //setErrors(errors => [...errors, 'CAPTCHA verification is required']);
+      setErrors(errors => [...errors, 'CAPTCHA verification is required']);
       setCaptchaError(true);
-      errorsRef.current.push('CAPTCHA verification is required'); 
+      isErrorRef.current = true; 
     }   
     if (!formData.isChecked) {
-      //setErrors(errors => [...errors, 'You must agree to Terms and Condition and Privacy Policy']);
+      setErrors(errors => [...errors, 'You must agree to Terms and Condition and Privacy Policy']);
       setIsCheckedError(true);
-      errorsRef.current.push('You must agree to Terms and Condition and Privacy Policy'); 
+      isErrorRef.current = true; 
     }
   }
 
@@ -282,12 +303,12 @@ const Signup = () => {
         </Typography>
         <form className={classes.form}>
           <Grid item xs={12} >
-            {errorsRef.current[0] && <Alert 
+            {errors[0] && <Alert 
               className={classes.alert}
               severity="error"
             > 
               <AlertTitle>Error Signing Up</AlertTitle>
-              {errorsRef.current.map((error, index) => (
+              {errors.map((error, index) => (
                 <Typography key={index}>* {error}</Typography>
               ))}
             </Alert>}
@@ -346,7 +367,8 @@ const Signup = () => {
                 format="MM/DD/yyyy"
                 margin="normal"
                 label="Date of Birth"
-                value={date}
+                helperText="MM/DD/YYYY"
+                value={dateOfBirth}
                 //error={dateError}
                 onChange={date => setDate(date)}
                 KeyboardButtonProps={{
@@ -430,7 +452,7 @@ const Signup = () => {
                 fullWidth
                 label="Confirm Password"
                 type="password"
-                error={confirmPasswordError}
+                error={confirmPasswordError}               
                 helperText="Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -494,7 +516,6 @@ const Signup = () => {
         <p>Confirm Password: {confirmPassword}</p>
         <p>CAPTCHA: {captcha.toString()}</p>
         <p>Terms and Condition: {isChecked.toString()}</p>*/}
-        
       </Container>
     </MuiPickersUtilsProvider>
   );
