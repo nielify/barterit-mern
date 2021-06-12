@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -12,16 +13,22 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+  },
+  toolbar: {
+    paddingTop: 0,
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1, 
+    marginLeft: theme.spacing(2),
+  },
+  firstName: {
   },
   avatar: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
   iconButton: {
-    color: '#fff'
+    color: '#fff',
   }
 }));
 
@@ -29,8 +36,9 @@ const Header = () => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [ email, setEmail ] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
+  //const [ email, setEmail ] = useState('');
+  const [ profilePicture, setProfilePicture ] = useState('');
+  const [ firstName, setFirstName ] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3001/', { credentials: 'include' })
@@ -43,13 +51,13 @@ const Header = () => {
           history.push(data.url);
         }
         else {
-          setEmail(data.email || data.firstName);
+          setFirstName(data.firstName);
           setProfilePicture(data.profilePicture);
         }
       })
       .catch(err => {
         console.log(err.message);
-        history.push('/signin');
+        //history.push('/signin');
       });
   }, [])
 
@@ -62,24 +70,30 @@ const Header = () => {
     } 
   } 
 
-  return ( 
-    <AppBar className={classes.root} position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Barter.it
-        </Typography>
-        { email && <Typography variant="subtitle2">
-          {email}
-        </Typography> }
-        <Avatar className={classes.avatar} src={profilePicture}></Avatar>
-        <IconButton 
-          className={classes.iconButton}
-          onClick={handleLogout}
-        >
-          <ExitToAppIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+  return (   
+      <AppBar className={classes.root} position="static">     
+        <Grid container>
+          <Grid item lg={1}></Grid>
+          <Grid item xs={12} lg={10}> 
+            <Toolbar className={classes.toolbar}>
+              <Typography variant="h6" className={classes.title}>
+                Barter.it
+              </Typography>
+              { firstName && <Typography variant="subtitle2" className={classes.firstName}>
+                {firstName}
+              </Typography> }
+              <Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
+              <IconButton 
+                className={classes.iconButton}
+                onClick={handleLogout}
+              >
+                <ExitToAppIcon />
+              </IconButton>
+            </Toolbar>
+          </Grid>
+          <Grid item lg={1}></Grid>
+        </Grid>
+      </AppBar>
   );
 }
  

@@ -15,6 +15,7 @@ const towns = [
   "Infanta",
   "Jomalig",
   "Lopez",
+  "Lucena",
   "Lucban",
   "Macalelon",
   "Mauban",
