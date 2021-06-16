@@ -43,6 +43,15 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     //minlength: [8, 'Password must be atleast 8 characters']
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Active'],
+    default: 'Pending'
+  },
+  confirmationCode: {
+    type: String,
+    
   }
 });
 
