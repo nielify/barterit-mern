@@ -19,7 +19,7 @@ const sendMail = async (email) =>{
     //text: "", 
     html: `<p>You have to verify your account before logging in to BarterIT</p>
     <p>Click the link to verify</p>
-    <a href="http://localhost:3000">https://barterit.com/auth/signup/verify/${randomString}</a>`
+    <a href="http://localhost:3000/signup/verify/${randomString}">https://barterit.com/auth/signup/verify/${randomString}</a>`
   });
   
   return info;

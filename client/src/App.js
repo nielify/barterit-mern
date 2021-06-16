@@ -7,6 +7,7 @@ import Cloudinary from './Test Components/Cloudinary';
 import SMSForm from './Test Components/SMSForm';
 import Signin from './Test Components/Signin';
 import Signup from './Test Components/Signup/Signup';
+import Verify from './Test Components/Signup/Verify/Verify'
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -44,6 +45,9 @@ function App() {
           </Route>
           <Route exact path="/signup">
             <Signup />
+          </Route>
+          <Route exact path="/signup/verify">
+            <Verify />
           </Route>
         </Switch>
       </Router>
