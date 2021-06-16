@@ -126,6 +126,7 @@ const Signup = () => {
       }
     );
     const data = await res.json();
+    
     if (data) {
       setCaptcha(data);
       setCaptchaError(false);

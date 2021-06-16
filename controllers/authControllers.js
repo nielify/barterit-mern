@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const cryptoRandomString = require('crypto-random-string');
 
 //handling Login errors 
 const handleLoginErrors = (err) => {
@@ -108,7 +109,8 @@ module.exports.signup_post = async (req, res) => {
     baranggay: req.body.brgy, 
     specificAddress: req.body.specificAddress, 
     email: req.body.email, 
-    password: req.body.password
+    password: req.body.password,
+    confirmationCode: cryptoRandomString({length: 128})
   }
 
   try {
