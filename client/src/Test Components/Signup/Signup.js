@@ -199,7 +199,18 @@ const Signup = () => {
       const data = await res.json();
 
       if (data.success) {
-       history.push('/signin');
+        history.push({
+          pathname: '/signup/verify', 
+          state: {
+            email: data.email
+          }
+        });
+      } else {
+        if (data.email) {
+          setErrors(errors => [...errors, data.email]);
+          setEmailError(true);
+          isErrorRef.current = true; 
+        }
       }
 
     } else {
@@ -431,7 +442,7 @@ const Signup = () => {
                 required
                 fullWidth
                 label="Email"
-                type="email"
+                //type="email"
                 error={emailError}
                 onChange={(e) => setEmail(e.target.value)}
               />
