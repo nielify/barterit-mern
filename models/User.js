@@ -44,20 +44,20 @@ const userSchema = mongoose.Schema({
     required: [true, 'Password is required'],
     //minlength: [8, 'Password must be atleast 8 characters']
   },
-  status: {
-    type: String,
-    enum: ['Pending', 'Active'],
-    default: 'Pending'
+  isActive: {
+    type: Boolean,
+    default: false
   },
   confirmationCode: {
     type: String,
-    
   }
 });
 
 userSchema.pre('save', async function(next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
+  if (!this.isActive) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+  }
   next();
 });
 

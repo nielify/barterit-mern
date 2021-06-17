@@ -13,6 +13,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
@@ -77,6 +79,10 @@ const useStyles = makeStyles((theme) => ({
   },
   captchaErr: {
     border: 'solid 1px red',
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#aaa',
   },
 }));
 
@@ -299,6 +305,11 @@ const Signup = () => {
     return re.test(password);
   }
 
+  const [ backdropOpen, setBackdropOpen ] = useState(true );
+  const handleBackdropClose = () => {
+    setBackdropOpen(false);
+  }
+
   useEffect(() => {
     
   }, []); 
@@ -514,21 +525,16 @@ const Signup = () => {
               </Link>
             </Grid>
           </Grid>
-        </form>
-        {/*<p>Last Name: {lastName}</p>
-        <p>First Name: {firstName}</p>
-        <p>Middle Name: {MiddleName}</p>
-        <p>Gender: {gender}</p>
-        <p>Date of Birth: {date.toString()}</p>
-        <p>Town: {town}</p>
-        <p>Brgy: {brgy}</p>
-        <p>Address: {specificAddress}</p>
-        <p>Email: {email}</p>
-        <p>Password: {password}</p>
-        <p>Confirm Password: {confirmPassword}</p>
-        <p>CAPTCHA: {captcha.toString()}</p>
-        <p>Terms and Condition: {isChecked.toString()}</p>*/}
+        </form>        
       </Container>
+      {/*<Backdrop className={classes.backdrop} open={backdropOpen} onClick={handleBackdropClose}>
+        <Alert severity="success">
+          <AlertTitle>
+            Registration email is sent to {email}
+          </AlertTitle>
+          Verify your email to complete the registration
+        </Alert>
+      </Backdrop>*/}
     </MuiPickersUtilsProvider>
   );
 }

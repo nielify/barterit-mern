@@ -6,7 +6,7 @@ const sendMail = require('../utils/nodemailer');
 //handling Login errors 
 const handleLoginErrors = (err) => {
   const errors = { email: '', password: '' };
-
+  
   //signup
   if (err._message === 'user validation failed') {
     Object.values(err.errors).forEach(error => {
@@ -99,6 +99,7 @@ const passwordIsValid = (password) => {
 }
 
 module.exports.signup_post = async (req, res) => {
+  const confirmationCode = cryptoRandomString({length: 128});
 
   const toSaveData = {
     lastName: req.body.lastName, 
@@ -111,20 +112,38 @@ module.exports.signup_post = async (req, res) => {
     specificAddress: req.body.specificAddress, 
     email: req.body.email, 
     password: req.body.password,
-    confirmationCode: cryptoRandomString({length: 128})
+    confirmationCode
   }
 
   try {
     validateRegistrationData(req.body);
     const user = await User.create(toSaveData);
-    const info = await sendMail(user.email);
-    console.log(info);
+    const info = await sendMail(user.email, confirmationCode);
+    
     res.status(201).send({ email: user.email, success: true });
   } catch (err) { 
     const errors = handleSignupErrors(err); 
     res.status(400).send(errors); 
   } 
-} 
+}   
+
+module.exports.signupVerifyId_get = async (req, res) => {
+  const confirmationCode = req.params.confirmationCode;
+  try { 
+    const user = await User.findOne({ confirmationCode });  
+    if (user) {
+      user.confirmationCode = undefined;
+      user.isActive = true;
+      const newUser = await user.save();
+      return res.redirect(`${process.env.DOMAIN1}/signup/success`);
+    } {
+      return res.redirect(`${process.env.DOMAIN1}/signin`);
+    }
+  } catch(err) {
+    console.log(err);
+    res.send({err});
+  }
+}
 
 module.exports.login_post = async (req, res) => {
   const { email, password } = req.body;
@@ -142,7 +161,7 @@ module.exports.login_post = async (req, res) => {
     const errors = handleLoginErrors(err);
     res.status(400).send(errors);
   }
-}
+} 
 
 module.exports.logout_get = (req, res) => { 
   const token = req.cookies.jwt; 

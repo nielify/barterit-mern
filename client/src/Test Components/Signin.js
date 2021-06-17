@@ -86,7 +86,7 @@ const Signin = () => {
       body: JSON.stringify({ email, password })
     }); 
     const data = await res.json();
-
+    console.log(data);
     if (data.email) {
       setEmailError(true);
       setEmailTextHelper(data.email);
