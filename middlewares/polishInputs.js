@@ -13,8 +13,7 @@ const polishRegInputs = (req, res, next) => {
   req.body.firstName = polish(req.body.firstName);
   req.body.middleName = polish(req.body.middleName);
   req.body.specificAddress = polish(req.body.specificAddress);
-  console.log('polishing inputs');
-  console.log(req.body);
+  next();
 }
 
 module.exports = polishRegInputs;
