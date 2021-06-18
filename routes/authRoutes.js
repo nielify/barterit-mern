@@ -5,8 +5,10 @@ const passport = require('passport');
 
 const authController = require('../controllers/authControllers');
 
+const polishRegInputs = require('../middlewares/polishInputs');
+
 //normal
-router.post('/signup', authController.signup_post);
+router.post('/signup', polishRegInputs, authController.signup_post);
 router.get('/signup/verify/:confirmationCode', authController.signupVerifyId_get);
 router.post('/login', authController.login_post);
 router.get('/logout', authController.logout_get);
