@@ -20,7 +20,7 @@ const requireAuth = (req, res, next) => {
     next();
   }
   else {
-    res.redirect('http://localhost:3000/signin');
+    res.redirect(`${process.env.DOMAIN1}/signin`);
   }
 }
 

@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -26,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     textAlign: 'center',
-    fontWeight: 'bold',
-    marginBottom: theme.spacing(2.5),
+    fontWeight: 500,
+    marginBottom: theme.spacing(3),
+  },
+  alert: {
+    marginBottom: theme.spacing(3),
   },
   textfield: {
     marginBottom: theme.spacing(3),
@@ -65,6 +70,8 @@ const Signin = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  const [ showAlert, setShowAlert ] = useState(false);
+
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ emailError, setEmailError ] = useState(false);
@@ -76,6 +83,7 @@ const Signin = () => {
     e.preventDefault();
     setEmailError(false);
     setPasswordError(false);
+    setShowAlert(false);
     setEmailTextHelper('');
     setPasswordTextHelper('');
 
@@ -98,6 +106,9 @@ const Signin = () => {
     if (data.loginSuccess) {
       history.push('/');
     }
+    if (data.loginSuccess === false) {
+      setShowAlert(true);
+    }
   }
 
   return (
@@ -107,11 +118,20 @@ const Signin = () => {
       </Avatar>
       <Typography className={classes.typography}
         component="h1" 
-        variant="h5"
+        variant="h4"
         color="primary"
       >
         Sign in to Barter.it
       </Typography>
+      {showAlert && <Alert 
+        severity="warning"
+        className={classes.alert}  
+      >
+        <AlertTitle>
+          Failed to sign in!
+        </AlertTitle>
+        The email is already registered but not yet verified. Please check your email inbox.
+      </Alert>}
       <form className={classes.form} noValidate>
         <TextField
           variant="outlined"

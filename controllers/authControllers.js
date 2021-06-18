@@ -150,13 +150,19 @@ module.exports.login_post = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-    const token = createToken(user._id);
-    res.cookie('jwt', token, { 
-      httpOnly: true, 
-      maxAge: maxAge * 1000, 
-      secure: process.env.ENVIRONMENT === 'dev' ? false : true  
-    });
-    res.status(200).send({ user: user._id, loginSuccess: true });
+    if (user.isActive) {
+      const token = createToken(user._id);
+      res.cookie('jwt', token, { 
+        httpOnly: true, 
+        maxAge: maxAge * 1000, 
+        secure: process.env.ENVIRONMENT === 'dev' ? false : true  
+      });
+      return res.status(200).send({ user: user._id, loginSuccess: true });
+    }
+    else {
+      return res.status(200).send({ loginSuccess: false, reason: 'Account is not active yet' });
+    }
+    
   } catch (err) {
     const errors = handleLoginErrors(err);
     res.status(400).send(errors);

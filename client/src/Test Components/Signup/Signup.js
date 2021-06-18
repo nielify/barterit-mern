@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 0,
   },
   typography: {
-    fontWeight: 'bold',
+    fontWeight: 500,
     marginBottom: theme.spacing(3),
     width: '100%',
   },
