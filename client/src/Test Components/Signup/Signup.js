@@ -13,8 +13,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
@@ -90,6 +88,7 @@ const Signup = () => {
   const classes = useStyles();
   const history = useHistory();
   
+  //actual registration data
   const [ lastName, setLastName ] = useState('');
   const [ firstName, setFirstName ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
@@ -108,7 +107,9 @@ const Signup = () => {
   const isErrorRef = useRef(false);
   const [ errors, setErrors ] = useState([]);
   //const [ showErrors, setShowErrors] = useState(null);
+  const [ submitting, setSubmitting ] = useState(false);
 
+  //error booleans
   const [ lastNameError, setLastNameError ] = useState(false); 
   const [ firstNameError, setFirstNameError ] = useState(false); 
   const [ genderError, setGenderError ] = useState(false); 
@@ -152,7 +153,13 @@ const Signup = () => {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (submitting) {
+      console.log('already submitting, wait for it to finish');
+      return;
+    }
+
+    setSubmitting(true);
     setLastNameError(false);
     setFirstNameError(false);
     setGenderError(false);
@@ -166,6 +173,7 @@ const Signup = () => {
     setCaptchaError(false);
     setErrors([]);
     isErrorRef.current = false;
+    
 
     const formData = {
       lastName,
@@ -211,16 +219,19 @@ const Signup = () => {
             email: data.email
           }
         });
+        setSubmitting(false);
       } else {
         if (data.email) {
           setErrors(errors => [...errors, data.email]);
           setEmailError(true);
           isErrorRef.current = true; 
+          setSubmitting(false);
         }
       }
 
     } else {
       window.scrollTo(0, 0);
+      setSubmitting(false);
     }
   }
 
@@ -527,14 +538,6 @@ const Signup = () => {
           </Grid>
         </form>        
       </Container>
-      {/*<Backdrop className={classes.backdrop} open={backdropOpen} onClick={handleBackdropClose}>
-        <Alert severity="success">
-          <AlertTitle>
-            Registration email is sent to {email}
-          </AlertTitle>
-          Verify your email to complete the registration
-        </Alert>
-      </Backdrop>*/}
     </MuiPickersUtilsProvider>
   );
 }
