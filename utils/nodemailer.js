@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer"); 
-const cryptoRandomString = require('crypto-random-string'); 
 
 const sendMail = async (email, confirmationCode) =>{ 
   let transporter = nodemailer.createTransport({ 
