@@ -14,11 +14,27 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f0f0f0',
   },
   toolbar: {
-    paddingTop: 0,
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   title: {
     flexGrow: 1, 
     marginLeft: theme.spacing(2),
+  },
+  brand: {
+    //height: '60px',
+  },
+  barter: {
+    fontSize: '1.5rem',
+    fontWeight: 500,
+    color: '#009688',
+    marginRight: 2,
+    textTransform: 'capitalize',
+  },
+  it: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    color: '#00897b',
   },
   signin: {
     paddingLeft: theme.spacing(3),
@@ -57,31 +73,51 @@ const DefaultHeader = () => {
         <Grid item lg={1}></Grid>
         <Grid item xs={12} lg={10}> 
           <Toolbar className={classes.toolbar}>
-            <Typography 
+            <Button
+              className={classes.brand}
+              //startIcon={<img href="qwe.jpg" alt="BIT" />}
+            >
+              <Typography
+                className={classes.barter}
+                variant="h6"
+              >
+                Barter
+              </Typography>
+              <Typography
+                className={classes.it}
+                variant="h6"
+              >
+                IT
+              </Typography>   
+            </Button>
+            
+            {/*<Typography 
               variant="h5" 
               className={classes.title}
               color="primary"
             >
               <strong>BarterIT</strong>
-            </Typography>
-            <Button
-              component={Link}
-              to="/signin"
-              color="primary"
-              variant="outlined"
-              className={classes.signin}
-            >
-              Sign in
-            </Button>
-            <Button
-              component={Link}
-              to="/signup"
-              color="primary"
-              variant="contained"
-              className={classes.signup}
-            >
-              Sign up
-            </Button>
+            </Typography>*/}
+            <div>
+              <Button
+                component={Link}
+                to="/signin"
+                color="primary"
+                variant="outlined"
+                className={classes.signin}
+              >
+                Sign in
+              </Button>
+              <Button
+                component={Link}
+                to="/signup"
+                color="primary"
+                variant="contained"
+                className={classes.signup}
+              >
+                Sign up
+              </Button>
+            </div>
           </Toolbar>
         </Grid>
         

@@ -24,7 +24,7 @@ import {
 import MomentUtils from '@date-io/moment';
 
 import towns from '../../others/towns';
-import Signup_SelectBaranggay from './Signup_SelectBaranggay';
+import SignupSelectBaranggay from './SignupSelectBaranggay';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -425,7 +425,7 @@ const Signup = () => {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <Signup_SelectBaranggay 
+              <SignupSelectBaranggay 
                 town={town} 
                 brgy={brgy} 
                 isTownSelected={isTownSelected} 
