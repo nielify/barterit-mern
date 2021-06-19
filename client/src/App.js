@@ -6,13 +6,15 @@ import PostList from './Components/PostList';
 import Upload from './Test Components/Upload';
 import Cloudinary from './Test Components/Cloudinary';
 import SMSForm from './Test Components/SMSForm';
+import ForgotPassword from './Test Components/ForgotPassword';
 import Signin from './Test Components/Signin';
-import Signup from './Test Components/Signup/Signup';
-import Verify from './Test Components/Signup/Verify/Verify'
+import Signup from './Test Components/signup/Signup';
+import Verify from './Test Components/signup/Verify'
+import Success from './Test Components/signup/Success';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Success from './Test Components/Signup/Verify/Success';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -41,6 +43,10 @@ function App() {
           </Route>
           <Route exact path="/sms">
             <SMSForm />
+          </Route>
+          <Route exact path="/forgot-password">
+            <DefaultHeader /> 
+            <ForgotPassword />
           </Route>
           <Route exact path="/signin">
             <DefaultHeader /> 
