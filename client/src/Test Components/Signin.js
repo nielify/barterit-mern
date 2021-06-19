@@ -168,7 +168,7 @@ const Signin = () => {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link to="#" variant="body2" className={classes.link}>
+            <Link to="/forgot-password" variant="body2" className={classes.link}>
               <Typography variant="body2" color="primary">
                 Forgot password?
               </Typography>

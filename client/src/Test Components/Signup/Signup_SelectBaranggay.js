@@ -45,7 +45,7 @@ import brgyTayabas from '../../others/brgyTayabas';
 import brgyTiaong from '../../others/brgyTiaong';
 import brgyUnisan from '../../others/brgyUnisan';
 
-const SelectBaranggay = ({town, brgy, isTownSelected, brgyError, handleBrgyChange, classes}) => {
+const Signup_SelectBaranggay = ({town, brgy, isTownSelected, brgyError, handleBrgyChange, classes}) => {
   return (
     <FormControl required fullWidth className={classes.formControl}>
       <InputLabel>Baranggay</InputLabel>
@@ -183,4 +183,4 @@ const SelectBaranggay = ({town, brgy, isTownSelected, brgyError, handleBrgyChang
   );
 }
  
-export default SelectBaranggay;
+export default Signup_SelectBaranggay;
