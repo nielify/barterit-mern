@@ -35,7 +35,7 @@ app.use(cors({
 
 //import routes
 const authRoutes = require('./routes/authRoutes');
-const apiRoutes = require('./routes/apiRoutes');
+const apiRoutes = require('./routes/api/apiRoutes');
 
 //database and server connection
 const PORT = process.env.PORT || 3001;
@@ -61,10 +61,11 @@ if (process.env.ENVIRONMENT === 'production') {
   });
 }
 
-//routes
 app.get('/', requireAuth, serverController.index_get);
 app.use('/auth', authRoutes);
 app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
 app.post('/api/upload', serverController.upload_post);
 app.post('/api/sms', serverController.sms_post);
+
+//improved backend routes
 app.use('/api', apiRoutes);

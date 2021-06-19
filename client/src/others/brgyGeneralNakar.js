@@ -10,7 +10,7 @@ const GeneralNakar = [
   "Maigang",
   "Maligaya",
   "Minahan Norte",
-  "Minahan Su",
+  "Minahan Sur",
   "Pagsangahan",
   "Pamplona",
   "Pisa",

@@ -1,8 +1,14 @@
+//basic router imports
 const  { Router }  = require('express');
 const router = Router();
-const cryptoRandomString = require('crypto-random-string');
 
-const sendMail = require('../utils/nodemailer');
+//utils
+const cryptoRandomString = require('crypto-random-string');
+const sendMail = require('../../utils/nodemailer');
+
+//routes
+const userRoutes = require('./user/userRoutes');
+
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;
@@ -28,5 +34,7 @@ router.post('/mail', async (req, res) => {
   //console.log(req.body.email);
   //res.send(cryptoRandomString({length: 128}));
 });
+
+router.use('/user', userRoutes);
 
 module.exports = router;
