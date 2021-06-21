@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
   warning: {
     marginTop: theme.spacing(2.3),
   },
+  error: {
+    marginTop: theme.spacing(2.3),
+  },
   email: {
     margin: theme.spacing(2.3, 0),
   },
@@ -42,6 +45,7 @@ const ForgotPassword = () => {
 
   const [ submitting, setSubmitting ] = useState(false);
   const [ showWarning, setShowWarning ] = useState(false);
+  const [ showError, setShowError ] = useState(false);
 
   const [ email, setEmail ] = useState('');
   const [ emailError, setEmailError ] = useState(false);
@@ -49,15 +53,17 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setEmailError(false);
-    setEmailHelperText('');
-    setShowWarning(false);
-    setSubmitting(true);
 
     if (submitting) {
       console.log('clicked while submitting');
       return;
     }
+
+    setEmailError(false);
+    setEmailHelperText('');
+    setShowWarning(false);
+    setShowError(false);
+    setSubmitting(false); 
 
     if (emailIsValid(email)) {
       const res = await fetch('http://localhost:3001/api/user/forgot-password', {
@@ -68,10 +74,14 @@ const ForgotPassword = () => {
 
       const data = await res.json();
 
-      if (data.success === false) {
-        setShowWarning(true);
-      }
+      console.log(data);
 
+      //if the email is not yet verified or not yet registered
+      if (data.success === false) { 
+        //setShowWarning(true);
+        //setErrorWarning(true);
+      }
+      
       setSubmitting(false);
     } else {
       setEmailError(true);
@@ -90,12 +100,16 @@ const ForgotPassword = () => {
         <Typography className={classes.title} component="h1" variant="h6">
           Forgot Password
         </Typography>
-        <Typography className={classes.paragraph} variant="p">
+        <Typography className={classes.paragraph} variant="body1">
           Please enter the email of your account that you wish to recover.
         </Typography>
         {showWarning && <Alert severity="warning" className={classes.warning}>
           <AlertTitle>Failed To Send Email</AlertTitle>
           The account you are trying to recover is not yet verified.
+        </Alert>}
+        {showError && <Alert severity="error" className={classes.error}>
+          <AlertTitle>Error sending email</AlertTitle>
+          The account you are trying to recover does not exist.
         </Alert>}
         <TextField 
           className={classes.email}

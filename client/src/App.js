@@ -11,6 +11,7 @@ import Signin from './Test Components/Signin';
 import Signup from './Test Components/signup/Signup';
 import Verify from './Test Components/signup/Verify'
 import Success from './Test Components/signup/Success';
+import ResetPassword from './Test Components/ResetPassword';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -64,10 +65,13 @@ function App() {
             <DefaultHeader /> 
             <Success />
           </Route>
+          <Route exact path="/user/:userId/reset-password/:token">
+            <DefaultHeader /> 
+            <ResetPassword />
+          </Route>
         </Switch>
       </Router>
     </ThemeProvider>
-
   );
 }
 

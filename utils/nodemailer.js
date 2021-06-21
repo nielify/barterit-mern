@@ -1,16 +1,15 @@
 const nodemailer = require("nodemailer"); 
 
-const sendMail = async (email, confirmationCode) =>{ 
-  let transporter = nodemailer.createTransport({ 
-    service: 'gmail', 
-    auth: { 
-      user: 'teamrealme333@gmail.com', 
-      pass: '@T3amrealme33', 
-    },
-  });
+const transporter = nodemailer.createTransport({ 
+  service: 'gmail', 
+  auth: { 
+    user: 'teamrealme333@gmail.com', 
+    pass: '@T3amrealme33', 
+  },
+});
 
+const sendVerificationMail = async (email, confirmationCode) => { 
   // send mail with defined transport object
-  
   let info = await transporter.sendMail({ 
     from: 'BarterIT <no-reply@barterit.com>', 
     to: email, 
@@ -24,4 +23,19 @@ const sendMail = async (email, confirmationCode) =>{
   return info;
 }
 
-module.exports = sendMail;
+const sendPasswordResetMail = async (email, link, firstName) => {
+  let info = await transporter.sendMail({ 
+    from: 'BarterIT <no-reply@barterit.com>', 
+    to: email, 
+    subject: "Password Reset", 
+    //text: "", 
+    html: `<p>Hello, ${firstName}</p>
+    <p>You have requested to reset your password in BarterIT</p>
+    <p>Kindly click the link if you wish to continue</p>
+    <a href="${link}">${link}</a>`
+  });
+
+  return info;
+}
+
+module.exports = { sendVerificationMail, sendPasswordResetMail };
