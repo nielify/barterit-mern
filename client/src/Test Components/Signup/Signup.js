@@ -316,11 +316,6 @@ const Signup = () => {
     return re.test(password);
   }
 
-  const [ backdropOpen, setBackdropOpen ] = useState(true );
-  const handleBackdropClose = () => {
-    setBackdropOpen(false);
-  }
-
   useEffect(() => {
     
   }, []); 

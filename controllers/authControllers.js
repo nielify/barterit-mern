@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const cryptoRandomString = require('crypto-random-string');
-const sendMail = require('../utils/nodemailer');
+const { sendVerificationMail } = require('../utils/nodemailer');
 
 //handling Login errors 
 const handleLoginErrors = (err) => {
@@ -118,7 +118,7 @@ module.exports.signup_post = async (req, res) => {
   try {
     validateRegistrationData(req.body);
     const user = await User.create(toSaveData);
-    const info = await sendMail(user.email, confirmationCode);
+    const info = await sendVerificationMail(user.email, confirmationCode);
     
     res.status(201).send({ email: user.email, success: true });
   } catch (err) { 
