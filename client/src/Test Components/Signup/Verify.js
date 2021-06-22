@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import { useState } from 'react';
-
 
 const useStyles = makeStyles({
   div: {
@@ -19,16 +17,17 @@ const Verify = () => {
   const classes = useStyles();
   const location = useLocation();
 
-  const [ email, setEmail ] = useState(location.state.email);
+  //const [ email, setEmail ] = useState(location.state.email);
 
   return (
     <div className={classes.div} >
-      <Alert severity="success">
+      {location.state && <Alert severity="success">
         <AlertTitle>
-          Registration email sent to {email}
+          Registration email sent to {location.state ? location.state.email : ''}
         </AlertTitle>
         Verify your email to complete the registration
-      </Alert>
+      </Alert>}
+      {!location.state && <h2>Error 404: Page not found</h2>}
     </div>
   );
 }

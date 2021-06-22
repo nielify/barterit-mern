@@ -6,7 +6,8 @@ import PostList from './Components/PostList';
 import Upload from './Test Components/Upload';
 import Cloudinary from './Test Components/Cloudinary';
 import SMSForm from './Test Components/SMSForm';
-import ForgotPassword from './Test Components/ForgotPassword';
+import ForgotPassword from './Test Components/forgotPassword/ForgotPassword';
+import EmailSent from './Test Components/forgotPassword/EmailSent';
 import Signin from './Test Components/Signin';
 import Signup from './Test Components/signup/Signup';
 import Verify from './Test Components/signup/Verify'
@@ -45,10 +46,6 @@ function App() {
           <Route exact path="/sms">
             <SMSForm />
           </Route>
-          <Route exact path="/forgot-password">
-            <DefaultHeader /> 
-            <ForgotPassword />
-          </Route>
           <Route exact path="/signin">
             <DefaultHeader /> 
             <Signin />
@@ -64,6 +61,14 @@ function App() {
           <Route exact path="/signup/success">
             <DefaultHeader /> 
             <Success />
+          </Route>
+          <Route exact path="/forgot-password">
+            <DefaultHeader /> 
+            <ForgotPassword />
+          </Route>
+          <Route exact path="/forgot-password/email-sent">
+            <DefaultHeader /> 
+            <EmailSent />
           </Route>
           <Route exact path="/user/:userId/reset-password/:token">
             <DefaultHeader /> 
