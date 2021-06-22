@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ForgotPassword = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [ submitting, setSubmitting ] = useState(false);
   const [ showWarning, setShowWarning ] = useState(false);
@@ -63,26 +65,39 @@ const ForgotPassword = () => {
     setEmailHelperText('');
     setShowWarning(false);
     setShowError(false);
-    setSubmitting(false); 
+    setSubmitting(true); 
 
     if (emailIsValid(email)) {
-      const res = await fetch('http://localhost:3001/api/user/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({email})
-      });
+      try {
+        const res = await fetch('http://localhost:3001/api/user/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify({email})
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      console.log(data);
+        //if the email is not yet verified or not yet registered
+        if (data.error) { 
+          setEmailHelperText(data.error);
+          setEmailError(true);
+        }
 
-      //if the email is not yet verified or not yet registered
-      if (data.success === false) { 
-        //setShowWarning(true);
-        //setErrorWarning(true);
+        if (data.success) { 
+          history.push({
+            pathname: '/forgot-password/email-sent', 
+            state: {
+              email
+            }
+          });
+        }
+
+        setSubmitting(false);
+      } catch (err) {
+        console.log(err);
+        setSubmitting(false);
       }
       
-      setSubmitting(false);
     } else {
       setEmailError(true);
       setEmailHelperText('Invalid email address');

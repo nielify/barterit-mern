@@ -7,6 +7,18 @@ const bcrypt = require('bcrypt');
 const { sendPasswordResetMail } = require('../utils/nodemailer');
 
 
+module.exports.user_get = async (req, res) => {
+  const userId = req.params.userId
+  
+  try {
+    const user = await User.findById(userId);
+    res.send(user);
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
 module.exports.forgotPassword_post = async (req, res) => {
   // check if email exist, send an error to the client if not
 
@@ -39,17 +51,17 @@ module.exports.forgotPassword_post = async (req, res) => {
     console.log(err);
   }
   
-  /* clicking the the link from the email will redirect the user to a client where it accepts 
+  /* clicking the link from the email will redirect the user to a client where it accepts 
    a new password that will be verified from the client and the server will receive the new password
    together the token and userid to be continued... tinittittinit tinitnit
   */
 }
 
 module.exports.resetPassword_get = async (req, res) => {
-  const userId = req.params.userId;
-  const token = req.params.token;
+  const userId = req.params.userId; 
+  const token = req.params.token; 
 
-  const passwordResetToken = await PasswordResetToken.findOne({ userId });
+  const passwordResetToken = await PasswordResetToken.findOne({ userId });  
   if (!passwordResetToken) {
     console.log('Your request has expired');
     return res.send({ error: 'Your request has expired' });
@@ -62,4 +74,11 @@ module.exports.resetPassword_get = async (req, res) => {
   }
 
   res.redirect(`${process.env.DOMAIN1}/user/${userId}/reset-password/${token}`);
+}
+
+module.exports.resetPassword_post = async (req, res) => { 
+  //actual password reset logic here
+
+
+  console.log(req.body);
 }
