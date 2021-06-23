@@ -4,14 +4,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   div: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: '75vh',
   },
-});
+  alert: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    maxWidth: 500,
+  },
+}));
 
 const Verify = () => {
   const classes = useStyles();
@@ -21,7 +26,7 @@ const Verify = () => {
 
   return (
     <div className={classes.div} >
-      {location.state && <Alert severity="success">
+      {location.state && <Alert severity="success" className={classes.alert}>
         <AlertTitle>
           Registration email sent to {location.state ? location.state.email : ''}
         </AlertTitle>

@@ -1,11 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +27,17 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2.3, 0),
   },
   confirmNewPassword: {
-    marginBottom: theme.spacing(2.3),
+    marginBottom: theme.spacing(3),
   },
+  paragraph: {
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const ResetPassword = () => {
   const classes = useStyles();
   const params = useParams();
+  const history = useHistory();
 
   const [ email, setEmail ] = useState('');
   const [ newPassword, setNewPassword ] = useState('');
@@ -43,10 +49,14 @@ const ResetPassword = () => {
   const [ newPasswordHelperText, setNewPasswordHelperText ] = useState('Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number');
   const [ confirmNewPasswordHelperText, setConfirmNewPasswordHelperText ] = useState('');
 
+  const [ showError, setShowError ] = useState(false);
+  const [ alertText, setAlertText ] = useState('');
+
   const [ submitting, setSubmitting ] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowError(false);
     setNewPasswordError(false);
     setConfirmNewPasswordError(false);
     setNewPasswordHelperText('Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number');
@@ -54,27 +64,40 @@ const ResetPassword = () => {
 
     if (submitting) {
       console.log('you clicked while submitting');
+      return
     }
     setSubmitting(true);
 
     if (passwordIsValid(newPassword)) {
       if (newPassword === confirmNewPassword) {
         try {
-          const res = await fetch(`http://localhost:3001/api/user/60cccc6bf4617d241444ca13/reset-password/51c3ae3c9e78930fd8e6ade37cdefac9d3047694d20de17f0186c33efc5a43d2`, {
+          const res = await fetch(`http://localhost:3001/api/user/${params.userId}/reset-password/${params.token}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ newPassword, confirmNewPassword })
           });
 
-          const data = res.json();
+          const data = await res.json();
+          
+          if (data.error) {
+            history.push('/forgot-password/expired');
+          }
 
-          console.log(data);
+          if (!data.success) {
+            setAlertText(data.message);
+            setShowError(true);
+          }
+
+          if (data.success) {
+            history.push('/forgot-password/success');
+          }
+
+          setSubmitting(false);
 
         } catch (err) {
           console.log(err);
-        }
-        
-        setSubmitting(false);
+          setSubmitting(false);
+        }   
       } else {
         setNewPasswordError(true);
         setConfirmNewPasswordError(true);
@@ -116,6 +139,12 @@ const ResetPassword = () => {
         <Typography className={classes.paragraph} variant="body1">
           Set your new password for your account, <em>{email}</em>
         </Typography>
+        {showError && <Alert severity="error">
+          <AlertTitle>
+            Error changing password
+          </AlertTitle>
+          {alertText}
+        </Alert>}
         <TextField 
           className={classes.newPassword}
           fullWidth

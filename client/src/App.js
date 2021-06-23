@@ -8,6 +8,8 @@ import Cloudinary from './Test Components/Cloudinary';
 import SMSForm from './Test Components/SMSForm';
 import ForgotPassword from './Test Components/forgotPassword/ForgotPassword';
 import EmailSent from './Test Components/forgotPassword/EmailSent';
+import Expired from './Test Components/forgotPassword/Expired';
+import ResetPasswordSuccess from './Test Components/forgotPassword/ResetPasswordSuccess';
 import Signin from './Test Components/Signin';
 import Signup from './Test Components/signup/Signup';
 import Verify from './Test Components/signup/Verify'
@@ -70,9 +72,21 @@ function App() {
             <DefaultHeader /> 
             <EmailSent />
           </Route>
+          <Route exact path="/forgot-password/expired">
+            <DefaultHeader /> 
+            <Expired />
+          </Route>
+          <Route exact path="/forgot-password/success">
+            <DefaultHeader /> 
+            <ResetPasswordSuccess />
+          </Route>
           <Route exact path="/user/:userId/reset-password/:token">
             <DefaultHeader /> 
             <ResetPassword />
+          </Route>
+          <Route path="/*">
+            <DefaultHeader /> 
+            <h2>Error 404: Page Not Found</h2>
           </Route>
         </Switch>
       </Router>

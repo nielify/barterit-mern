@@ -1,10 +1,7 @@
-import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-
-
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,26 +17,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-const EmailSent = () => {
+const Expired = () => {
   const classes = useStyles();
-  const location = useLocation();
 
   return (  
     <div className={classes.container}>
-      {location.state && <Alert 
-        severity="success"
+      <Alert 
+        severity="error"
         className={classes.alert}
       >
         <AlertTitle>
-          Password reset email sent to {location.state ? location.state.email : ''}
+          Your token has expired
         </AlertTitle>
-          Check your email to continue resetting your password
-      </Alert> }
-      {!location.state && <h2>Error 404: Page not found</h2>}
+          The token for resetting your password has already expired. 
+          Try requesting for a new one in forgot password page.
+      </Alert>
     </div>
-    
   );
 }
  
-export default EmailSent;
+export default Expired
