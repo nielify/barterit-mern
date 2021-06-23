@@ -2,6 +2,9 @@
   "name": "barterit-mern",
   "version": "1.0.0",
   "description": "bsit capstone thesis project",
+  "engines": {
+    "node": "14.x"
+  },
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server",
