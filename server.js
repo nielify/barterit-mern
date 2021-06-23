@@ -51,14 +51,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 //production
 if (process.env.ENVIRONMENT === 'production') {
   app.use(express.static('client/build'));
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'path/to/your/index.html'), (err) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-    })
-  });
 }
 
 app.get('/', requireAuth, serverController.index_get);
