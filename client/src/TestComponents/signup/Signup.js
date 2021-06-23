@@ -120,7 +120,7 @@ const Signup = () => {
   const [ emailError, setEmailError ] = useState(false); 
   const [ passwordError, setPasswordError ] = useState(false); 
   const [ confirmPasswordError, setConfirmPasswordError ] = useState(false); 
-  const [ captchaError, setCaptchaError] = useState(false); 
+  const [ captchaError, setCaptchaError] = useState(true); // do not forget to false this on production
   const [ isCheckedError, setIsCheckedError] = useState(false); 
 
   const siteKey = "6LcVEhkbAAAAADDdH5zfokSSOf8xYAxd-UO6k9VQ";
