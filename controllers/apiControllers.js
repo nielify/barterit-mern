@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const { sendPasswordResetMail } = require('../utils/nodemailer');
 
-module.exports.marketplace_get = (req, res) => { 
+module.exports.marketplace_get = async (req, res) => { 
   const token = req.cookies.jwt;
 
   if (token) {
