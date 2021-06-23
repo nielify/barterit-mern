@@ -69,7 +69,7 @@ const ForgotPassword = () => {
 
     if (emailIsValid(email)) {
       try {
-        const res = await fetch('http://localhost:3001/api/user/forgot-password', {
+        const res = await fetch('/api/user/forgot-password', {
           method: 'POST',
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify({email})

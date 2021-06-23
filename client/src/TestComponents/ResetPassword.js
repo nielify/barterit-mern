@@ -71,7 +71,7 @@ const ResetPassword = () => {
     if (passwordIsValid(newPassword)) {
       if (newPassword === confirmNewPassword) {
         try {
-          const res = await fetch(`http://localhost:3001/api/user/${params.userId}/reset-password/${params.token}`, {
+          const res = await fetch(`/api/user/${params.userId}/reset-password/${params.token}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ newPassword, confirmNewPassword })
@@ -119,7 +119,7 @@ const ResetPassword = () => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/user/${params.userId}`)
+    fetch(`/api/user/${params.userId}`)
       .then((res) => {
         return res.json();
       })

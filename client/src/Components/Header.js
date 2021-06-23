@@ -41,7 +41,7 @@ const Header = () => {
   const [ firstName, setFirstName ] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3001/', { credentials: 'include' })
+    fetch('/', { credentials: 'include' })
       .then(res => {
         return res.json();
       })
@@ -62,7 +62,7 @@ const Header = () => {
   }, [])
 
   const handleLogout = async () => { 
-    const res = await fetch('http://localhost:3001/auth/logout', { credentials: 'include' }); 
+    const res = await fetch('/auth/logout', { credentials: 'include' }); 
     const data = await res.json(); 
     
     if (data.logoutSuccess) { 

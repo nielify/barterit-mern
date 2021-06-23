@@ -126,7 +126,7 @@ const Signup = () => {
   const siteKey = "6LcVEhkbAAAAADDdH5zfokSSOf8xYAxd-UO6k9VQ";
   const handleToken = async (token) => {
     const res = await fetch(
-      'http://localhost:3001/api/recaptcha', { 
+      '/api/recaptcha', { 
         method: 'POST', 
         headers: { 'Content-type': 'application/json' }, 
         body: JSON.stringify({ token } )
@@ -204,7 +204,7 @@ const Signup = () => {
         confirmPassword,
       }
       
-      const res = await fetch('http://localhost:3001/auth/signup', {
+      const res = await fetch('/auth/signup', {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         credentials: 'include',
