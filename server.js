@@ -53,7 +53,6 @@ if (process.env.ENVIRONMENT === 'production') {
   app.use(express.static('client/build'));
 }
 
-app.get('/', requireAuth, serverController.index_get);
 app.use('/auth', authRoutes);
 app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
 app.post('/api/upload', serverController.upload_post);
