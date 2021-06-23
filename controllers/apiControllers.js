@@ -3,9 +3,28 @@ const PasswordResetToken = require('../models/PasswordResetToken');
 
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const { sendPasswordResetMail } = require('../utils/nodemailer');
 
+module.exports.marketplace_get = (req, res) => { 
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+      const userId = decodedToken.id;
+      try {
+        const user = await User.findById(userId);
+        res.status(200).send(user);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  } 
+  else if (req.user) {
+    res.status(200).send(req.user)
+  }
+}
 
 module.exports.user_get = async (req, res) => {
   const userId = req.params.userId

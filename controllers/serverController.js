@@ -1,29 +1,10 @@
 //imports
 const cloudinary = require('../utils/cloudinary');
 const client = require('../utils/twilio');
-const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
 
 //controllers
-module.exports.index_get = (req, res) => { 
-  const token = req.cookies.jwt;
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-      const userId = decodedToken.id;
-      try {
-        const user = await User.findById(userId);
-        res.status(200).send(user);
-      } catch (err) {
-        console.log(err);
-      }
-    });
-  } 
-  else if (req.user) {
-    res.status(200).send(req.user)
-  }
-}
-
 module.exports.singleUpload_post = (req, res) => {
   res.send('single upload successful');
 }

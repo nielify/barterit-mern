@@ -41,7 +41,7 @@ const Header = () => {
   const [ firstName, setFirstName ] = useState('');
 
   useEffect(() => {
-    fetch('/', { credentials: 'include' })
+    fetch('/api/marketplace', { credentials: 'include' })
       .then(res => {
         return res.json();
       })

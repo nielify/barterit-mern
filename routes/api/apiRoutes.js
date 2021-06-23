@@ -6,9 +6,18 @@ const router = Router();
 const cryptoRandomString = require('crypto-random-string');
 const sendMail = require('../../utils/nodemailer');
 
+//middlewares
+const requireAuth = require('./middlewares/requireAuth');
+
 //routes
 const userRoutes = require('./user/userRoutes');
 
+//controllers
+const apiController = require('../../controllers/apiControllers');
+
+router.get('/marketplace', requireAuth, apiController.marketplace_get);
+
+router.use('/user', userRoutes);
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;
@@ -35,6 +44,6 @@ router.post('/mail', async (req, res) => {
   //res.send(cryptoRandomString({length: 128}));
 });
 
-router.use('/user', userRoutes);
+
 
 module.exports = router;
