@@ -1,8 +1,9 @@
-import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -13,33 +14,33 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '75vh',
   },
-  alert: {
-    margin: theme.spacing(3),
-    padding: theme.spacing(3),
-    maxWidth: 500,
-  }
+  login: {
+    marginTop: theme.spacing(1),
+    display: 'block',
+  },
+  link: {
+    color: '#009688',
+  },
 }));
 
-
-const EmailSent = () => {
+const ResetPasswordSuccess = () => {
   const classes = useStyles();
-  const location = useLocation();
 
   return (  
     <div className={classes.container}>
-      {location.state && <Alert 
+      <Alert 
         severity="success"
         className={classes.alert}
       >
         <AlertTitle>
-          Password reset email sent to {location.state ? location.state.email : ''}
+          Password changed successfully
         </AlertTitle>
-          Check your email to continue resetting your password
-      </Alert> }
-      {!location.state && <h2>Error 404: Page not found</h2>}
+          You have successfully changed your password to a new one.<br />
+          You may now <Link to="/signin" className={classes.link}>log in</Link> with your new password.
+      </Alert> 
     </div>
     
   );
 }
  
-export default EmailSent;
+export default ResetPasswordSuccess;

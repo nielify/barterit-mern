@@ -20,8 +20,6 @@ module.exports.user_get = async (req, res) => {
 }
 
 module.exports.forgotPassword_post = async (req, res) => {
-  // check if email exist, send an error to the client if not
-
   try {
     const user = await User.findOne({ email: req.body.email });
 
@@ -50,11 +48,6 @@ module.exports.forgotPassword_post = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-  
-  /* clicking the link from the email will redirect the user to a client where it accepts 
-   a new password that will be verified from the client and the server will receive the new password
-   together the token and userid to be continued... tinittittinit tinitnit
-  */
 }
 
 module.exports.resetPassword_get = async (req, res) => {
@@ -62,23 +55,59 @@ module.exports.resetPassword_get = async (req, res) => {
   const token = req.params.token; 
 
   const passwordResetToken = await PasswordResetToken.findOne({ userId });  
+  
   if (!passwordResetToken) {
     console.log('Your request has expired');
-    return res.send({ error: 'Your request has expired' });
+    return res.redirect(`${process.env.DOMAIN1}/forgot-password/expired`);
   }
 
   const isValid = await bcrypt.compare(token, passwordResetToken.token);
+  
   if (!isValid) {
     console.log('Your request has expired');
-    return res.send({ error: 'Your request has expired' });
+    return res.redirect(`${process.env.DOMAIN1}/forgot-password/expired`);
   }
 
   res.redirect(`${process.env.DOMAIN1}/user/${userId}/reset-password/${token}`);
 }
 
 module.exports.resetPassword_post = async (req, res) => { 
-  //actual password reset logic here
 
+  const userId = req.params.userId;
+  const token = req.params.token;
+  const newPassword = req.body.newPassword;
+  const confirmNewPassword = req.body.confirmNewPassword;
 
-  console.log(req.body);
+  //find token and check if expired, send an error if expired
+  const resetToken = await PasswordResetToken.findOne({ userId });
+  if (!resetToken) {
+    return res.send({ error: 'token has expired' });
+  }
+
+  //compare token from client and token from database, send error if different
+  const isValid = await bcrypt.compare(token, resetToken.token);
+  if (!isValid) {
+    return res.send({ error: 'invalid token' });
+  }
+
+  //check if password is the same from previous one, send an error if it is
+  const user = await User.findOne({ _id: userId });
+  const isPasswordMatch = await bcrypt.compare(newPassword, user.password);
+  if (isPasswordMatch) {
+    return res.send({ success: false, message: 'Password is the same as previous one, use a different password' });
+  }
+
+  //hash the newPassword and make it the new password
+  const salt = await bcrypt.genSalt();
+  const hashedNewPassword = await bcrypt.hash(newPassword, salt);
+  await User.updateOne(
+    { _id: userId },
+    { $set: { password: hashedNewPassword } },
+    { new: true }
+  );
+
+  //delete the token used
+  await resetToken.deleteOne();
+
+  res.send({ success: 'true', message: 'password changed'});
 }
