@@ -7,7 +7,7 @@ const cryptoRandomString = require('crypto-random-string');
 const sendMail = require('../../utils/nodemailer');
 
 //middlewares
-const requireAuth = require('./middlewares/requireAuth');
+const requireAuth = require('../../middlewares/requireAuth');
 
 //routes
 const userRoutes = require('./user/userRoutes');
