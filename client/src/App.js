@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './Components/Header'; 
 import DefaultHeader from './Components/DefaultHeader';
 import PostList from './Components/PostList';
-import Upload from './Test Components/Upload';
-import Cloudinary from './Test Components/Cloudinary';
-import SMSForm from './Test Components/SMSForm';
-import ForgotPassword from './Test Components/forgotPassword/ForgotPassword';
-import EmailSent from './Test Components/forgotPassword/EmailSent';
-import Expired from './Test Components/forgotPassword/Expired';
-import ResetPasswordSuccess from './Test Components/forgotPassword/ResetPasswordSuccess';
-import Signin from './Test Components/Signin';
-import Signup from './Test Components/signup/Signup';
-import Verify from './Test Components/signup/Verify'
-import Success from './Test Components/signup/Success';
-import ResetPassword from './Test Components/ResetPassword';
+import Upload from './TestComponents/Upload';
+import Cloudinary from './TestComponents/Cloudinary';
+import SMSForm from './TestComponents/SMSForm';
+import ForgotPassword from './TestComponents/forgotPassword/ForgotPassword';
+import EmailSent from './TestComponents/forgotPassword/EmailSent';
+import Expired from './TestComponents/forgotPassword/Expired';
+import ResetPasswordSuccess from './TestComponents/forgotPassword/ResetPasswordSuccess';
+import Signin from './TestComponents/Signin';
+import Signup from './TestComponents/signup/Signup';
+import Verify from './TestComponents/signup/Verify'
+import Success from './TestComponents/signup/Success';
+import ResetPassword from './TestComponents/ResetPassword';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';

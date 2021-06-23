@@ -20,8 +20,7 @@ const requireAuth = (req, res, next) => {
     next();
   }
   else {
-    return res.redirect('/signin');
-    //res.status(401).send({ redirect: true, url: '/signin' });
+    res.status(401).send({ redirect: true, url: '/signin' });
   }
 }
 
