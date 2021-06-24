@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 //const passport = require('passport');
 //const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -50,7 +51,11 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 //production
 if (process.env.ENVIRONMENT === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
 }
 
 app.use('/auth', authRoutes);
