@@ -49,6 +49,15 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.log(err);
   });
 
+//backend routes
+app.use('/auth', authRoutes);
+app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
+app.post('/api/upload', serverController.upload_post);
+app.post('/api/sms', serverController.sms_post);
+
+//improved backend routes
+app.use('/api', apiRoutes);
+
 //production
 if (process.env.ENVIRONMENT === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')));
@@ -58,10 +67,4 @@ if (process.env.ENVIRONMENT === 'production') {
   });
 }
 
-app.use('/auth', authRoutes);
-app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
-app.post('/api/upload', serverController.upload_post);
-app.post('/api/sms', serverController.sms_post);
 
-//improved backend routes
-app.use('/api', apiRoutes);
