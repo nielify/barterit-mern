@@ -84,10 +84,10 @@ function App() {
             <DefaultHeader /> 
             <ResetPassword />
           </Route>
-          {/*<Route path="/*">
+          <Route path="/*">
             <DefaultHeader /> 
             <h2>Error 404: Page Not Found</h2>
-           </Route>*/}
+          </Route>
         </Switch>
       </Router>
     </ThemeProvider>
