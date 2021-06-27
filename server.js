@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 //const passport = require('passport');
 //const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -18,7 +19,6 @@ const upload = require('./utils/multer');
 const serverController = require('./controllers/serverController');
 
 //middlewares
-const requireAuth = require('./middlewares/requireAuth');
 app.use(cookieParser());
 /*app.use(session({ 
   secret: 'TeamRealme',
@@ -48,24 +48,18 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
     console.log(err);
   });
 
-//production
-if (process.env.ENVIRONMENT === 'production') {
-  app.use(express.static('client/build'));
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'path/to/your/index.html'), (err) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-    })
-  });
-}
-
-app.get('/', requireAuth, serverController.index_get);
+//backend routes
 app.use('/auth', authRoutes);
 app.post('/single-upload', upload.single("image"), serverController.singleUpload_post);
 app.post('/api/upload', serverController.upload_post);
 app.post('/api/sms', serverController.sms_post);
-
 //improved backend routes
 app.use('/api', apiRoutes);
+
+//production routes setup
+if (process.env.ENVIRONMENT === 'production') {
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+}

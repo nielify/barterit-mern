@@ -41,7 +41,7 @@ const Header = () => {
   const [ firstName, setFirstName ] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3001/', { credentials: 'include' })
+    fetch('http://localhost:3001/api/marketplace', { credentials: 'include' })
       .then(res => {
         return res.json();
       })
