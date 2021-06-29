@@ -24,9 +24,9 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, "Town is required"]
   },
-  baranggay: {
+  barangay: {
     type: String,
-    required: [true, "Baranggay is required"]
+    required: [true, "Barangay is required"]
   },
   specificAddress: {
     type: String,

@@ -24,7 +24,7 @@ import {
 import MomentUtils from '@date-io/moment';
 
 import towns from '../../others/towns';
-import SignupSelectBaranggay from './SignupSelectBaranggay';
+import SignupSelectBarangay from './SignupSelectBarangay';
 
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -129,7 +129,7 @@ const Signup = () => {
       'http://localhost:3001/api/recaptcha', { 
         method: 'POST', 
         headers: { 'Content-type': 'application/json' }, 
-        body: JSON.stringify({ token } )
+        body: JSON.stringify({ token })
       }
     );
     const data = await res.json();
@@ -257,7 +257,7 @@ const Signup = () => {
       isErrorRef.current = true; 
     }
     if (!formData.brgy) {
-      setErrors(errors => [...errors, 'Select your Baranggay']);
+      setErrors(errors => [...errors, 'Select your Barangay']);
       setBrgyError(true);
       isErrorRef.current = true; 
     }
@@ -420,7 +420,7 @@ const Signup = () => {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <SignupSelectBaranggay 
+              <SignupSelectBarangay 
                 town={town} 
                 brgy={brgy} 
                 isTownSelected={isTownSelected} 

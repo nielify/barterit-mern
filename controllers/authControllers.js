@@ -48,7 +48,7 @@ const handleSignupErrors = (err) => {
     gender: '',
     dateOfBirth: '',
     town: '',
-    baranggay: '',
+    barangay: '',
     specificAddress: '',
     email: '',
     password: '',
@@ -61,7 +61,7 @@ const handleSignupErrors = (err) => {
   if (err.message.includes('Gender is required')) errors.gender = 'Gender is required';
   if (err.message.includes('Date of Birth is required')) errors.dateOfBirth = 'Date of Birth is required';
   if (err.message.includes('Town is required')) errors.town = 'Town is required';
-  if (err.message.includes('Baranggay is required')) errors.baranggay = 'Baranggay is required';
+  if (err.message.includes('Barangay is required')) errors.barangay = 'Barangay is required';
   if (err.message.includes('Specific Address is required')) errors.specificAddress = 'Specific Address is required';
   if (err.message.includes('Email is required')) errors.email = 'Email is required';
   if (err.message.includes('Email is invalid')) errors.email = 'Email is invalid';
@@ -108,7 +108,7 @@ module.exports.signup_post = async (req, res) => {
     gender: req.body.gender, 
     dateOfBirth: req.body.dateOfBirth, 
     town: req.body.town, 
-    baranggay: req.body.brgy, 
+    barangay: req.body.brgy, 
     specificAddress: req.body.specificAddress, 
     email: req.body.email, 
     password: req.body.password,
