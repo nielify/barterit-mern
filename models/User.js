@@ -12,9 +12,9 @@ const userSchema = mongoose.Schema({
     required: [true, "First Name is required"]
   },
   middleName: String,
-  gender: {
+  sex: {
     type: String,
-    required: [true, "Gender is required"]
+    required: [true, "Sex is required"]
   },
   dateOfBirth: {
     type: Date,

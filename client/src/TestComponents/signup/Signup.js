@@ -92,7 +92,7 @@ const Signup = () => {
   const [ lastName, setLastName ] = useState('');
   const [ firstName, setFirstName ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
-  const [ gender, setGender ] = useState(''); 
+  const [ sex, setSex ] = useState(''); 
   const [ dateOfBirth, setDate ] = useState(new Date(2010, 2, 21));
   const [ town, setTown ] = useState('');
   const [ brgy, setBrgy ] = useState('');
@@ -112,7 +112,7 @@ const Signup = () => {
   //error booleans
   const [ lastNameError, setLastNameError ] = useState(false); 
   const [ firstNameError, setFirstNameError ] = useState(false); 
-  const [ genderError, setGenderError ] = useState(false); 
+  const [ sexError, setSexError ] = useState(false); 
   //const [ dateError, setDateError ] = useState(false); 
   const [ townError, setTownError ] = useState(false); 
   const [ brgyError, setBrgyError ] = useState(false); 
@@ -162,7 +162,7 @@ const Signup = () => {
     setSubmitting(true);
     setLastNameError(false);
     setFirstNameError(false);
-    setGenderError(false);
+    setSexError(false);
     setTownError(false);
     setBrgyError(false);
     setSpecificAddressError(false);
@@ -178,7 +178,7 @@ const Signup = () => {
     const formData = {
       lastName,
       firstName,
-      gender,
+      sex,
       town,
       brgy,
       specificAddress,
@@ -194,7 +194,7 @@ const Signup = () => {
         lastName,
         firstName,
         middleName,
-        gender,
+        sex,
         dateOfBirth,
         town,
         brgy,
@@ -246,9 +246,9 @@ const Signup = () => {
       setFirstNameError(true);
       isErrorRef.current = true; 
     }
-    if (!formData.gender) {
-      setErrors(errors => [...errors, 'Select your Gender']);
-      setGenderError(true);
+    if (!formData.sex) {
+      setErrors(errors => [...errors, 'Select your sex']);
+      setSexError(true);
       isErrorRef.current = true; 
     }
     if (!formData.town) {
@@ -375,11 +375,11 @@ const Signup = () => {
               />
             </Grid>
             <Grid item xs={6}>
-              <FormControl required fullWidth className={classes.formControl} error={genderError}>
-                <InputLabel>Gender</InputLabel>
+              <FormControl required fullWidth className={classes.formControl} error={sexError}>
+                <InputLabel>Sex</InputLabel>
                 <Select
-                  value={gender}
-                  onChange={e => setGender(e.target.value)}
+                  value={sex}
+                  onChange={e => setSex(e.target.value)}
                 >
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
