@@ -2,6 +2,10 @@ import { Link, useHistory } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +20,9 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import {
   MuiPickersUtilsProvider,
@@ -106,7 +113,8 @@ const Signup = () => {
   
   const isErrorRef = useRef(false);
   const [ errors, setErrors ] = useState([]);
-  //const [ showErrors, setShowErrors] = useState(null);
+  const [ showPassword, setShowPassword] = useState(false);
+  const [ showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [ submitting, setSubmitting ] = useState(false);
 
   //error booleans
@@ -122,6 +130,14 @@ const Signup = () => {
   const [ confirmPasswordError, setConfirmPasswordError ] = useState(false); 
   const [ captchaError, setCaptchaError] = useState(false); 
   const [ isCheckedError, setIsCheckedError] = useState(false); 
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  }
 
   const siteKey = "6LcVEhkbAAAAADDdH5zfokSSOf8xYAxd-UO6k9VQ";
   const handleToken = async (token) => {
@@ -350,6 +366,7 @@ const Signup = () => {
                 required
                 fullWidth
                 label="Last Name"
+                type="text"
                 error={lastNameError}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -361,6 +378,7 @@ const Signup = () => {
                 required
                 fullWidth
                 label="First Name"
+                type="text"
                 error={firstNameError}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -371,6 +389,7 @@ const Signup = () => {
                 //size="small"
                 fullWidth
                 label="Middle Name"
+                type="text"
                 onChange={(e) => setMiddleName(e.target.value)}
               />
             </Grid>
@@ -436,6 +455,7 @@ const Signup = () => {
                 required
                 fullWidth
                 label="Specific Address"
+                type="text"
                 helperText="eg: House number, Street, etc."
                 error={specificAddressError}
                 onChange={(e) => setSpecificAddress(e.target.value)}
@@ -459,12 +479,12 @@ const Signup = () => {
                 required
                 fullWidth
                 label="Email"
-                //type="email"
+                type="text"
                 error={emailError}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/*<Grid item xs={12}>
               <TextField
                 required
                 fullWidth
@@ -474,18 +494,66 @@ const Signup = () => {
                 helperText="Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number"
                 onChange={(e) => setPassword(e.target.value)}
               />
+            </Grid>*/}
+            <Grid item xs={12}>
+              <FormControl 
+                fullWidth 
+                required
+              >
+                <InputLabel error={passwordError}>Password</InputLabel>
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  onChange={(e) => setPassword(e.target.value)}
+                  error={passwordError}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleShowPassword}
+                        //onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <FormHelperText error={passwordError}>Password must contain at least 8 characters with 1 special character[!@#$%^&*], 1 lowercase letter, 1 uppercase letter, and a number</FormHelperText>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
+              <FormControl 
+                fullWidth 
+                required
+              >
+                <InputLabel error={confirmPasswordError}>Confirm Password</InputLabel>
+                <Input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={confirmPasswordError}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={handleShowConfirmPassword}
+                        //onMouseDown={handleMouseDownPassword}
+                      >
+                        {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+                <FormHelperText error={confirmPasswordError}>Password must contain at least 8 characters with 1 special character[!@#$%^&*], 1 lowercase letter, 1 uppercase letter, and a number</FormHelperText>
+              </FormControl>
+            </Grid>
+            {/*<Grid item xs={12}>
               <TextField
                 required
                 fullWidth
                 label="Confirm Password"
                 type="password"
                 error={confirmPasswordError}               
-                helperText="Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number"
+                helperText="Password must contain at least 8 characters with 1 special character[!@#$%^&*], 1 lowercase letter, 1 uppercase letter, and a number"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </Grid>
+            </Grid>*/}
             <Grid item>
               <ReCAPTCHA 
                 sitekey={siteKey}

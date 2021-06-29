@@ -46,7 +46,7 @@ const ResetPassword = () => {
   const [ newPasswordError, setNewPasswordError ] = useState(false);
   const [ confirmNewPasswordError, setConfirmNewPasswordError ] = useState(false);
 
-  const [ newPasswordHelperText, setNewPasswordHelperText ] = useState('Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number');
+  const [ newPasswordHelperText, setNewPasswordHelperText ] = useState('Password must contain at least 8 characters with 1 symbol[!@#$%^&*], 1 lowercase letter, 1 uppercase letter, and a number');
   const [ confirmNewPasswordHelperText, setConfirmNewPasswordHelperText ] = useState('');
 
   const [ showError, setShowError ] = useState(false);
@@ -59,7 +59,7 @@ const ResetPassword = () => {
     setShowError(false);
     setNewPasswordError(false);
     setConfirmNewPasswordError(false);
-    setNewPasswordHelperText('Password must contain at least 8 characters with 1 symbol, 1 lowercase letter, 1 uppercase letter, and a number');
+    setNewPasswordHelperText('Password must contain at least 8 characters with 1 symbol[!@#$%^&*], 1 lowercase letter, 1 uppercase letter, and a number');
     setConfirmNewPasswordHelperText('');
 
     if (submitting) {
