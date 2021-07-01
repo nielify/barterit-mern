@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ResetPassword = () => {
+const ResetPassword = ({ setShowProgress }) => {
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
@@ -71,6 +71,7 @@ const ResetPassword = () => {
     if (passwordIsValid(newPassword)) {
       if (newPassword === confirmNewPassword) {
         try {
+          setShowProgress(true);
           const res = await fetch(`http://localhost:3001/api/user/${params.userId}/reset-password/${params.token}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
@@ -78,7 +79,8 @@ const ResetPassword = () => {
           });
 
           const data = await res.json();
-          
+          setShowProgress(false);
+
           if (data.error) {
             history.push('/forgot-password/expired');
           }
@@ -95,6 +97,7 @@ const ResetPassword = () => {
           setSubmitting(false);
 
         } catch (err) {
+          setShowProgress(true);
           console.log(err);
           setSubmitting(false);
         }   

@@ -66,7 +66,7 @@ const GoogleButton = withStyles((theme) => ({
   },
 }))(Button);*/
 
-const Signin = () => {
+const Signin = ({ setShowProgress }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -86,6 +86,7 @@ const Signin = () => {
     setShowAlert(false);
     setEmailTextHelper('');
     setPasswordTextHelper('');
+    setShowProgress(true);
 
     const res = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
@@ -95,6 +96,7 @@ const Signin = () => {
     }); 
     const data = await res.json();
     console.log(data);
+    setShowProgress(false);
     if (data.email) {
       setEmailError(true);
       setEmailTextHelper(data.email);

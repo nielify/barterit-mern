@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup = () => {
+const Signup = ({ setShowProgress }) => {
   const classes = useStyles();
   const history = useHistory();
   
@@ -169,6 +169,7 @@ const Signup = () => {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowProgress(true);
 
     if (submitting) {
       console.log('already submitting, wait for it to finish');
@@ -227,6 +228,7 @@ const Signup = () => {
         body: JSON.stringify(registrationData)
       });
       const data = await res.json();
+      setShowProgress(false); //turn off the progress bar
 
       if (data.success) {
         history.push({
@@ -235,7 +237,7 @@ const Signup = () => {
             email: data.email
           }
         });
-        setSubmitting(false);
+        setSubmitting(false); //make submit button clickable again
       } else {
         if (data.email) {
           setErrors(errors => [...errors, data.email]);
@@ -246,6 +248,7 @@ const Signup = () => {
       }
 
     } else {
+      setShowProgress(false); //turn off the progress bar
       window.scrollTo(0, 0);
       setSubmitting(false);
     }
@@ -508,6 +511,7 @@ const Signup = () => {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
+                        tabIndex={-1}
                         onClick={handleShowPassword}
                         //onMouseDown={handleMouseDownPassword}
                       >
@@ -532,6 +536,7 @@ const Signup = () => {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
+                        tabIndex={-1}
                         onClick={handleShowConfirmPassword}
                         //onMouseDown={handleMouseDownPassword}
                       >
