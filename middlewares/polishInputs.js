@@ -9,11 +9,17 @@ const polish = (input) => {
 };
 
 const polishRegInputs = (req, res, next) => {
-  req.body.lastName = polish(req.body.lastName);
-  req.body.firstName = polish(req.body.firstName);
-  req.body.middleName = polish(req.body.middleName);
-  req.body.specificAddress = polish(req.body.specificAddress);
-  next();
+  try {
+    req.body.lastName = polish(req.body.lastName);
+    req.body.firstName = polish(req.body.firstName);
+    req.body.middleName = polish(req.body.middleName);
+    req.body.specificAddress = polish(req.body.specificAddress);
+    next();
+  } catch (err) {
+    res.send(err.message);
+  }
+  
+ 
 }
 
 module.exports = polishRegInputs;

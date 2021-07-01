@@ -120,6 +120,11 @@ module.exports.signup_post = async (req, res) => {
     const user = await User.create(toSaveData);
     const info = await sendVerificationMail(user.email, confirmationCode);
     
+    //tentative delete on email not sent because of captcha shits
+    if (info.rejected[0]) {
+      user.deleteOne();
+    }
+
     res.status(201).send({ email: user.email, success: true });
   } catch (err) { 
     const errors = handleSignupErrors(err); 
