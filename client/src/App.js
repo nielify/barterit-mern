@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import LinearLoader from './Utilities/LinearLoader';
 import Header from './Components/Header'; 
 import DefaultHeader from './Components/DefaultHeader';
 import PostList from './Components/PostList';
@@ -33,6 +34,7 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <LinearLoader />
       <Router>
         <Switch>
           <Route exact path="/">
