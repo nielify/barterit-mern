@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ setShowProgress }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -55,6 +55,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowProgress(true);
 
     if (submitting) {
       console.log('clicked while submitting');
@@ -76,6 +77,7 @@ const ForgotPassword = () => {
         });
 
         const data = await res.json();
+        setShowProgress(false);
 
         //if the email is not yet verified or not yet registered
         if (data.error) { 
@@ -96,9 +98,11 @@ const ForgotPassword = () => {
       } catch (err) {
         console.log(err);
         setSubmitting(false);
+        setShowProgress(false);
       }
       
     } else {
+      setShowProgress(false);
       setEmailError(true);
       setEmailHelperText('Invalid email address');
       setSubmitting(false);

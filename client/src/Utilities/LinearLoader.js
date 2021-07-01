@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -20,9 +20,8 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 
-const LinearLoader = () => {
-  const [ showProgress, setShowProgress ] = useState(true);
-
+const LinearLoader = ({ showProgress }) => {
+  
   return (
     <div>
       {showProgress && <BorderLinearProgress />}

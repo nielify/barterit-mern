@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useState } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
 import Header from './Components/Header'; 
@@ -32,9 +33,11 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const [ showProgress, setShowProgress ] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
-      <LinearLoader />
+      <LinearLoader showProgress={showProgress} />
       <Router>
         <Switch>
           <Route exact path="/">
@@ -52,11 +55,11 @@ function App() {
           </Route>
           <Route exact path="/signin">
             <DefaultHeader /> 
-            <Signin />
+            <Signin setShowProgress={setShowProgress}/>
           </Route>
           <Route exact path="/signup">
             <DefaultHeader /> 
-            <Signup />
+            <Signup setShowProgress={setShowProgress}/>
           </Route>
           <Route exact path="/signup/verify">
             <DefaultHeader /> 
@@ -68,7 +71,7 @@ function App() {
           </Route>
           <Route exact path="/forgot-password">
             <DefaultHeader /> 
-            <ForgotPassword />
+            <ForgotPassword setShowProgress={setShowProgress}/>
           </Route>
           <Route exact path="/forgot-password/email-sent">
             <DefaultHeader /> 
@@ -84,7 +87,7 @@ function App() {
           </Route>
           <Route exact path="/user/:userId/reset-password/:token">
             <DefaultHeader /> 
-            <ResetPassword />
+            <ResetPassword setShowProgress={setShowProgress} />
           </Route>
           <Route path="/*">
             <DefaultHeader /> 
