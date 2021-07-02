@@ -72,7 +72,7 @@ const ResetPassword = ({ setShowProgress }) => {
       if (newPassword === confirmNewPassword) {
         try {
           setShowProgress(true);
-          const res = await fetch(`http://localhost:3001/api/user/${params.userId}/reset-password/${params.token}`, {
+          const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/${params.userId}/reset-password/${params.token}`, {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify({ newPassword, confirmNewPassword })
@@ -122,7 +122,7 @@ const ResetPassword = ({ setShowProgress }) => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/user/${params.userId}`)
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/${params.userId}`)
       .then((res) => {
         return res.json();
       })

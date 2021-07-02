@@ -88,7 +88,7 @@ const Signin = ({ setShowProgress }) => {
     setPasswordTextHelper('');
     setShowProgress(true);
 
-    const res = await fetch('http://localhost:3001/auth/login', {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

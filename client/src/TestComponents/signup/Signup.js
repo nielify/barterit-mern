@@ -142,7 +142,7 @@ const Signup = ({ setShowProgress }) => {
   const siteKey = "6LcVEhkbAAAAADDdH5zfokSSOf8xYAxd-UO6k9VQ";
   const handleToken = async (token) => {
     const res = await fetch(
-      'http://localhost:3001/api/recaptcha', { 
+      `${process.env.REACT_APP_SERVER_DOMAIN}/api/recaptcha`, { 
         method: 'POST', 
         headers: { 'Content-type': 'application/json' }, 
         body: JSON.stringify({ token })
@@ -221,7 +221,7 @@ const Signup = ({ setShowProgress }) => {
         confirmPassword,
       }
       
-      const res = await fetch('http://localhost:3001/auth/signup', {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/signup`, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
         credentials: 'include',
@@ -566,7 +566,6 @@ const Signup = ({ setShowProgress }) => {
                 onExpired={handleExpire}
                 className={classes.captcha && captchaError ? classes.captchaErr : undefined}
               />
-              <p>{process.env.REACT_APP_RECAPTCHA_SITE_KEY}</p>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
