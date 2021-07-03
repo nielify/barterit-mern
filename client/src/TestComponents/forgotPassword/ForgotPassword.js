@@ -70,7 +70,7 @@ const ForgotPassword = ({ setShowProgress }) => {
 
     if (emailIsValid(email)) {
       try {
-        const res = await fetch('http://localhost:3001/api/user/forgot-password', {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/forgot-password`, {
           method: 'POST',
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify({email})

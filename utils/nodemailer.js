@@ -17,7 +17,7 @@ const sendVerificationMail = async (email, confirmationCode) => {
     //text: "", 
     html: `<p>You have to verify your account before logging in to BarterIT</p>
     <p>Click the link to verify</p>
-    <a href="http://localhost:3001/auth/signup/verify/${confirmationCode}">https://barterit.com/auth/signup/verify/${confirmationCode}</a>`
+    <a href="${process.env.DOMAIN2}/auth/signup/verify/${confirmationCode}">https://barterit.com/auth/signup/verify/${confirmationCode}</a>`
   });
   
   return info;

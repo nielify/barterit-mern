@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '75vh',
   },
+  alert: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    maxWidth: 500,
+  },
   login: {
     marginTop: theme.spacing(1),
     display: 'block',
