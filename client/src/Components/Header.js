@@ -8,27 +8,78 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
 
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import Divider from '@material-ui/core/Divider';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import DraftsIcon from '@material-ui/icons/Drafts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(2),
+    //backgroundColor: '#f0f0f0',
   },
   toolbar: {
-    paddingTop: 0,
+    display: 'flex',
+    justifyContent: 'space-between',
   },
-  title: {
-    flexGrow: 1, 
-    marginLeft: theme.spacing(2),
+  brand: {
+    //marginLeft: theme.spacing(2),
+  },
+  barter: {
+    fontSize: '1.5rem',
+    fontWeight: 500,
+    //color: '#009688',
+    color: '#fff',
+    marginRight: 2,
+    textTransform: 'capitalize',
+  },
+  it: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    //color: '#00897b',
+    color: '#fff',
+  },
+  right: {
+    display: 'flex',
+    alignItems: 'center',
   },
   firstName: {
+    //color: '#1f1f1f',
+    marginRight: theme.spacing(1.5),
+    fontWeight: 'bold',
   },
   avatar: {
-    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
-  iconButton: {
+  logout: {
+    marginRight: theme.spacing(1),
+    backgroundColor: '#26a69a',
     color: '#fff',
+    padding: 11,
+  },
+  dropdown: {
+    marginRight: theme.spacing(1),
+    color: '#fff',
+    
+  },
+  accountMenu: {
+    marginTop: theme.spacing(1.5),
+  },
+  listItem: {
+    paddingRight: theme.spacing(17),
+  },
+  listItemIcon: {
+    minWidth: '40px',
   }
 }));
 
@@ -38,7 +89,17 @@ const Header = () => {
   
   //const [ email, setEmail ] = useState('');
   const [ profilePicture, setProfilePicture ] = useState('');
-  const [ firstName, setFirstName ] = useState('');
+  const [ firstName, setFirstName ] = useState('Niel');
+
+  const [accountAnchorEl, setAccountAnchorEl] = useState(null);
+
+  const toggleAccountPopper = (event) => {
+    setAccountAnchorEl(accountAnchorEl ? null : event.currentTarget);
+  };
+
+  function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+  }
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
@@ -76,19 +137,75 @@ const Header = () => {
           <Grid item lg={1}></Grid>
           <Grid item xs={12} lg={10}> 
             <Toolbar className={classes.toolbar}>
-              <Typography variant="h6" className={classes.title}>
-                Barter.it
-              </Typography>
-              { firstName && <Typography variant="subtitle2" className={classes.firstName}>
-                {firstName}
-              </Typography> }
-              <Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
-              <IconButton 
-                className={classes.iconButton}
-                onClick={handleLogout}
+              
+              <Button
+                tabIndex={-1}
+                className={classes.brand}
+                //startIcon={<img href="qwe.jpg" alt="BIT" />}
               >
-                <ExitToAppIcon />
-              </IconButton>
+                <Typography
+                  className={classes.barter}
+                  variant="h6"
+                >
+                  Barter
+                </Typography>
+                <Typography
+                  className={classes.it}
+                  variant="h6"
+                >
+                  IT
+                </Typography>   
+              </Button>
+              <div className={classes.right}>
+                { firstName && <Typography variant="subtitle2" className={classes.firstName}>
+                  {firstName}
+                </Typography> }
+                <Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
+                <IconButton 
+                  className={classes.dropdown} 
+                  onClick={toggleAccountPopper} 
+                  size="small" 
+                >
+                  <ArrowDropDownIcon fontSize="large" />
+                </IconButton>
+                <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl}>
+                  <Paper className={classes.accountMenu} elevation={6}>
+                    <List component="nav">
+                      <ListItem 
+                        button 
+                        className={classes.listItem}
+                      >
+                        <ListItemIcon className={classes.listItemIcon}>
+                          <PersonIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="My Profile" />
+                      </ListItem>
+                      <ListItem 
+                        button 
+                        className={classes.listItem}
+                      >
+                        <ListItemIcon className={classes.listItemIcon}>
+                          <BookmarkIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Saved Items" />
+                      </ListItem>
+                    </List>
+                    <Divider />
+                    <List component="nav">
+                      <ListItem 
+                        button 
+                        className={classes.listItem} 
+                        onClick={handleLogout} 
+                      >
+                        <ListItemIcon className={classes.listItemIcon}>
+                          <ExitToAppIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Log Out" />
+                      </ListItem>
+                    </List>
+                  </Paper>
+                </Popper>
+              </div>
             </Toolbar>
           </Grid>
           <Grid item lg={1}></Grid>
