@@ -2,9 +2,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
-import Header from './Components/Header'; 
+import Marketplace from './Components/Marketplace/Marketplace';
 import DefaultHeader from './Components/DefaultHeader';
-import PostList from './Components/PostList';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -46,8 +45,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Header />
-            <PostList />
+            <Marketplace />
+            {/* <Header />
+            <PostList /> */}
           </Route>
           <Route exact path="/upload">
             <Upload />
