@@ -21,11 +21,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import DraftsIcon from '@material-ui/icons/Drafts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(2),
+    //marginBottom: theme.spacing(2),
     //backgroundColor: '#f0f0f0',
   },
   toolbar: {
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   firstName: {
     //color: '#1f1f1f',
     marginRight: theme.spacing(1.5),
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   avatar: {
     marginRight: theme.spacing(1),

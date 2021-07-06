@@ -1,10 +1,19 @@
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
+import Grid from '@material-ui/core/Grid';
 import CardPost from './CardPost'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    
+  }
+}));
+
 const PostList = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container >
+    <Grid container item xs={9} className={classes.root} style={{ display: "table" }}>
       <Grid item lg={1}></Grid>
       <Grid container item lg={10}>
         <Grid item xs={6} sm={4} lg={3}>
