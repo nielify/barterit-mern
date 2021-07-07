@@ -22,6 +22,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
+import MarketPlaceHeader from './MarketplaceHeader';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     //marginBottom: theme.spacing(2),
@@ -79,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
   },
   listItemIcon: {
     minWidth: '40px',
+  },
+  zIndex: {
+    zIndex: 9999,
   }
 }));
 
@@ -131,12 +136,11 @@ const Header = () => {
   } 
 
   return (   
-      <AppBar className={classes.root} position="static">     
+      <AppBar className={classes.root} position="sticky">     
         <Grid container>
           <Grid item lg={1}></Grid>
           <Grid item xs={12} lg={10}> 
             <Toolbar className={classes.toolbar}>
-              
               <Button
                 tabIndex={-1}
                 className={classes.brand}
@@ -167,7 +171,7 @@ const Header = () => {
                 >
                   <ArrowDropDownIcon fontSize="large" />
                 </IconButton>
-                <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl}>
+                <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
                   <Paper className={classes.accountMenu} elevation={6}>
                     <List component="nav">
                       <ListItem 
@@ -208,6 +212,7 @@ const Header = () => {
             </Toolbar>
           </Grid>
           <Grid item lg={1}></Grid>
+          {/* <MarketPlaceHeader /> */}
         </Grid>
       </AppBar>
   );

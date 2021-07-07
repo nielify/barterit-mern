@@ -10,7 +10,7 @@ const Marketplace = () => {
     <Grid container>
       <Header />
       <MarketplaceSidebar />
-      {/* <MarkpetPlaceHeader /> */}
+      <MarkpetPlaceHeader />
       <PostList />
     </Grid>
   );
