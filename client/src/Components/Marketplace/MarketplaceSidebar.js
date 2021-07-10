@@ -30,6 +30,8 @@ import towns from '../../others/towns';
 const useStyles = makeStyles((theme) => ({
   root: {
     borderRight: 'solid 1px #bbb',
+    position: 'fixed',
+    top: '8.4vh',
   },
   scrollable: {
     maxHeight: '69.5vh',
@@ -102,6 +104,7 @@ const MarketplaceSidebar = () => {
 
   return (
     <Hidden smDown>
+      <Grid container item md={4} lg={3}></Grid>
       <Grid container item md={4} lg={3} className={classes.root} style={{ display: "table" }}>
         <Grid item xs={12}>
           <div className={classes.forms}>
