@@ -2,8 +2,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
-import Marketplace from './Components/Marketplace/Marketplace';
 import DefaultHeader from './Components/DefaultHeader';
+import Marketplace from './Components/Marketplace/Marketplace';
+import CreatePost from './Components/CreatePost';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -46,8 +47,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Marketplace />
-            {/* <Header />
-            <PostList /> */}
+          </Route>
+          <Route exact path="/create-post">
+            <CreatePost />
           </Route>
           <Route exact path="/upload">
             <Upload />

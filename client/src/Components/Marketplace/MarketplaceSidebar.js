@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+
 
 import { loadCSS } from 'fg-loadcss';
 
@@ -121,6 +123,8 @@ const MarketplaceSidebar = () => {
             </form>
             <form className={classes.create}>
             <Button
+              component={Link}
+              to="/create-post"
               variant="contained"
               color="primary"
               className={classes.button}

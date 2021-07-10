@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -89,6 +89,8 @@ const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal }) => {
           </form>
           <div className={classes.icons}> 
             <IconButton 
+              component={Link}
+              to="/create-post"
               className={classes.icon} 
               //onClick={toggleAccountPopper} 
               //size="small"

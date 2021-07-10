@@ -73,10 +73,10 @@ const useStyles = makeStyles((theme) => ({
     
   },
   accountMenu: {
-    marginTop: theme.spacing(1.5),
+    marginTop: theme.spacing(2),
   },
   listItem: {
-    paddingRight: theme.spacing(17),
+    paddingRight: theme.spacing(10),
   },
   listItemIcon: {
     minWidth: '40px',
