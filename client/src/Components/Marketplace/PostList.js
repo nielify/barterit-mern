@@ -6,7 +6,6 @@ import CardPost from './CardPost'
 const useStyles = makeStyles((theme) => ({
   root: {
     //border: 'solid 1px blue',
-    borderBottom: ''
   }
 }));
 
@@ -14,7 +13,7 @@ const PostList = () => {
   const classes = useStyles();
 
   return (
-    <Grid container item xs={12} md={9} className={classes.root} style={{ display: "table" }}>
+    <Grid container item xs={12} md={8} lg={9} className={classes.root} style={{ display: "table" }}>
       <Grid item lg={1}></Grid>
       <Grid container item lg={10}>
         <Grid item xs={6} sm={4} lg={3}>

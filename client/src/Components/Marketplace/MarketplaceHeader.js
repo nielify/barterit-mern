@@ -12,24 +12,21 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 
-import { faPlusSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import SearchIcon from '@material-ui/icons/Search';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   div: {
-    //background: '#009688',
+    width: '100vw',
     background: '#fff', 
+    //background: 'orange', 
     borderBottom: 'solid 1px #bbb', 
-    flexGrow: 1,
     textAlign: 'center', 
     display: 'flex', 
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: theme.spacing(1.5, 1.5), 
-    position: "sticky",
-    top: 0,
+    width: '100vw',
   },
   search: {
     flexGrow: 1,
@@ -38,15 +35,22 @@ const useStyles = makeStyles((theme) => ({
   sticky: {
     position: "sticky",
     top: 0,
-    zIndex: 99999,
+    zIndex: 1100,
+  },
+  icons: {
+    minWidth: 141,
   },
   icon: {
     color: '#009688'
-  }
+  },
 }));
 
-const MarkpetPlaceHeader = () => {
+const MarketplaceHeader = ({ setOpen }) => {
   const classes = useStyles();
+
+  const handleOpenCategoryModal = () => {
+    setOpen(true);
+  };
 
   useEffect(() => {
     const node = loadCSS(
@@ -79,8 +83,8 @@ const MarkpetPlaceHeader = () => {
               }}
             />
           </form>
-          <div> 
-          <IconButton 
+          <div className={classes.icons}> 
+            <IconButton 
               className={classes.icon} 
               //onClick={toggleAccountPopper} 
               //size="small"
@@ -92,11 +96,11 @@ const MarkpetPlaceHeader = () => {
               //onClick={toggleAccountPopper} 
               //size="small"
             >
-              <Icon className="fas fa-sliders-h" />
-            </IconButton>
+              <Icon className="fa fa-map-marker" />
+            </IconButton> 
             <IconButton 
               className={classes.icon} 
-              //onClick={toggleAccountPopper} 
+              onClick={handleOpenCategoryModal} 
               //size="small"
             >
               <Icon className="fa fa-list-alt" />
@@ -109,4 +113,4 @@ const MarkpetPlaceHeader = () => {
   );
 }
  
-export default MarkpetPlaceHeader;
+export default MarketplaceHeader;

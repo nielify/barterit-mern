@@ -26,7 +26,7 @@ import AddIcon from '@material-ui/icons/Add';
 import towns from '../../others/towns';
 
 const useStyles = makeStyles((theme) => ({
-  borderRight: {
+  root: {
     borderRight: 'solid 1px #bbb',
   },
   scrollable: {
@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     overflowY: 'auto',
-    width: '100%',
     '&::-webkit-scrollbar': {
       width: '5px',
       borderRadius: '150px',
@@ -101,7 +100,7 @@ const MarketplaceSidebar = () => {
 
   return (
     <Hidden smDown>
-      <Grid container item xs={3} className={classes.borderRight}>
+      <Grid container item md={4} lg={3} className={classes.root} style={{ display: "table" }}>
         <Grid item xs={12}>
           <div className={classes.forms}>
             <form className={classes.search}>
@@ -134,60 +133,62 @@ const MarketplaceSidebar = () => {
             <Divider className={classes.divider}/>  
           </div>
         </Grid>
-        <div className={classes.scrollable}>
-          <Grid container style={{ display: "table" }}>
-            <Grid item xs={12}>
-              <Typography variant="h6" className={classes.typographyFilters}>Filters</Typography>
-              <FormControl fullWidth>
-                <InputLabel>Location</InputLabel>
-                <Select 
-                  className={classes.location}
-                >
-                  {towns.map((town) => (
-                    <MenuItem value={town} key={town}>{town}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel>Radius</InputLabel>
-                <Select 
-                  className={classes.kilometer}
-                >
-                  <MenuItem value={1} key={1}>{1} kilometer</MenuItem>
-                  {kilometers.map((km) => (
-                    <MenuItem value={km} key={km}>{km} kilometers</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+        <Grid item xs={12}> 
+          <div className={classes.scrollable}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="h6" className={classes.typographyFilters}>Filters</Typography>
+                <FormControl fullWidth>
+                  <InputLabel>Location</InputLabel>
+                  <Select 
+                    className={classes.location}
+                  >
+                    {towns.map((town) => (
+                      <MenuItem value={town} key={town}>{town}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                  <InputLabel>Radius</InputLabel>
+                  <Select 
+                    className={classes.kilometer}
+                  >
+                    <MenuItem value={1} key={1}>{1} kilometer</MenuItem>
+                    {kilometers.map((km) => (
+                      <MenuItem value={km} key={km}>{km} kilometers</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>	
+                <Typography variant="h6" className={classes.typographyCategories}>Categories</Typography>
+                <List component="nav" className={classes.categories}>
+                  {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon)}
+                  {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon)}
+                  {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon)}
+                  {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon)}
+                  {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon)}
+                  {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon)}
+                  {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon)}
+                  {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon)}
+                  {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon)}
+                  {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon)}
+                  {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon)}
+                  {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon)}
+                  {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon)}
+                  {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon)}
+                  {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon)}
+                  {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon)}
+                  {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon)}
+                  {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon)}
+                  {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon)}
+                  {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon)}
+                  {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon)}
+                </List>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>	
-              <Typography variant="h6" className={classes.typographyCategories}>Categories</Typography>
-              <List component="nav" className={classes.categories}>
-                {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon)}
-                {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon)}
-                {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon)}
-                {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon)}
-                {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon)}
-                {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon)}
-                {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon)}
-                {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon)}
-                {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon)}
-                {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon)}
-                {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon)}
-                {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon)}
-                {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon)}
-                {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon)}
-                {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon)}
-                {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon)}
-                {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon)}
-                {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon)}
-                {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon)}
-                {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon)}
-                {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon)}
-              </List>
-            </Grid>
-          </Grid>
-        </div>  
+          </div>  
+        </Grid>
       </Grid>
     </Hidden>
   );
@@ -195,12 +196,13 @@ const MarketplaceSidebar = () => {
 
 function Category(icon, text, cssClass) {
   return (
-  <ListItem button>
-    <ListItemIcon className={cssClass}>
-      <Icon className={icon} />
-    </ListItemIcon>
-    <ListItemText primary={text} />
-  </ListItem>)
+    <ListItem button>
+      <ListItemIcon className={cssClass}>
+        <Icon className={icon} />
+      </ListItemIcon>
+      <ListItemText primary={text} />
+    </ListItem>
+  )
 }
 
 export default MarketplaceSidebar;
