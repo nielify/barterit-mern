@@ -46,6 +46,30 @@ const PostList = () => {
         <Grid item xs={6} sm={4} lg={3}>
           <CardPost />
         </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
+        <Grid item xs={6} sm={4} lg={3}>
+          <CardPost />
+        </Grid>
       </Grid>
       <Grid item xs={1}></Grid>
     </Grid>
