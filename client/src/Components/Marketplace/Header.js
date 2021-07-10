@@ -24,21 +24,14 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //marginBottom: theme.spacing(2),
-    //backgroundColor: '#f0f0f0',
-    //width: '100vw',
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-  brand: {
-    //marginLeft: theme.spacing(2),
-  },
   barter: {
     fontSize: '1.5rem',
     fontWeight: 500,
-    //color: '#009688',
     color: '#fff',
     marginRight: 2,
     textTransform: 'capitalize',
@@ -46,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   it: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
-    //color: '#00897b',
     color: '#fff',
   },
   right: {
@@ -54,12 +46,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   firstName: {
-    //color: '#1f1f1f',
-    marginRight: theme.spacing(1.5),
-    //fontWeight: 'bold',
+    marginRight: theme.spacing(2),
   },
   avatar: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1.5),
   },
   logout: {
     marginRight: theme.spacing(1),
@@ -70,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   dropdown: {
     marginRight: theme.spacing(1),
     color: '#fff',
-    
   },
   accountMenu: {
     marginTop: theme.spacing(2),
@@ -90,7 +79,6 @@ const Header = () => {
   const classes = useStyles();
   const history = useHistory();
   
-  //const [ email, setEmail ] = useState('');
   const [ profilePicture, setProfilePicture ] = useState('');
   const [ firstName, setFirstName ] = useState('Niel');
 
@@ -131,84 +119,86 @@ const Header = () => {
   } 
 
   return (   
-      <AppBar className={classes.root} position="sticky">     
-        <Grid container>
-          <Grid item lg={1}></Grid>
-          <Grid item xs={12} lg={10}> 
-            <Toolbar className={classes.toolbar}>
-              <Button
-                tabIndex={-1}
-                className={classes.brand}
-                //startIcon={<img href="qwe.jpg" alt="BIT" />}
+    <AppBar className={classes.root} position="sticky">     
+      <Grid container>
+        {/* <Grid item lg={1}></Grid> */}
+        <Grid item xs={12}> 
+          <Toolbar className={classes.toolbar}>
+            <Button
+              tabIndex={-1}
+              className={classes.brand}
+              //startIcon={<img href="qwe.jpg" alt="BIT" />}
+            >
+              <Typography
+                className={classes.barter}
+                variant="h6"
+                style={{letterSpacing: 1.5}}
               >
-                <Typography
-                  className={classes.barter}
-                  variant="h6"
-                >
-                  Barter
-                </Typography>
-                <Typography
-                  className={classes.it}
-                  variant="h6"
-                >
-                  IT
-                </Typography>   
-              </Button>
-              <div className={classes.right}>
-                { firstName && <Typography variant="subtitle2" className={classes.firstName}>
-                  {firstName}
-                </Typography> }
-                <Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
-                <IconButton 
-                  className={classes.dropdown} 
-                  onClick={toggleAccountPopper} 
-                  size="small" 
-                >
-                  <ArrowDropDownIcon fontSize="large" />
-                </IconButton>
-                <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
-                  <Paper className={classes.accountMenu} elevation={6}>
-                    <List component="nav">
-                      <ListItem 
-                        button 
-                        className={classes.listItem}
-                      >
-                        <ListItemIcon className={classes.listItemIcon}>
-                          <PersonIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="My Profile" />
-                      </ListItem>
-                      <ListItem 
-                        button 
-                        className={classes.listItem}
-                      >
-                        <ListItemIcon className={classes.listItemIcon}>
-                          <BookmarkIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Saved Items" />
-                      </ListItem>
-                    </List>
-                    <Divider />
-                    <List component="nav">
-                      <ListItem 
-                        button 
-                        className={classes.listItem} 
-                        onClick={handleLogout} 
-                      >
-                        <ListItemIcon className={classes.listItemIcon}>
-                          <ExitToAppIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Log Out" />
-                      </ListItem>
-                    </List>
-                  </Paper>
-                </Popper>
-              </div>
-            </Toolbar>
-          </Grid>
-          <Grid item lg={1}></Grid>
+                Barter
+              </Typography>
+              <Typography
+                className={classes.it}
+                variant="h6"
+                style={{letterSpacing: 1}}
+              >
+                IT
+              </Typography>   
+            </Button>
+            <div className={classes.right}>
+              <Avatar Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
+              { firstName && <Typography variant="subtitle2" className={classes.firstName}>
+                {firstName}
+              </Typography> }
+              <IconButton 
+                className={classes.dropdown} 
+                onClick={toggleAccountPopper} 
+                size="small" 
+              >
+                <ArrowDropDownIcon fontSize="large" />
+              </IconButton>
+              <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
+                <Paper className={classes.accountMenu} elevation={6}>
+                  <List component="nav">
+                    <ListItem 
+                      button 
+                      className={classes.listItem}
+                    >
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <PersonIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="My Profile" />
+                    </ListItem>
+                    <ListItem 
+                      button 
+                      className={classes.listItem}
+                    >
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <BookmarkIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Saved Items" />
+                    </ListItem>
+                  </List>
+                  <Divider />
+                  <List component="nav">
+                    <ListItem 
+                      button 
+                      className={classes.listItem} 
+                      onClick={handleLogout} 
+                    >
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <ExitToAppIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Log Out" />
+                    </ListItem>
+                  </List>
+                </Paper>
+              </Popper>
+            </div>
+          </Toolbar>
         </Grid>
-      </AppBar>
+        {/* <Grid item lg={1}></Grid> */}
+      </Grid>
+    </AppBar>
   );
 }
  
