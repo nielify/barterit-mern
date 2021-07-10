@@ -10,8 +10,8 @@ import LocationModal from './LocationModal'
 import Grid from '@material-ui/core/Grid';
 
 const Marketplace = () => {
-  const [openCategoryModal, setOpenCategoryModal] = useState(false);
-  const [openLocationModal, setOpenLocationModal] = useState(false);
+  const [ openCategoryModal, setOpenCategoryModal ] = useState(false);
+  const [ openLocationModal, setOpenLocationModal ] = useState(false);
 
   return (  
     <Grid container>
