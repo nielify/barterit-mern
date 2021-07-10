@@ -22,12 +22,11 @@ import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
-import MarketPlaceHeader from './MarketplaceHeader';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     //marginBottom: theme.spacing(2),
     //backgroundColor: '#f0f0f0',
+    //width: '100vw',
   },
   toolbar: {
     display: 'flex',
@@ -100,10 +99,6 @@ const Header = () => {
   const toggleAccountPopper = (event) => {
     setAccountAnchorEl(accountAnchorEl ? null : event.currentTarget);
   };
-
-  function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-  }
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
@@ -212,7 +207,6 @@ const Header = () => {
             </Toolbar>
           </Grid>
           <Grid item lg={1}></Grid>
-          {/* <MarketPlaceHeader /> */}
         </Grid>
       </AppBar>
   );
