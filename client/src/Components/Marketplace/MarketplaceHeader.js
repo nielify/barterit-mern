@@ -45,11 +45,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MarketplaceHeader = ({ setOpen }) => {
+const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal }) => {
   const classes = useStyles();
 
   const handleOpenCategoryModal = () => {
-    setOpen(true);
+    setOpenCategoryModal(true);
+  };
+
+  const handleOpenLocationModal = () => {
+    setOpenLocationModal(true);
   };
 
   useEffect(() => {
@@ -93,7 +97,7 @@ const MarketplaceHeader = ({ setOpen }) => {
             </IconButton>
             <IconButton 
               className={classes.icon} 
-              //onClick={toggleAccountPopper} 
+              onClick={handleOpenLocationModal} 
               //size="small"
             >
               <Icon className="fa fa-map-marker" />
