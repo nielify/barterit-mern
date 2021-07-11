@@ -68,7 +68,7 @@ const DefaultHeader = () => {
 
 
   return (   
-    <AppBar className={classes.root} position="static">     
+    <AppBar className={classes.root} position="fixed">     
       <Grid container>
         <Grid item lg={1}></Grid>
         <Grid item xs={12} lg={10}> 

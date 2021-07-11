@@ -37,7 +37,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(15),
     marginBottom: theme.spacing(8),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),

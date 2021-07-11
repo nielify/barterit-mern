@@ -1,6 +1,6 @@
 const CreatePost = () => {
   return (  
-    <h1>Add New Post</h1>
+    <h1>Post new item</h1>
   );
 }
  
