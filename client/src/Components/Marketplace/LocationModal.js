@@ -10,6 +10,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+
 
 import towns from '../../others/towns';
 
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(3, 4, 4, 4),
+    padding: theme.spacing(3, 4, 3, 4),
     margin: theme.spacing(0, 2),
     maxHeight: '80vh',
     minWidth: 250,
@@ -84,6 +86,16 @@ const FilterModal = ({ open, setOpen }) => {
               ))}
             </Select>
           </FormControl>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{
+              marginTop: 24
+            }}
+          >
+            Apply
+          </Button>
         </div>
       </Fade>
     </Modal>

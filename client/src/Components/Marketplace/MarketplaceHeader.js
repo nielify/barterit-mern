@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(1.5, 1.5), 
     width: '100vw',
+
   },
   search: {
     flexGrow: 1,

@@ -16,10 +16,10 @@ const Marketplace = () => {
   return (  
     <Grid container>
       <Header />
-      <MarketplaceSidebar />
       <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal}/>
       <CategoryModal open={openCategoryModal} setOpen={setOpenCategoryModal}/>
       <LocationModal open={openLocationModal} setOpen={setOpenLocationModal}/>
+      <MarketplaceSidebar />
       <PostList />
     </Grid>
   );
