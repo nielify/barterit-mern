@@ -19,6 +19,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import categories from '../../others/categories';
 import towns from '../../others/towns'
+import { set } from 'mongoose';
 
 
 
@@ -48,16 +49,52 @@ const useStyles = makeStyles((theme) => ({
 const Fields = () => {
   const classes = useStyles();
 
+  //title state
+  const [ title, setTitle ] = useState('');
+  const [ titleError, setTitleError ] = useState(false); 
+
+  //category state
+  const [ category, setCategory ] = useState('');
+  const [ categoryError, setCategoryError ] = useState(false); 
+
+  //descriptions state.
+  const [ description, setDescription ] = useState('');
+  const [ descriptionError, setDescriptionError ] = useState(false); 
+
+  //location state
+  const [ location, setLocation ] = useState('');
+  const [ locationError, setLocationError ] = useState(false); 
+
   const [ inReturn, setInReturn ] = useState([]);
   const [ typeInReturn, setTypeInReturn ] = useState('');
   const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: \"1 tray of eggs\"');
   const [ inReturnError, setInReturnError ] = useState(false);
   
-  const handleDelete = (key) => {
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setTitleError(false);
+  }
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    setCategoryError(false);
+  }
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+    setDescriptionError(false);
+  }
+
+ const handleLocationChange = (e) => {
+   setLocation(e.target.value);
+   setLocationError(false);
+ }
+
+  const handleDeleteChip = (key) => {
     setInReturn((chips) => chips.filter((chip) => chip.key !== key));
   }
 
-  const handleEnter = (e) => {
+  const handleInReturnEnter = (e) => {
     if(e.keyCode == 13){
       if (typeInReturn !== '') {
         const item = {
@@ -66,6 +103,7 @@ const Fields = () => {
         }
         setInReturn([...inReturn, item]);
         setTypeInReturn('');
+        setInReturnError(false);
       } else {
         setInReturnHelperText('Please type the item');
         setInReturnError(true);
@@ -81,6 +119,7 @@ const Fields = () => {
       }
       setInReturn([...inReturn, item]);
       setTypeInReturn('');
+      setInReturnError(false);
     } else {
       setInReturnHelperText('Please type the item');
       setInReturnError(true);
@@ -93,6 +132,14 @@ const Fields = () => {
     setInReturnHelperText('Include the amount and name of the items. eg: \"1 tray of eggs\"');
   }
 
+  const handlePost = () => {
+    if (!title) setTitleError(true);
+    if (!category) setCategoryError(true);
+    if (!description) setDescriptionError(true);
+    if (!location) setLocationError(true);
+    if (!inReturn[0]) setInReturnError(true);
+  }
+
   return (  
     <>
       <TextField 
@@ -100,11 +147,14 @@ const Fields = () => {
         size="small"
         label="Title"
         fullWidth
+        error={titleError}
+        onChange={handleTitleChange}
       />
-      <FormControl variant="outlined" className={classes.select} fullWidth size="small">
+      <FormControl variant="outlined" className={classes.select} fullWidth size="small" error={categoryError}>
         <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
         <Select
           label="Categories"
+          onChange={handleCategoryChange}
         >
           {categories.map((category) => (
             <MenuItem value={category} key={category}>{category}</MenuItem>
@@ -115,15 +165,18 @@ const Fields = () => {
         variant="outlined"
         size="small"
         label="Description"
+        error={descriptionError}
         fullWidth
         multiline
         rows={4}
         className={classes.description}
+        onChange={handleDescriptionChange}
       />
-      <FormControl variant="outlined" className={classes.select} fullWidth size="small">
+      <FormControl variant="outlined" className={classes.select} fullWidth size="small" error={locationError}>
         <InputLabel id="demo-simple-select-outlined-label">Location</InputLabel>
         <Select
           label="Location"
+          onChange={handleLocationChange}
         >
           {towns.map((towns) => (
             <MenuItem value={towns} key={towns}>{towns}</MenuItem>
@@ -141,7 +194,7 @@ const Fields = () => {
                 <Chip
                   color="primary"
                   label={data.label}
-                  onDelete={() => handleDelete(data.key)}
+                  onDelete={() => handleDeleteChip(data.key)}
                   className={classes.chip}
                 />
               </li>
@@ -156,7 +209,7 @@ const Fields = () => {
         >
           <OutlinedInput
              onChange={(e) =>  handleInReturnChange(e)}
-             onKeyDown={handleEnter}
+             onKeyDown={handleInReturnEnter}
              placeholder="Type the items you want in return here..."
              value={typeInReturn}
              error={inReturnError}
@@ -179,6 +232,7 @@ const Fields = () => {
           color="primary"
           fullWidth
           className={classes.postButton}
+          onClick={handlePost}
         >
           Post to Marketplace
         </Button>
