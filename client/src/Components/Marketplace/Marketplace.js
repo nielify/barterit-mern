@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Header from './Header';
+import Header from '../Header';
 import PostList from './PostList';
 import MarketplaceSidebar from './MarketplaceSidebar';
 import MarketplaceHeader from './MarketplaceHeader';

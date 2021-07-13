@@ -17,9 +17,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Container from '@material-ui/core/Container';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
 
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
