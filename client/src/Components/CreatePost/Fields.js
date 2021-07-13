@@ -2,16 +2,25 @@ import { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Button from '@material-ui/core/Button';
+
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import categories from '../../others/categories';
 import towns from '../../others/towns'
-import { Typography } from '@material-ui/core';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +38,21 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     marginTop: theme.spacing(.5),
     marginBottom: theme.spacing(.5),
+    marginRight: theme.spacing(1),
+  },
+  postButton: {
+    marginTop: theme.spacing(3),
   }
 }));
 
 const Fields = () => {
   const classes = useStyles();
-  
+
   const [ inReturn, setInReturn ] = useState([]);
   const [ typeInReturn, setTypeInReturn ] = useState('');
-
+  const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: \"1 tray of eggs\"');
+  const [ inReturnError, setInReturnError ] = useState(false);
+  
   const handleDelete = (key) => {
     setInReturn((chips) => chips.filter((chip) => chip.key !== key));
   }
@@ -51,9 +66,31 @@ const Fields = () => {
         }
         setInReturn([...inReturn, item]);
         setTypeInReturn('');
-        console.log(inReturn);
+      } else {
+        setInReturnHelperText('Please type the item');
+        setInReturnError(true);
       }
     }
+  }
+
+  const handleAddInReturnClick = () => {
+    if (typeInReturn !== '') {
+      const item = {
+        key: inReturn.length,
+        label: typeInReturn,
+      }
+      setInReturn([...inReturn, item]);
+      setTypeInReturn('');
+    } else {
+      setInReturnHelperText('Please type the item');
+      setInReturnError(true);
+    }
+  } 
+
+  const handleInReturnChange = (e) => {
+    setTypeInReturn(e.target.value);
+    setInReturnError(false);
+    setInReturnHelperText('Include the amount and name of the items. eg: \"1 tray of eggs\"');
   }
 
   return (  
@@ -100,7 +137,7 @@ const Fields = () => {
           </Typography>
           <ul style={{listStyle: 'none', padding: 0, margin: 0}}>
             { inReturn.map((data) => (
-              <li key={data.key} style={{display: 'block'}}>
+              <li key={data.key} style={{display: 'inline-block'}}>
                 <Chip
                   color="primary"
                   label={data.label}
@@ -112,17 +149,39 @@ const Fields = () => {
             
           </ul>
         </div>
-        <TextField 
-          variant="outlined"
+        <FormControl 
+          fullWidth 
           size="small"
-          placeholder="Type the items you want in return here..."
-          fullWidth
-          helperText="include the amount and name of the items. eg: 1 tray of eggs" 
           className={classes.description}
-          onKeyDown={handleEnter}
-          onChange={(e) => setTypeInReturn(e.target.value)}
-          value={typeInReturn}
-        />
+        >
+          <OutlinedInput
+             onChange={(e) =>  handleInReturnChange(e)}
+             onKeyDown={handleEnter}
+             placeholder="Type the items you want in return here..."
+             value={typeInReturn}
+             error={inReturnError}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  color="primary"
+                  tabIndex={-1}
+                  onClick={handleAddInReturnClick}
+                >
+                  <PostAddIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <FormHelperText style={{marginLeft: 12}} error={inReturnError}>{ inReturnHelperText }</FormHelperText>
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          className={classes.postButton}
+        >
+          Post to Marketplace
+        </Button>
       </div>
     </>
   );
