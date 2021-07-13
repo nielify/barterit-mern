@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Components/DefaultHeader';
+import Header from './Components/Header'
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Upload from './TestComponents/Upload';
@@ -43,6 +44,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <LinearLoader showProgress={showProgress} />
+      <Header />
       <Router>
         <Switch>
           <Route exact path="/">

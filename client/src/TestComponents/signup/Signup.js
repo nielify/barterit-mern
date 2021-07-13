@@ -37,7 +37,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(15),
+    marginTop: theme.spacing(4),
     marginBottom: theme.spacing(8),
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
@@ -347,7 +347,7 @@ const Signup = ({ setShowProgress }) => {
           variant="h4"
           color="primary"
         >
-          Sign up to Barterit
+          Create new account
         </Typography>
         <form className={classes.form}>
           <Grid item xs={12} >
