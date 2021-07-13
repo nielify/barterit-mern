@@ -1,15 +1,16 @@
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import PageTitle from './PageTitle';
 import AddPhotos from './AddPhotos';
-import Title from './Title';
+import Fields from './Fields';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(5),
+    //marginTop: theme.spacing(5),
+    padding: theme.spacing(5, 2, 10, 2),
   },
   typography: {
     //letterSpacing: -2,
@@ -23,7 +24,7 @@ const CreatePost = () => {
     <Container maxWidth="md" className={classes.root}> 
       <PageTitle />
       <AddPhotos />
-      <Title />
+      <Fields />
     </Container>  
   );
 }

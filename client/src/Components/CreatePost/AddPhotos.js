@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
     padding: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+    border: 'solid 1px #bbb',
+    borderRadius: 5,
   },
   card: {
     width: 150,
