@@ -15,7 +15,6 @@ import puppyImg from '../../Images/puppy-image.jpg'
 import shoesImg from '../../Images/shoes-image.jpg'
 import tshirtImg from '../../Images/tshirt-image.jpg'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: 5,
@@ -32,20 +31,19 @@ const PostList = () => {
   return (
     <Grid container item xs={12} md={8} lg={9} style={{ display: "table", padding: 8 }}>
       <Grid container item xs={12}>  
-        { PostCard(computerImg) }
-        { PostCard(mugImg) }
-        { PostCard(computerImg) }
-        { PostCard(phoneImg) }
-        { PostCard(puppyImg) }
-        { PostCard(shoesImg) }
-        { PostCard(tshirtImg) }
+        { PostCard("Computer", computerImg) }
+        { PostCard("Mug", mugImg) }
+        { PostCard("Phone", phoneImg) }
+        { PostCard("Puppy", puppyImg) }
+        { PostCard("Shoes", shoesImg) }
+        { PostCard("Shirt", tshirtImg) }
       </Grid>  
     </Grid>
   );
 }
  
 //title, image, location, userID?, 
-function PostCard(image) {
+function PostCard(title, image) {
   const classes = useStyles();
 
   const handleClick = async () => {
@@ -67,7 +65,7 @@ function PostCard(image) {
           />
           <CardContent className={classes.cardContent}>
             <Typography variant="h6" component="h3" style={{fontSize: '1rem' }}>
-              Lizard the friggin dog the friggin dogthe friggin dog
+              { title }
             </Typography>
             <Typography variant="p" component="p" style={{fontSize: '.85rem',}}>
               Sariaya

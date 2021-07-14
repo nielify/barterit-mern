@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Header from './Header';
 import PostList from './PostList';
 import MarketplaceSidebar from './MarketplaceSidebar';
 import MarketplaceHeader from './MarketplaceHeader';
@@ -15,7 +14,6 @@ const Marketplace = () => {
 
   return (  
     <Grid container>
-      <Header />
       <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal}/>
       <CategoryModal open={openCategoryModal} setOpen={setOpenCategoryModal}/>
       <LocationModal open={openLocationModal} setOpen={setOpenLocationModal}/>
