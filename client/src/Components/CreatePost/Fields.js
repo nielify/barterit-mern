@@ -138,6 +138,7 @@ const Fields = () => {
     if (!description) setDescriptionError(true);
     if (!location) setLocationError(true);
     if (!inReturn[0]) setInReturnError(true);
+    if (titleError || categoryError || descriptionError || locationError) window.scrollTo(0, 0);
   }
 
   return (  
