@@ -13,9 +13,10 @@ import shoesImg from '../../Images/shoes-image.jpg'
 import tshirtImg from '../../Images/tshirt-image.jpg'
 
 const useStyles = makeStyles((theme) => ({
-  carousel: {   
+  root: {   
     textAlign: 'center',
     position: 'relative',
+    marginBottom: theme.spacing(1),
   },
   image: {
     height: 400,
@@ -47,7 +48,7 @@ const ItemCarousel = () => {
 
   return (  
     <Carousel 
-      className={classes.carousel}
+      className={classes.root}
       navButtonsProps={{ // Change the colors and radius of the actual buttons. THIS STYLES BOTH BUTTONS
         style: {
           opacity: .6,
