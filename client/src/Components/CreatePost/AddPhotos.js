@@ -85,7 +85,6 @@ const AddPhotos = () => {
         }
         setImagesFiles(oldImageFiles => [...oldImageFiles, imageFile]);
         imageFilesKey.current = imageFilesKey.current + 1;
-        console.log(imageFilesKey.current);
       }
     });
   }

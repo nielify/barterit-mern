@@ -6,6 +6,7 @@ import DefaultHeader from './Components/DefaultHeader';
 import Header from './Components/Header'
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
+import Item from './Components/Item/Item';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -52,6 +53,9 @@ function App() {
           </Route>
           <Route exact path="/create-post">
             <CreatePost />
+          </Route>
+          <Route exact path="/item">
+            <Item />
           </Route>
           <Route exact path="/upload">
             <Upload />
