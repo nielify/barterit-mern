@@ -32,6 +32,7 @@ const Title = () => {
       </Typography>
       <Typography
         className={classes.posted}
+        gutterBottom
       >
         Posted 3 hours ago in Sariaya
       </Typography>

@@ -4,11 +4,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ItemCarousel from './ItemCarousel';
 import Title from './Title';
-import Details from './Details';
+import Owner from './Owner';
+import Description from './Description';
+import InReturn from './InReturn';
+import SubmitButton from './SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(3, 2, 10, 2),
+    padding: theme.spacing(3, 2, 5, 2),
   }
 }));
 
@@ -19,7 +22,10 @@ const Item = () => {
     <Container maxWidth="md" className={classes.root}>
       <ItemCarousel />
       <Title />
-      <Details />
+      <Owner />
+      <Description />
+      <InReturn />
+      <SubmitButton />
     </Container>
   );
 }
