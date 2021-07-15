@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ItemCarousel from './ItemCarousel';
 import Title from './Title';
 import Description from './Description';
+import Owner from './Owner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,7 @@ const Item = () => {
       <ItemCarousel />
       <Title />
       <Description />
+      <Owner />
     </Container>
   );
 }
