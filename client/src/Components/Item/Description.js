@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Details = () => {
+const Description = () => {
   const classes = useStyles();
 
   return (  
@@ -18,7 +18,7 @@ const Details = () => {
         variant="subtitle2"
         className={classes.title}
       >
-        Details
+        Description
       </Typography>
       <Typography
         variant="body2"
@@ -29,4 +29,4 @@ const Details = () => {
   );
 }
  
-export default Details;
+export default Description;

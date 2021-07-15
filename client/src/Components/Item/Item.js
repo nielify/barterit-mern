@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ItemCarousel from './ItemCarousel';
 import Title from './Title';
-import Details from './Details';
+import Description from './Description';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const Item = () => {
     <Container maxWidth="md" className={classes.root}>
       <ItemCarousel />
       <Title />
-      <Details />
+      <Description />
     </Container>
   );
 }
