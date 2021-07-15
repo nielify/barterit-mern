@@ -19,13 +19,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   image: {
-    height: 400,
+    borderRadius: 15,
+    height: '75vh',
+    objectFit: 'contain',
+    width: '80%',
   },
   imageBackground: {
     position: 'absolute',
     top: 0,
     left: 0,
-    height: 380,
+    height: '75vh',
     zIndex: -999,
     filter: 'blur(20px)',
     width: '100%',

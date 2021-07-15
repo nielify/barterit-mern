@@ -20,8 +20,8 @@ const Item = () => {
     <Container maxWidth="md" className={classes.root}>
       <ItemCarousel />
       <Title />
-      <Description />
       <Owner />
+      <Description />
     </Container>
   );
 }
