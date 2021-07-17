@@ -19,9 +19,6 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import categories from '../../others/categories';
 import towns from '../../others/towns'
-import { set } from 'mongoose';
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +64,7 @@ const Fields = () => {
 
   const [ inReturn, setInReturn ] = useState([]);
   const [ typeInReturn, setTypeInReturn ] = useState('');
-  const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: \"1 tray of eggs\"');
+  const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: "1 tray of eggs"');
   const [ inReturnError, setInReturnError ] = useState(false);
   
   const handleTitleChange = (e) => {
@@ -95,7 +92,7 @@ const Fields = () => {
   }
 
   const handleInReturnEnter = (e) => {
-    if(e.keyCode == 13){
+    if(e.keyCode === 13){
       if (typeInReturn !== '') {
         const item = {
           key: inReturn.length,
@@ -129,7 +126,7 @@ const Fields = () => {
   const handleInReturnChange = (e) => {
     setTypeInReturn(e.target.value);
     setInReturnError(false);
-    setInReturnHelperText('Include the amount and name of the items. eg: \"1 tray of eggs\"');
+    setInReturnHelperText('Include the amount and name of the items. eg: "1 tray of eggs"');
   }
 
   const handlePost = () => {

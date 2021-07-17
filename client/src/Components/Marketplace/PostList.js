@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Card from '@material-ui/core/Card';
@@ -15,9 +16,11 @@ import puppyImg from '../../Images/puppy-image.jpg'
 import shoesImg from '../../Images/shoes-image.jpg'
 import tshirtImg from '../../Images/tshirt-image.jpg'
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: 5,
+    textDecoration: 'none',
   },
   cardContent: {
     padding: theme.spacing(1),
@@ -53,8 +56,12 @@ function PostCard(title, image) {
   }
 
   return (
-    <Grid item xs={6} sm={4} lg={3}>
-      <Card className={classes.root}>
+    <Grid item xs={6} sm={4} lg={3} 
+      component={Link}
+      to="/item"
+      style={{textDecoration: 'none'}}
+    >
+      <Card className={classes.root} >
         <CardActionArea>
           <CardMedia
             component="img"

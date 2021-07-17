@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Carousel from 'react-material-ui-carousel';
-import { Paper, Button } from '@material-ui/core';
 
 //test images
 import computerImg from '../../Images/computer-image.jpg'
@@ -75,8 +74,8 @@ function Item({ image }) {
 
   return (
     <>
-      <img src={image} className={classes.image}/>
-      <img src={image} className={classes.imageBackground}/>
+      <img src={image} alt="background image" className={classes.image}/>
+      <img src={image} alt="test image" className={classes.imageBackground}/>
     </>
   )
 }
