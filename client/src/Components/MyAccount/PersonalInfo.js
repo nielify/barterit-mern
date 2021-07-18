@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     overflow: 'hidden',
     borderRadius: 5,
+    marginBottom: theme.spacing(2),
   },
   background: {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${JakeBackground})`,
