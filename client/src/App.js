@@ -7,6 +7,7 @@ import Header from './Components/Header'
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
+import MyAccount from './Components/MyAccount/MyAccount';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -44,9 +45,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LinearLoader showProgress={showProgress} />
-      <Header />
       <Router>
+        <LinearLoader showProgress={showProgress} />
+        <Header />
         <Switch>
           <Route exact path="/">
             <Marketplace />
@@ -56,6 +57,9 @@ function App() {
           </Route>
           <Route exact path="/item">
             <Item />
+          </Route>
+          <Route exact path="/my-account">
+            <MyAccount />
           </Route>
           <Route exact path="/upload">
             <Upload />

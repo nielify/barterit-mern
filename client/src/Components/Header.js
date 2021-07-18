@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -160,6 +160,8 @@ const Header = () => {
                 <Paper className={classes.accountMenu} elevation={6}>
                   <List component="nav">
                     <ListItem 
+                      component={Link}
+                      to="/my-account"
                       button 
                       className={classes.listItem}
                     >

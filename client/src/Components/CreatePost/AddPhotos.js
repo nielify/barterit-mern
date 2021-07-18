@@ -142,9 +142,9 @@ function PreviewImage({ image, index, handleRemovePhoto }) {
           image={image}
           style={{height:'100%'}}
         />
-      <div className={classes.iconButton} onClick={() => handleRemovePhoto(index) }>
-        <CloseIcon fontSize="small" />
-      </div>
+        <div className={classes.iconButton} onClick={() => handleRemovePhoto(index) }>
+          <CloseIcon fontSize="small" />
+        </div>
       </Card>
     </Grid>
   )
