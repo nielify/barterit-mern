@@ -30,7 +30,7 @@ const PostedItems = () => {
         className={classes.title}
         gutterBottom
       >
-        Posted Items in Marketplace
+        Your items in Marketplace
       </Typography>
       <Grid container xs={12}  className={classes.container}>
         <PostCard />
@@ -65,12 +65,12 @@ function PostCard() {
             image={shoesImg}
             //style={{objectFit: 'fill'}}
           />
-          <CardContent>
-            <Typography variant="h6" component="h3" style={{fontSize: '1rem' }}>
+          <CardContent style={{padding: 0, paddingLeft: 8, paddingBottom: 6, paddingTop: 2}}>
+            <Typography variant="h6" component="h3" style={{fontSize: '.9rem' }}>
               Test Title
             </Typography>
-            <Typography variant="p" component="p" style={{fontSize: '.85rem',}}>
-              January 12, 2021
+            <Typography variant="p" component="p" style={{fontSize: '.75rem',}}>
+              Posted: January 12, 2021
             </Typography>
           </CardContent>
         </CardActionArea>
