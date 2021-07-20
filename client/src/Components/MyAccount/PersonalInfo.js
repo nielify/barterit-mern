@@ -11,7 +11,6 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 import JakeBackground from '../../Images/jake_background.jpg';
 import JakeRebullo from '../../Images/jake_rebullo.jpg';
-import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   bgContainer: {
@@ -79,9 +78,19 @@ const useStyles = makeStyles((theme) => ({
     top: 12,
     right: 12,
     padding: 0,
+    cursor: 'pointer',
+  },
+  file: {
+    width: 0.1,
+	  height: 0.1,
+	  opacity: 0,
+	  overflow: 'hidden',
+	  position: 'absolute',
+	  zIndex: -1, 
   },
   editPicture: {
     padding: 0,
+    cursor: 'pointer',
     position: 'absolute',
     bottom: 0,
     right: -3,
@@ -95,6 +104,14 @@ const useStyles = makeStyles((theme) => ({
 const PersonalInfo = () => {
   const classes = useStyles();
 
+  const handlePictureFileChange = () => {
+    alert('Picture changed');
+  }
+
+  const handleBackgroundFileChange = () => {
+    alert('Background changed');
+  }
+
   return ( 
     <>
       <div className={classes.bgContainer}>
@@ -102,10 +119,20 @@ const PersonalInfo = () => {
         <div className={classes.info}>
           <div className={classes.avatarContainer}>
             <Avatar src={JakeRebullo} className={classes.avatar} />
+            <input 
+              type="file" 
+              name="pictureFile" 
+              id="pictureFile" 
+              accept="image/*" 
+              className={classes.file}
+              onChange={handlePictureFileChange}
+            />
             <IconButton className={classes.editPicture}>
-              <Avatar className={classes.pictureIcon}>
-                <CameraAltIcon fontSize="small"/>
-              </Avatar>
+              <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
+                <Avatar className={classes.pictureIcon}>
+                  <CameraAltIcon fontSize="small"/>
+                </Avatar>
+              </label>
             </IconButton> 
           </div>
           <div className={classes.innerInfo}>
@@ -132,12 +159,23 @@ const PersonalInfo = () => {
             </Typography>
           </div>
         </div>    
-        <IconButton className={classes.editBackground}>
-          <Avatar>
-            <CameraAltIcon />
-          </Avatar>
-        </IconButton>  
-      </div>
+          <input 
+            type="file" 
+            name="backgroundFile" 
+            id="backgroundFile" 
+            accept="image/*" 
+            //multiple 
+            className={classes.file}
+            onChange={handleBackgroundFileChange}
+          />
+          <IconButton className={classes.editBackground}>
+            <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+              <Avatar>
+                <CameraAltIcon />
+              </Avatar>
+            </label>
+          </IconButton> 
+      </div>          
     </>
   );
 }
