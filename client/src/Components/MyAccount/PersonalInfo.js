@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   background: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${JakeBackground})`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${JakeBackground})`,
     height: '100%',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -104,6 +105,12 @@ const useStyles = makeStyles((theme) => ({
 const PersonalInfo = () => {
   const classes = useStyles();
 
+  const [ picture, setPicture ] = useState(JakeRebullo);
+  const [ background, setBackground ] = useState(JakeBackground);
+  const [ name, setName ] = useState('Jake Rebullo');
+  const [ rating, setRating ] = useState(3.5);
+  const [ town, setTown ] = useState('Sariaya');
+
   const handlePictureFileChange = () => {
     alert('Picture changed');
   }
@@ -118,8 +125,8 @@ const PersonalInfo = () => {
         <div className={classes.background}></div>
         <div className={classes.info}>
           <div className={classes.avatarContainer}>
-            <Avatar src={JakeRebullo} className={classes.avatar} />
-            <input 
+            <Avatar src={picture} className={classes.avatar} />
+            <input  
               type="file" 
               name="pictureFile" 
               id="pictureFile" 
@@ -139,12 +146,13 @@ const PersonalInfo = () => {
             <Typography
               className={classes.name}
             >
-              Jake Rebullo
+              { name }
             </Typography>
             <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
               <Rating 
                 name="half-rating-read"
-                value={4.5} precision={0.5} 
+                value={rating} 
+                precision={0.5} 
                 readOnly 
                 size="small" 
                 style={{color:'#33ab9f', }}
@@ -155,7 +163,7 @@ const PersonalInfo = () => {
             <Typography
               className={classes.location}
             >
-              Sariaya
+              { town }
             </Typography>
           </div>
         </div>    
