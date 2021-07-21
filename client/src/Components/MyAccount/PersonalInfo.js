@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 import JakeBackground from '../../Images/jake_background.jpg';
 import JakeRebullo from '../../Images/jake_rebullo.jpg';
@@ -17,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     overflow: 'hidden',
     borderRadius: 5,
+    marginBottom: theme.spacing(2),
   },
   background: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${JakeBackground})`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${JakeBackground})`,
     height: '100%',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -37,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     marginLeft: theme.spacing(1.5),
+    position: 'relative',
+  },
+  avatarContainer: {
     position: 'relative',
   },
   avatar: {
@@ -67,28 +74,85 @@ const useStyles = makeStyles((theme) => ({
     bottom: '-50%',
     left: '5%',
   },
+  editBackground: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    padding: 0,
+    cursor: 'pointer',
+  },
+  file: {
+    width: 0.1,
+	  height: 0.1,
+	  opacity: 0,
+	  overflow: 'hidden',
+	  position: 'absolute',
+	  zIndex: -1, 
+  },
+  editPicture: {
+    padding: 0,
+    cursor: 'pointer',
+    position: 'absolute',
+    bottom: 0,
+    right: -3,
+  },
+  pictureIcon: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  }
 }));
 
 const PersonalInfo = () => {
   const classes = useStyles();
 
+  const [ picture, setPicture ] = useState(JakeRebullo);
+  const [ background, setBackground ] = useState(JakeBackground);
+  const [ name, setName ] = useState('Jake Rebullo');
+  const [ rating, setRating ] = useState(3.5);
+  const [ town, setTown ] = useState('Sariaya');
+
+  const handlePictureFileChange = () => {
+    alert('Picture changed');
+  }
+
+  const handleBackgroundFileChange = () => {
+    alert('Background changed');
+  }
+
   return ( 
     <>
       <div className={classes.bgContainer}>
         <div className={classes.background}></div>
-        {/* <div className={classes.overlay}></div> */}
         <div className={classes.info}>
-          <Avatar src={JakeRebullo} className={classes.avatar}/>
+          <div className={classes.avatarContainer}>
+            <Avatar src={picture} className={classes.avatar} />
+            <input  
+              type="file" 
+              name="pictureFile" 
+              id="pictureFile" 
+              accept="image/*" 
+              className={classes.file}
+              onChange={handlePictureFileChange}
+            />
+            <IconButton className={classes.editPicture}>
+              <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
+                <Avatar className={classes.pictureIcon}>
+                  <CameraAltIcon fontSize="small"/>
+                </Avatar>
+              </label>
+            </IconButton> 
+          </div>
           <div className={classes.innerInfo}>
             <Typography
               className={classes.name}
             >
-              Jake Rebullo
+              { name }
             </Typography>
             <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
               <Rating 
                 name="half-rating-read"
-                value={4.5} precision={0.5} 
+                value={rating} 
+                precision={0.5} 
                 readOnly 
                 size="small" 
                 style={{color:'#33ab9f', }}
@@ -99,11 +163,27 @@ const PersonalInfo = () => {
             <Typography
               className={classes.location}
             >
-              Sariaya
+              { town }
             </Typography>
           </div>
-        </div>
-      </div>
+        </div>    
+          <input 
+            type="file" 
+            name="backgroundFile" 
+            id="backgroundFile" 
+            accept="image/*" 
+            //multiple 
+            className={classes.file}
+            onChange={handleBackgroundFileChange}
+          />
+          <IconButton className={classes.editBackground}>
+            <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+              <Avatar>
+                <CameraAltIcon />
+              </Avatar>
+            </label>
+          </IconButton> 
+      </div>          
     </>
   );
 }
