@@ -8,6 +8,7 @@ import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
 import MyAccount from './Components/MyAccount/MyAccount';
+import SavedItems from './Components/SavedItems/SavedItems';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -60,6 +61,9 @@ function App() {
           </Route>
           <Route exact path="/my-account">
             <MyAccount />
+          </Route>
+          <Route exact path="/saved-items">
+            <SavedItems />
           </Route>
           <Route exact path="/upload">
             <Upload />
