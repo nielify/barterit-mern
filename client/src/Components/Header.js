@@ -125,6 +125,8 @@ const Header = () => {
         <Grid item xs={12}> 
           <Toolbar className={classes.toolbar}>
             <Button
+              component={Link}
+              to="/"
               tabIndex={-1}
               className={classes.brand}
               //startIcon={<img href="qwe.jpg" alt="BIT" />}
@@ -171,6 +173,8 @@ const Header = () => {
                       <ListItemText primary="My Profile" />
                     </ListItem>
                     <ListItem 
+                      component={Link}
+                      to="/saved-items"
                       button 
                       className={classes.listItem}
                     >

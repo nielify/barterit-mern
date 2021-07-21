@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     //border: 'solid 1px #bbb',
     width: '100%',
   },
+  cardContent: {
+    padding: theme.spacing(1),
+  }
 }));
 
 const PostedItems = () => {
@@ -54,6 +57,8 @@ const PostedItems = () => {
 }
  
 function PostCard() {
+  const classes = useStyles();
+
   return (
     <Grid item xs={6} sm={4} lg={3}>
       <Card style={{margin:5}}>
@@ -65,11 +70,11 @@ function PostCard() {
             image={shoesImg}
             //style={{objectFit: 'fill'}}
           />
-          <CardContent style={{padding: 0, paddingLeft: 8, paddingBottom: 6, paddingTop: 2}}>
+          <CardContent className={classes.cardContent}>
             <Typography variant="h6" component="h3" style={{fontSize: '.9rem' }}>
               Test Title
             </Typography>
-            <Typography variant="p" component="p" style={{fontSize: '.75rem',}}>
+            <Typography variant="h6" component="p" style={{fontSize: '.8rem',}}>
               Posted: January 12, 2021
             </Typography>
           </CardContent>
