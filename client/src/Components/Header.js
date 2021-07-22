@@ -21,6 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import { ClickAwayListener } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
   },
   accountMenu: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
   listItem: {
     paddingRight: theme.spacing(10),
@@ -86,6 +87,10 @@ const Header = () => {
 
   const toggleAccountPopper = (event) => {
     setAccountAnchorEl(accountAnchorEl ? null : event.currentTarget);
+  };
+
+  const handleClickAway = () => {
+    setAccountAnchorEl(null);
   };
 
   useEffect(() => {
@@ -151,59 +156,63 @@ const Header = () => {
               { firstName && <Typography variant="subtitle2" className={classes.firstName}>
                 {firstName}
               </Typography> }
-              <IconButton 
-                className={classes.dropdown} 
-                onClick={toggleAccountPopper} 
-                size="small" 
-              >
-                <ArrowDropDownIcon fontSize="large" />
-              </IconButton>
-              <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
-                <Paper className={classes.accountMenu} elevation={6}>
-                  <List component="nav">
-                    <ListItem 
-                      onClick={toggleAccountPopper}
-                      component={Link}
-                      to="/my-account"
-                      button 
-                      className={classes.listItem}
-                    >
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <PersonIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="My Profile" />
-                    </ListItem>
-                    <ListItem 
-                      onClick={toggleAccountPopper}
-                      component={Link}
-                      to="/saved-items"
-                      button 
-                      className={classes.listItem}
-                    >
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <BookmarkIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Saved Items" />
-                    </ListItem>
-                  </List>
-                  <Divider />
-                  <List component="nav">
-                    <ListItem 
-                      button 
-                      className={classes.listItem} 
-                      onClick={ () => {
-                        handleLogout();
-                        toggleAccountPopper();
-                      }} 
-                    >
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <ExitToAppIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Log Out" />
-                    </ListItem>
-                  </List>
-                </Paper>
-              </Popper>
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <div>
+                  <IconButton 
+                    className={classes.dropdown} 
+                    onClick={toggleAccountPopper} 
+                    size="small" 
+                  >
+                    <ArrowDropDownIcon fontSize="large" />
+                  </IconButton>
+                  <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
+                    <Paper className={classes.accountMenu} elevation={6}>
+                      <List component="nav">
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/my-account"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <PersonIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="My Profile" />
+                        </ListItem>
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/saved-items"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <BookmarkIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Saved Items" />
+                        </ListItem>
+                      </List>
+                      <Divider />
+                      <List component="nav">
+                        <ListItem 
+                          button 
+                          className={classes.listItem} 
+                          onClick={ () => {
+                            handleLogout();
+                            toggleAccountPopper();
+                          }} 
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <ExitToAppIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Log Out" />
+                        </ListItem>
+                      </List>
+                    </Paper>
+                  </Popper>
+                </div>
+              </ClickAwayListener>
             </div>
           </Toolbar>
         </Grid>
