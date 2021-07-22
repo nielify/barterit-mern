@@ -52,6 +52,11 @@ const PostedItems = () => {
         <PostCard />
         <PostCard />
       </Grid>
+      {/* {<Typography
+        style={{textAlign:'center', width: '100%'}}
+      >
+        You do not have any posted items in Marketplace.
+      </Typography>} */}
     </>
   );
 }
