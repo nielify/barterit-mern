@@ -162,6 +162,7 @@ const Header = () => {
                 <Paper className={classes.accountMenu} elevation={6}>
                   <List component="nav">
                     <ListItem 
+                      onClick={toggleAccountPopper}
                       component={Link}
                       to="/my-account"
                       button 
@@ -173,6 +174,7 @@ const Header = () => {
                       <ListItemText primary="My Profile" />
                     </ListItem>
                     <ListItem 
+                      onClick={toggleAccountPopper}
                       component={Link}
                       to="/saved-items"
                       button 
@@ -189,7 +191,10 @@ const Header = () => {
                     <ListItem 
                       button 
                       className={classes.listItem} 
-                      onClick={handleLogout} 
+                      onClick={ () => {
+                        handleLogout();
+                        toggleAccountPopper();
+                      }} 
                     >
                       <ListItemIcon className={classes.listItemIcon}>
                         <ExitToAppIcon />
