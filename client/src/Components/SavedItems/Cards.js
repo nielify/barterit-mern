@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
   question: {
     marginBottom: theme.spacing(2),
+  },
+  empty: {
+    width: '100%',
+    textAlign: 'center',
   }
 }));
 
@@ -77,6 +81,11 @@ const Cards = () => {
       {items.map((item,i) => (
         <ItemCard item={item} key={i} handleRemoveItem={handleRemoveItem} index={i}/>
       ))}
+      {!items[0] && <Typography
+        className={classes.empty}
+      >
+        Your saved items is empty
+      </Typography>}
     </Grid>
   );
 }
