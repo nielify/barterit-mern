@@ -142,50 +142,43 @@ function DeleteConfirmationModal({ open, setOpen, handleRemoveItem, index }) {
       className={classes.modal}
       open={open}
       onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }} 
       disableEnforceFocus 
     >
-      <Fade in={open}>
-        <div className={classes.paper}>
-          <Typography 
-            gutterBottom
-            variant="subtitle1"
-            className={classes.question}
-          >
-            Remove from saved items?
-          </Typography>
-          <Grid container>
-            <Grid item xs={5}>
-              <Button
-                variant="outlined"
-                color="primary"
-                fullWidth
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={5}>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={() => {
-                  handleRemoveItem(index);
-                  handleClose();
-                }}
-              >
-                Yes
-              </Button>
-            </Grid>
+      <div className={classes.paper}>
+        <Typography 
+          gutterBottom
+          variant="subtitle1"
+          className={classes.question}
+        >
+          Remove from saved items?
+        </Typography>
+        <Grid container>
+          <Grid item xs={5}>
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
           </Grid>
-        </div>
-      </Fade>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={5}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={() => {
+                handleRemoveItem(index);
+                handleClose();
+              }}
+            >
+              Yes
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
     </Modal>
   )
 }

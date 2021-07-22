@@ -15,7 +15,7 @@ const Title = () => {
       color="primary" 
       gutterBottom
     >
-      Saved Items from Marketplace
+      Your saved items from Marketplace
     </Typography>
   );
 }
