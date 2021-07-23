@@ -3,12 +3,13 @@ import { useState } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Components/DefaultHeader';
-import Header from './Components/Header'
+import Header from './Components/Header';
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
 import MyAccount from './Components/MyAccount/MyAccount';
 import SavedItems from './Components/SavedItems/SavedItems';
+import User from './Components/User/User';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
@@ -64,6 +65,9 @@ function App() {
           </Route>
           <Route exact path="/saved-items">
             <SavedItems />
+          </Route>
+          <Route exact path="/user">
+            <User />
           </Route>
           <Route exact path="/upload">
             <Upload />

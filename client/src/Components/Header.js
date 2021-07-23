@@ -21,7 +21,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { ClickAwayListener } from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
+import JakePhoto from '../Images/jake_rebullo.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
   firstName: {
     marginRight: theme.spacing(2),
+    textDecoration: 'none',
+    color: '#fff',
   },
   avatar: {
     marginRight: theme.spacing(1.5),
+    textDecoration: 'none',
   },
   logout: {
     marginRight: theme.spacing(1),
@@ -80,8 +85,8 @@ const Header = () => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [ profilePicture, setProfilePicture ] = useState('');
-  const [ firstName, setFirstName ] = useState('Niel');
+  const [ profilePicture, setProfilePicture ] = useState(JakePhoto);
+  const [ firstName, setFirstName ] = useState('Jake');
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -152,8 +157,21 @@ const Header = () => {
               </Typography>   
             </Button>
             <div className={classes.right}>
-              <Avatar Avatar className={classes.avatar} src={profilePicture}>{ firstName[0] }</Avatar>
-              { firstName && <Typography variant="subtitle2" className={classes.firstName}>
+              <Avatar Avatar 
+                className={classes.avatar} 
+                src={profilePicture}
+                component={Link}
+                to="/my-account"
+              >
+                { firstName[0] }
+              </Avatar>
+              { firstName && 
+              <Typography 
+                variant="subtitle2" 
+                className={classes.firstName}
+                component={Link}
+                to="/my-account"
+              >
                 {firstName}
               </Typography> }
               <ClickAwayListener onClickAway={handleClickAway}>
