@@ -118,7 +118,7 @@ const Header = () => {
         console.log(err.message);
         //history.push('/signin');
       });
-  }, [])
+  }, [history])
 
   const handleLogout = async () => { 
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, { credentials: 'include' }); 
@@ -158,7 +158,7 @@ const Header = () => {
               </Typography>   
             </Button>
             <div className={classes.right}>
-              <Avatar Avatar 
+              <Avatar 
                 className={classes.avatar} 
                 src={profilePicture}
                 component={Link}
