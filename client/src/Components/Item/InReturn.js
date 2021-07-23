@@ -22,8 +22,8 @@ const InReturn = () => {
   const classes = useStyles();
 
   const [ inReturns, setInReturns ] = useState([
-    '1pc Tender juicy hotdog',
-    '2pcs Eggs',
+    '1 case Redrose',
+    '1 whole Baliwag Chicken',
   ]);
 
   return (  
