@@ -8,7 +8,8 @@ const BorderLinearProgress = withStyles((theme) => ({
     height: 5,
     //borderRadius: 5,
     position: 'fixed',
-    width: '100%'
+    width: '100%',
+    zIndex: 99999999,
   },
   colorPrimary: {
     backgroundColor: 'inherit'

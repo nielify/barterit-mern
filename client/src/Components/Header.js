@@ -116,7 +116,7 @@ const Header = () => {
       })
       .catch(err => {
         console.log(err.message);
-        //history.push('/signin');
+        history.push('/signin');
       });
   }, [history])
 
@@ -132,8 +132,8 @@ const Header = () => {
   return (   
     <AppBar className={classes.root} position="sticky">     
       <Grid container>
-        {/* <Grid item lg={1}></Grid> */}
-        <Grid item xs={12}> 
+        <Grid item lg={1}></Grid>
+        <Grid item xs={12} lg={10}> 
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -247,7 +247,7 @@ const Header = () => {
             </div>
           </Toolbar>
         </Grid>
-        {/* <Grid item lg={1}></Grid> */}
+        <Grid item lg={1}></Grid>
       </Grid>
     </AppBar>
   );
