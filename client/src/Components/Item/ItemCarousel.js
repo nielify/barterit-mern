@@ -74,8 +74,8 @@ function Item({ image }) {
 
   return (
     <>
-      <img src={image} alt="background image" className={classes.image}/>
-      <img src={image} alt="test image" className={classes.imageBackground}/>
+      <img src={image} alt="main" className={classes.image}/>
+      <img src={image} alt="background" className={classes.imageBackground}/>
     </>
   )
 }

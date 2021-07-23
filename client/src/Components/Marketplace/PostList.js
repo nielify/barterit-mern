@@ -23,7 +23,12 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   cardContent: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(.5, 1, .4, 1),
+  },
+  location: {
+    position: 'relative',
+    top: -4,
+    fontSize: '.83rem', 
   },
   
 }));
@@ -74,7 +79,7 @@ function PostCard(title, image) {
             <Typography variant="h6" component="h3" style={{fontSize: '1rem' }}>
               { title }
             </Typography>
-            <Typography variant="p" component="p" style={{fontSize: '.85rem',}}>
+            <Typography variant="body1" className={classes.location}>
               Sariaya
             </Typography>
           </CardContent>
