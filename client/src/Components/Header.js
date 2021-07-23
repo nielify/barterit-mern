@@ -15,13 +15,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MessageIcon from '@material-ui/icons/Message';
 
 import JakePhoto from '../Images/jake_rebullo.jpg'
 
@@ -197,6 +198,18 @@ const Header = () => {
                             <PersonIcon />
                           </ListItemIcon>
                           <ListItemText primary="My Profile" />
+                        </ListItem>
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/negotiations"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <MessageIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Negotiations" />
                         </ListItem>
                         <ListItem 
                           onClick={toggleAccountPopper}
