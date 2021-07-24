@@ -9,6 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
+  decoy: {
+    width: '100%',
+    height: 64,
+  },
   root: {
     marginBottom: theme.spacing(2),
     backgroundColor: '#f0f0f0',
@@ -68,64 +72,66 @@ const DefaultHeader = () => {
 
 
   return (   
-    <AppBar className={classes.root} position="fixed">     
-      <Grid container>
-        <Grid item lg={1}></Grid>
-        <Grid item xs={12} lg={10}> 
-          <Toolbar className={classes.toolbar}>
-            <Button
-              tabIndex={-1}
-              className={classes.brand}
-              //startIcon={<img href="qwe.jpg" alt="BIT" />}
-            >
-              <Typography
-                className={classes.barter}
-                variant="h6"
-              >
-                Barter
-              </Typography>
-              <Typography
-                className={classes.it}
-                variant="h6"
-              >
-                IT
-              </Typography>   
-            </Button>
-            
-            {/*<Typography 
-              variant="h5" 
-              className={classes.title}
-              color="primary"
-            >
-              <strong>BarterIT</strong>
-            </Typography>*/}
-            <div>
+    <>
+      <div className={classes.decoy}></div>
+      <AppBar className={classes.root} position="fixed">    
+        <Grid container>
+          <Grid item lg={1}></Grid>
+          <Grid item xs={12} lg={10}> 
+            <Toolbar className={classes.toolbar}>
               <Button
-                component={Link}
-                to="/signin"
-                color="primary"
-                variant="outlined"
-                className={classes.signin}
+                tabIndex={-1}
+                className={classes.brand}
+                //startIcon={<img href="qwe.jpg" alt="BIT" />}
               >
-                Sign in
+                <Typography
+                  className={classes.barter}
+                  variant="h6"
+                >
+                  Barter
+                </Typography>
+                <Typography
+                  className={classes.it}
+                  variant="h6"
+                >
+                  IT
+                </Typography>   
               </Button>
-              <Button
-                component={Link}
-                to="/signup"
+              
+              {/*<Typography 
+                variant="h5" 
+                className={classes.title}
                 color="primary"
-                variant="contained"
-                className={classes.signup}
               >
-                Sign up
-              </Button>
-            </div>
-          </Toolbar>
+                <strong>BarterIT</strong>
+              </Typography>*/}
+              <div>
+                <Button
+                  component={Link}
+                  to="/signin"
+                  color="primary"
+                  variant="outlined"
+                  className={classes.signin}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  component={Link}
+                  to="/signup"
+                  color="primary"
+                  variant="contained"
+                  className={classes.signup}
+                >
+                  Sign up
+                </Button>
+              </div>
+            </Toolbar>
+          </Grid>
+          <Grid item lg={1}></Grid>
         </Grid>
-        
-        
-        <Grid item lg={1}></Grid>
-      </Grid>
-    </AppBar>
+      </AppBar>
+    </>
+    
 );
 }
  
