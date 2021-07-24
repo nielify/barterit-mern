@@ -66,7 +66,7 @@ const GoogleButton = withStyles((theme) => ({
   },
 }))(Button);*/
 
-const Signin = ({ setShowProgress }) => {
+const Signin = ({ setShowProgress, setFirstName }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -106,6 +106,7 @@ const Signin = ({ setShowProgress }) => {
       setPasswordTextHelper(data.password);
     }
     if (data.loginSuccess) {
+      setFirstName(data.firstName);
       history.push('/');
     }
     if (data.loginSuccess === false) {

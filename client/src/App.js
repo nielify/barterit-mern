@@ -51,7 +51,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <LinearLoader showProgress={showProgress} />
-        { firstName ? <Header /> : <DefaultHeader />}
+        { firstName ? <Header firstName={firstName} setFirstName={setFirstName} /> : <DefaultHeader />}
         <Switch>
           <Route exact path="/">
             <Marketplace />
@@ -81,7 +81,7 @@ function App() {
             <SMSForm />
           </Route>
           <Route exact path="/signin">
-            <Signin setShowProgress={setShowProgress}/>
+            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} />
           </Route>
           <Route exact path="/signup">
             <Signup setShowProgress={setShowProgress}/>
