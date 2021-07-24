@@ -16,7 +16,7 @@ import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(14),
+    marginTop: theme.spacing(8),
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
