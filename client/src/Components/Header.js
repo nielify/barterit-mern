@@ -81,12 +81,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = () => {
+const Header = ({ firstName, setFirstName }) => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [ profilePicture, setProfilePicture ] = useState(JakePhoto);
-  const [ firstName, setFirstName ] = useState('Jake');
+  const [ profilePicture, setProfilePicture ] = useState('');
+  //const [ firstName, setFirstName ] = useState('');
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -109,8 +109,8 @@ const Header = () => {
           history.push(data.url);
         }
         else {
-          setFirstName(data.firstName);
-          setProfilePicture(data.profilePicture);
+          /* setFirstName(data.firstName);
+          setProfilePicture(data.profilePicture); */
         }
       })
       .catch(err => {
@@ -124,6 +124,7 @@ const Header = () => {
     const data = await res.json(); 
     
     if (data.logoutSuccess) { 
+      setFirstName('');
       history.push('/signin'); 
     } 
   } 

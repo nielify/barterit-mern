@@ -162,7 +162,7 @@ module.exports.login_post = async (req, res) => {
         maxAge: maxAge * 1000, 
         secure: process.env.ENVIRONMENT === 'dev' ? false : true  
       });
-      return res.status(200).send({ user: user._id, loginSuccess: true });
+      return res.status(200).send({ user: user._id, firstName: user.firstName , loginSuccess: true });
     }
     else {
       return res.status(200).send({ loginSuccess: false, reason: 'Account is not active yet' });

@@ -45,11 +45,13 @@ const theme = createMuiTheme({
 function App() {
   const [ showProgress, setShowProgress ] = useState(false);
 
+  const [ firstName, setFirstName ] = useState(''); 
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <LinearLoader showProgress={showProgress} />
-        <Header />
+        { firstName ? <Header firstName={firstName} setFirstName={setFirstName} /> : <DefaultHeader />}
         <Switch>
           <Route exact path="/">
             <Marketplace />
@@ -79,43 +81,33 @@ function App() {
             <SMSForm />
           </Route>
           <Route exact path="/signin">
-            <DefaultHeader /> 
-            <Signin setShowProgress={setShowProgress}/>
+            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} />
           </Route>
           <Route exact path="/signup">
-            <DefaultHeader /> 
             <Signup setShowProgress={setShowProgress}/>
           </Route>
           <Route exact path="/signup/verify">
-            <DefaultHeader /> 
             <Verify />
           </Route>
           <Route exact path="/signup/success">
-            <DefaultHeader /> 
             <Success />
           </Route>
           <Route exact path="/forgot-password">
-            <DefaultHeader /> 
             <ForgotPassword setShowProgress={setShowProgress}/>
           </Route>
           <Route exact path="/forgot-password/email-sent">
-            <DefaultHeader /> 
             <EmailSent />
           </Route>
           <Route exact path="/forgot-password/expired">
-            <DefaultHeader /> 
             <Expired />
           </Route>
           <Route exact path="/forgot-password/success">
-            <DefaultHeader /> 
             <ResetPasswordSuccess />
           </Route>
           <Route exact path="/user/:userId/reset-password/:token">
-            <DefaultHeader /> 
             <ResetPassword setShowProgress={setShowProgress} />
           </Route>
           <Route path="/*">
-            {/* <DefaultHeader />  */}
             <h2>Error 404: Page Not Found</h2>
           </Route>
         </Switch>
