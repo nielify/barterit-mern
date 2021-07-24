@@ -35,7 +35,7 @@ const PostedItems = () => {
       >
         Your items in Marketplace
       </Typography>
-      <Grid container xs={12}  className={classes.container}>
+      <Grid container className={classes.container}>
         <PostCard />
         <PostCard />
         <PostCard />

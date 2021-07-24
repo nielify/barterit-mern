@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     padding: 11,
   },
   dropdown: {
-    marginRight: theme.spacing(1),
     color: '#fff',
   },
   accountMenu: {
@@ -132,8 +131,8 @@ const Header = () => {
   return (   
     <AppBar className={classes.root} position="sticky">     
       <Grid container>
-        <Grid item lg={1}></Grid>
-        <Grid item xs={12} lg={10}> 
+        {/* <Grid item lg={1}></Grid> */}
+        <Grid item xs={12} /* lg={10} */> 
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -145,7 +144,7 @@ const Header = () => {
               <Typography
                 className={classes.barter}
                 variant="h6"
-                style={{letterSpacing: 1.5}}
+                style={{letterSpacing: 1}}
               >
                 Barter
               </Typography>
@@ -247,7 +246,7 @@ const Header = () => {
             </div>
           </Toolbar>
         </Grid>
-        <Grid item lg={1}></Grid>
+        {/* <Grid item lg={1}></Grid> */}
       </Grid>
     </AppBar>
   );
