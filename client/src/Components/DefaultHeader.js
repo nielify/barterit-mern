@@ -76,8 +76,7 @@ const DefaultHeader = () => {
       <div className={classes.decoy}></div>
       <AppBar className={classes.root} position="fixed">    
         <Grid container>
-          <Grid item lg={1}></Grid>
-          <Grid item xs={12} lg={10}> 
+          <Grid item xs={12}> 
             <Toolbar className={classes.toolbar}>
               <Button
                 tabIndex={-1}
@@ -127,7 +126,6 @@ const DefaultHeader = () => {
               </div>
             </Toolbar>
           </Grid>
-          <Grid item lg={1}></Grid>
         </Grid>
       </AppBar>
     </>
