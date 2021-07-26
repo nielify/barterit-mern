@@ -14,7 +14,7 @@ import JakeBackground from '../../Images/jake_background.jpg';
 import JakeRebullo from '../../Images/jake_rebullo.jpg';
 
 const useStyles = makeStyles((theme) => ({
-  bgContainer: {
+  root: {
     width: '100%',
     position: 'relative',
     height: 200,
@@ -23,11 +23,23 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   background: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${JakeBackground})`,
     height: '100%',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
+    width: '100%',
+  },
+  backgroundImg: {
+    height: '100%',
+    width: '100%',
+    objectFit: 'cover',
+    position: 'relative',
+  },
+  backgroundOverlay: { 
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'black',
+    opacity: .35,
   },
   info: {
     position: 'absolute',
@@ -122,8 +134,11 @@ const PersonalInfo = () => {
 
   return ( 
     <>
-      <div className={classes.bgContainer}>
-        <div className={classes.background}></div>
+      <div className={classes.root}>
+        <div className={classes.background}>
+          { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
+          <div className={classes.backgroundOverlay}></div>
+        </div>
         <div className={classes.info}>
           <div className={classes.avatarContainer}>
             <Avatar src={picture} className={classes.avatar} />
