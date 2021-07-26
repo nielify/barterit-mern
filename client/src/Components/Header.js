@@ -162,7 +162,7 @@ const Header = ({ firstName, setFirstName }) => {
                 className={classes.avatar} 
                 src={profilePicture}
                 component={Link}
-                to="/my-account"
+                to="/profile"
               >
                 { firstName[0] }
               </Avatar>
@@ -171,7 +171,7 @@ const Header = ({ firstName, setFirstName }) => {
                 variant="subtitle2" 
                 className={classes.firstName}
                 component={Link}
-                to="/my-account"
+                to="/profile"
               >
                 {firstName}
               </Typography> }
@@ -190,7 +190,7 @@ const Header = ({ firstName, setFirstName }) => {
                         <ListItem 
                           onClick={toggleAccountPopper}
                           component={Link}
-                          to="/my-account"
+                          to="/profile"
                           button 
                           className={classes.listItem}
                         >
