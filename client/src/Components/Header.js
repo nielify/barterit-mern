@@ -163,9 +163,7 @@ const Header = ({ firstName, setFirstName }) => {
                 src={profilePicture}
                 component={Link}
                 to="/profile"
-              >
-                { firstName[0] }
-              </Avatar>
+              />
               { firstName && 
               <Typography 
                 variant="subtitle2" 

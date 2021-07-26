@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    position: 'relative',
   },
   info: {
     position: 'absolute',
@@ -95,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     right: -3,
+    border: 'solid 1px #fff',
   },
   pictureIcon: {
     width: theme.spacing(4),
@@ -105,10 +105,11 @@ const useStyles = makeStyles((theme) => ({
 const PersonalInfo = () => {
   const classes = useStyles();
 
-  const [ picture, setPicture ] = useState(JakeRebullo);
-  const [ background, setBackground ] = useState(JakeBackground);
+  const [ picture, setPicture ] = useState('');
+  const [ background, setBackground ] = useState('');
   const [ name, setName ] = useState('Jake Rebullo');
   const [ rating, setRating ] = useState(3.5);
+  const [ rates, setRates ] = useState(69);
   const [ town, setTown ] = useState('Sariaya');
 
   const handlePictureFileChange = () => {
@@ -158,7 +159,7 @@ const PersonalInfo = () => {
                 style={{color:'#33ab9f', }}
                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
               />
-              <span className={classes.number}>(12)</span>
+              <span className={classes.number}>({ rates })</span>
             </Box>
             <Typography
               className={classes.location}
@@ -167,22 +168,22 @@ const PersonalInfo = () => {
             </Typography>
           </div>
         </div>    
-          <input 
-            type="file" 
-            name="backgroundFile" 
-            id="backgroundFile" 
-            accept="image/*" 
-            //multiple 
-            className={classes.file}
-            onChange={handleBackgroundFileChange}
-          />
-          <IconButton className={classes.editBackground}>
-            <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-              <Avatar>
-                <CameraAltIcon />
-              </Avatar>
-            </label>
-          </IconButton> 
+        <input 
+          type="file" 
+          name="backgroundFile" 
+          id="backgroundFile" 
+          accept="image/*" 
+          //multiple 
+          className={classes.file}
+          onChange={handleBackgroundFileChange}
+        />
+        <IconButton className={classes.editBackground}>
+          <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+            <Avatar>
+              <CameraAltIcon />
+            </Avatar>
+          </label>
+        </IconButton> 
       </div>          
     </>
   );
