@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   background: {
     height: '100%',
     width: '100%',
+    opacity: .8,
   },
   backgroundImg: {
     height: '100%',
@@ -91,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
     right: 12,
     padding: 0,
     cursor: 'pointer',
+    border: 'solid 1px #fff',
   },
   file: {
     width: 0.1,
@@ -119,10 +121,10 @@ const PersonalInfo = () => {
 
   const [ picture, setPicture ] = useState('');
   const [ background, setBackground ] = useState('');
-  const [ name, setName ] = useState('Jake Rebullo');
+  const [ name, setName ] = useState('John Doe');
   const [ rating, setRating ] = useState(3.5);
   const [ rates, setRates ] = useState(69);
-  const [ town, setTown ] = useState('Sariaya');
+  const [ town, setTown ] = useState('Mars');
 
   const handlePictureFileChange = () => {
     alert('Picture changed');
