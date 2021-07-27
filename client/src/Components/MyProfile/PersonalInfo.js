@@ -182,6 +182,14 @@ const PersonalInfo = ({ user }) => {
     setShowBackgroundSave(false);
   }
 
+  const handleSavePicture = () => {
+    alert('submitting picture' + picture);
+  }
+
+  const handleSaveBackground = () => {
+    alert('submitting background' + background);
+  }
+
   return ( 
     <div className={classes.root}>
       <div className={classes.background}>
@@ -261,6 +269,7 @@ const PersonalInfo = ({ user }) => {
         <Button
           variant="contained"
           color="primary"
+          onClick={handleSavePicture}
         >
           Save Profile Picture
         </Button>
@@ -277,6 +286,7 @@ const PersonalInfo = ({ user }) => {
         <Button
           variant="contained"
           color="primary"
+          onClick={handleSaveBackground}
         >
           Save Profile Background
         </Button>
