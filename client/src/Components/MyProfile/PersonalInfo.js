@@ -9,6 +9,7 @@ import Rating from '@material-ui/lab/Rating';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
 
 import JakeBackground from '../../Images/jake_background.jpg';
 import JakeRebullo from '../../Images/jake_rebullo.jpg';
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: theme.spacing(10),
     height: theme.spacing(10),
-    border: 'solid 2px #fff',
+    border: 'solid 2px #00695f',
   },
   number: {
     color: '#fff',
@@ -91,7 +92,6 @@ const useStyles = makeStyles((theme) => ({
     right: 12,
     padding: 0,
     cursor: 'pointer',
-    border: 'solid 1px #fff',
   },
   file: {
     width: 0.1,
@@ -107,11 +107,11 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     right: -3,
-    border: 'solid 1px #fff',
   },
   pictureIcon: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+    background: '#33ab9f',
   }
 }));
 
@@ -207,8 +207,8 @@ const PersonalInfo = () => {
         />
         <IconButton className={classes.editBackground}>
           <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-            <Avatar>
-              <CameraAltIcon />
+            <Avatar style={{background: '#33ab9f'}}>
+              <PhotoSizeSelectActualIcon />
             </Avatar>
           </label>
         </IconButton> 
