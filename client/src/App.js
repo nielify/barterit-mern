@@ -7,7 +7,7 @@ import Header from './Components/Header';
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
-import MyAccount from './Components/MyAccount/MyAccount';
+import MyProfile from './Components/MyProfile/MyProfile';
 import SavedItems from './Components/SavedItems/SavedItems';
 import User from './Components/User/User';
 import Upload from './TestComponents/Upload';
@@ -62,8 +62,8 @@ function App() {
           <Route exact path="/item">
             <Item />
           </Route>
-          <Route exact path="/my-account">
-            <MyAccount />
+          <Route exact path="/profile">
+            <MyProfile />
           </Route>
           <Route exact path="/saved-items">
             <SavedItems />

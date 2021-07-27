@@ -75,6 +75,7 @@ const AddPhotos = () => {
   }
 
   const handleInputChange = (e) => {
+    console.log(e.target.files);
     Array.prototype.forEach.call(e.target.files, (file) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -87,6 +88,7 @@ const AddPhotos = () => {
         imageFilesKey.current = imageFilesKey.current + 1;
       }
     });
+    e.target.value = null;
   }
 
   return (  

@@ -9,12 +9,13 @@ import Rating from '@material-ui/lab/Rating';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
+import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
 
 import JakeBackground from '../../Images/jake_background.jpg';
 import JakeRebullo from '../../Images/jake_rebullo.jpg';
 
 const useStyles = makeStyles((theme) => ({
-  bgContainer: {
+  root: {
     width: '100%',
     position: 'relative',
     height: 200,
@@ -23,12 +24,23 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   background: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${JakeBackground})`,
     height: '100%',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
+    width: '100%',
+  },
+  backgroundImg: {
+    height: '100%',
+    width: '100%',
+    objectFit: 'cover',
     position: 'relative',
+  },
+  backgroundOverlay: { 
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'black',
+    opacity: .35,
   },
   info: {
     position: 'absolute',
@@ -49,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: theme.spacing(10),
     height: theme.spacing(10),
-    border: 'solid 2px #fff',
+    border: 'solid 2px #00695f',
   },
   number: {
     color: '#fff',
@@ -99,30 +111,47 @@ const useStyles = makeStyles((theme) => ({
   pictureIcon: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+    background: '#33ab9f',
   }
 }));
 
 const PersonalInfo = () => {
   const classes = useStyles();
 
-  const [ picture, setPicture ] = useState(JakeRebullo);
-  const [ background, setBackground ] = useState(JakeBackground);
-  const [ name, setName ] = useState('Jake Rebullo');
-  const [ rating, setRating ] = useState(3.5);
-  const [ town, setTown ] = useState('Sariaya');
+  const [ picture, setPicture ] = useState('');
+  const [ background, setBackground ] = useState('');
+  const [ name, setName ] = useState('John Doe');
+  const [ rating, setRating ] = useState(0);
+  const [ rates, setRates ] = useState(0);
+  const [ town, setTown ] = useState('Mars');
 
-  const handlePictureFileChange = () => {
-    alert('Picture changed');
-  }
+  const handlePictureFileChange = (e) => { 
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => { 
+        setPicture(reader.result);
+      }
+    }
+  } 
 
-  const handleBackgroundFileChange = () => {
-    alert('Background changed');
-  }
+  const handleBackgroundFileChange = (e) => { 
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => { 
+        setBackground(reader.result);
+      }
+    }
+  } 
 
   return ( 
     <>
-      <div className={classes.bgContainer}>
-        <div className={classes.background}></div>
+      <div className={classes.root}>
+        <div className={classes.background}>
+          { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
+          <div className={classes.backgroundOverlay}></div>
+        </div>
         <div className={classes.info}>
           <div className={classes.avatarContainer}>
             <Avatar src={picture} className={classes.avatar} />
@@ -158,7 +187,7 @@ const PersonalInfo = () => {
                 style={{color:'#33ab9f', }}
                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
               />
-              <span className={classes.number}>(12)</span>
+              <span className={classes.number}>({ rates })</span>
             </Box>
             <Typography
               className={classes.location}
@@ -167,22 +196,22 @@ const PersonalInfo = () => {
             </Typography>
           </div>
         </div>    
-          <input 
-            type="file" 
-            name="backgroundFile" 
-            id="backgroundFile" 
-            accept="image/*" 
-            //multiple 
-            className={classes.file}
-            onChange={handleBackgroundFileChange}
-          />
-          <IconButton className={classes.editBackground}>
-            <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-              <Avatar>
-                <CameraAltIcon />
-              </Avatar>
-            </label>
-          </IconButton> 
+        <input 
+          type="file" 
+          name="backgroundFile" 
+          id="backgroundFile" 
+          accept="image/*" 
+          //multiple 
+          className={classes.file}
+          onChange={handleBackgroundFileChange}
+        />
+        <IconButton className={classes.editBackground}>
+          <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+            <Avatar style={{background: '#33ab9f'}}>
+              <PhotoSizeSelectActualIcon />
+            </Avatar>
+          </label>
+        </IconButton> 
       </div>          
     </>
   );
