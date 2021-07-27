@@ -52,7 +52,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <LinearLoader showProgress={showProgress} />
-        { user._id ? <Header firstName={firstName} setFirstName={setFirstName} user={user}/> : <DefaultHeader />}
+        { user._id ? <Header user={user} setUser={setUser} /> : <DefaultHeader />}
         <Switch>
           <Route exact path="/">
             <Marketplace />

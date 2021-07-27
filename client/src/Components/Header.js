@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ firstName, setFirstName, user }) => {
+const Header = ({ user, setUser }) => {
   const classes = useStyles();
   const history = useHistory();
   
@@ -123,7 +123,7 @@ const Header = ({ firstName, setFirstName, user }) => {
     const data = await res.json(); 
     
     if (data.logoutSuccess) { 
-      setFirstName('');
+      setUser({});
       history.push('/signin'); 
     } 
   } 
