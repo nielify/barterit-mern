@@ -48,12 +48,14 @@ const useStyles = makeStyles((theme) => ({
     left: 20,
     display: 'flex',
     alignItems: 'center',
+    width: 400,
   },
   innerInfo: {
     display: 'flex',
     flexDirection: 'column',
     marginLeft: theme.spacing(1.5),
     position: 'relative',
+    width: '100%',
   },
   avatarContainer: {
     position: 'relative',
@@ -76,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '.95rem',
     position: 'absolute',
     top: '-70%',
-    left: '5%',
+    left: 6,
   },
   location: {
     color: '#fff',
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '.75rem',
     position: 'absolute',
     bottom: '-50%',
-    left: '5%',
+    left: 6,
   },
   editBackground: {
     position: 'absolute',
@@ -115,15 +117,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PersonalInfo = () => {
+const PersonalInfo = ({ user }) => {
   const classes = useStyles();
 
   const [ picture, setPicture ] = useState('');
   const [ background, setBackground ] = useState('');
-  const [ name, setName ] = useState('John Doe');
+  const [ name, setName ] = useState(user.firstName + ' ' + user.middleName + ' ' + user.lastName);
   const [ rating, setRating ] = useState(0);
   const [ rates, setRates ] = useState(0);
-  const [ town, setTown ] = useState('Mars');
+  const [ town, setTown ] = useState(user.town);
 
   const handlePictureFileChange = (e) => { 
     if (e.target.files[0]) {

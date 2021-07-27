@@ -46,12 +46,13 @@ function App() {
   const [ showProgress, setShowProgress ] = useState(false);
 
   const [ firstName, setFirstName ] = useState(''); 
+  const [ user, setUser ] = useState({});
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <LinearLoader showProgress={showProgress} />
-        { firstName ? <Header firstName={firstName} setFirstName={setFirstName} /> : <DefaultHeader />}
+        { user._id ? <Header firstName={firstName} setFirstName={setFirstName} user={user}/> : <DefaultHeader />}
         <Switch>
           <Route exact path="/">
             <Marketplace />
@@ -63,7 +64,7 @@ function App() {
             <Item />
           </Route>
           <Route exact path="/profile">
-            <MyProfile />
+            <MyProfile user={user} />
           </Route>
           <Route exact path="/saved-items">
             <SavedItems />
@@ -81,7 +82,7 @@ function App() {
             <SMSForm />
           </Route>
           <Route exact path="/signin">
-            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} />
+            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} setUser={setUser}/>
           </Route>
           <Route exact path="/signup">
             <Signup setShowProgress={setShowProgress}/>

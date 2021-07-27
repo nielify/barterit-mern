@@ -67,7 +67,7 @@ const GoogleButton = withStyles((theme) => ({
   },
 }))(Button);*/
 
-const Signin = ({ setShowProgress, setFirstName }) => {
+const Signin = ({ setShowProgress, setFirstName, setUser }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -96,7 +96,7 @@ const Signin = ({ setShowProgress, setFirstName }) => {
       body: JSON.stringify({ email, password })
     }); 
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     setShowProgress(false);
     if (data.email) {
       setEmailError(true);
@@ -106,8 +106,9 @@ const Signin = ({ setShowProgress, setFirstName }) => {
       setPasswordError(true);
       setPasswordTextHelper(data.password);
     }
-    if (data.loginSuccess) {
-      setFirstName(data.firstName);
+    if (data.user) {
+      setFirstName(data.user.firstName);
+      setUser(data.user);
       history.push('/');
     }
     if (data.loginSuccess === false) {

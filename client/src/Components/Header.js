@@ -81,12 +81,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ firstName, setFirstName }) => {
+const Header = ({ firstName, setFirstName, user }) => {
   const classes = useStyles();
   const history = useHistory();
   
   const [ profilePicture, setProfilePicture ] = useState('');
-  //const [ firstName, setFirstName ] = useState('');
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -98,7 +97,7 @@ const Header = ({ firstName, setFirstName }) => {
     setAccountAnchorEl(null);
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
       .then(res => {
         return res.json();
@@ -109,15 +108,15 @@ const Header = ({ firstName, setFirstName }) => {
           history.push(data.url);
         }
         else {
-          /* setFirstName(data.firstName);
-          setProfilePicture(data.profilePicture); */
+          //setFirstName(data.firstName);
+          //setProfilePicture(data.profilePicture); 
         }
       })
       .catch(err => {
         console.log(err.message);
         history.push('/signin');
       });
-  }, [history])
+  }, [history]) */
 
   const handleLogout = async () => { 
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, { credentials: 'include' }); 
@@ -164,14 +163,14 @@ const Header = ({ firstName, setFirstName }) => {
                 component={Link}
                 to="/profile"
               />
-              { firstName && 
+              { user.firstName && 
               <Typography 
                 variant="subtitle2" 
                 className={classes.firstName}
                 component={Link}
                 to="/profile"
               >
-                {firstName}
+                {user.firstName}
               </Typography> }
               <ClickAwayListener onClickAway={handleClickAway}>
                 <div>

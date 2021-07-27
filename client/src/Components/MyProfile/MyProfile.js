@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MyProfile = () => {
+const MyProfile = ({ user }) => {
   const classes = useStyles();
 
   return (  
     <Container maxWidth="md" className={classes.root}>
-      <PersonalInfo />
+      <PersonalInfo user={user} />
       <PostedItems />
     </Container>
   );
