@@ -6,13 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
+import Button from '@material-ui/core/Button';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
-
-import JakeBackground from '../../Images/jake_background.jpg';
-import JakeRebullo from '../../Images/jake_rebullo.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,11 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
   info: {
     position: 'absolute',
-    bottom: 15,
-    left: 20,
+    bottom: 0,
+    left: 0,
+    margin: '15px 20px',
     display: 'flex',
     alignItems: 'center',
-    width: 400,
+    width: 350,
   },
   innerInfo: {
     display: 'flex',
@@ -90,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
   editBackground: {
     position: 'absolute',
-    top: 12,
+    bottom: 12,
     right: 12,
     padding: 0,
     cursor: 'pointer',
@@ -114,6 +113,17 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
     background: '#33ab9f',
+  },
+  saveContainer: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    top: 0,
+    right: 0,
+    background: '#000',
+    width: '100%',
+    opacity: .6,
+    padding: theme.spacing(1, 2),
   }
 }));
 
@@ -127,14 +137,24 @@ const PersonalInfo = ({ user }) => {
   const [ rates, setRates ] = useState(0);
   const [ town, setTown ] = useState(user.town);
 
+  const [ showBackgroundSave, setShowBackgroundSave ] = useState(false);
+  const [ showPictureSave, setShowPictureSave ] = useState(false);
+  const [ showEditPicture, setShowEditPicture ] = useState(true);
+  const [ showEditBackground, setShowEditBackground ] = useState(true);
+
+
+
   const handlePictureFileChange = (e) => { 
-    if (e.target.files[0]) {
+    if (e.target.files[0]) { 
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => { 
         setPicture(reader.result);
       }
     }
+    setShowPictureSave(true);
+    setShowEditBackground(false);
+    e.target.value = null;
   } 
 
   const handleBackgroundFileChange = (e) => { 
@@ -145,77 +165,123 @@ const PersonalInfo = ({ user }) => {
         setBackground(reader.result);
       }
     }
+    setShowBackgroundSave(true);
+    setShowEditPicture(false);
+    e.target.value = null;
   } 
 
+  const handleCancelPicture = () => {
+    setPicture('');
+    setShowEditBackground(true);
+    setShowPictureSave(false);
+  }
+
+  const handleCancelBackground = () => {
+    setBackground('');
+    setShowEditPicture(true);
+    setShowBackgroundSave(false);
+  }
+
   return ( 
-    <>
-      <div className={classes.root}>
-        <div className={classes.background}>
-          { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
-          <div className={classes.backgroundOverlay}></div>
+    <div className={classes.root}>
+      <div className={classes.background}>
+        { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
+        <div className={classes.backgroundOverlay}></div>
+      </div>
+      <div className={classes.info}>
+        <div className={classes.avatarContainer}>
+          <Avatar src={picture} className={classes.avatar} />
+          <input  
+            type="file" 
+            name="pictureFile" 
+            id="pictureFile" 
+            accept="image/*" 
+            className={classes.file}
+            onChange={handlePictureFileChange}
+          />
+          { showEditPicture && <IconButton className={classes.editPicture}>
+            <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
+              <Avatar className={classes.pictureIcon}>
+                <CameraAltIcon fontSize="small"/>
+              </Avatar>
+            </label>
+          </IconButton> }
+          
         </div>
-        <div className={classes.info}>
-          <div className={classes.avatarContainer}>
-            <Avatar src={picture} className={classes.avatar} />
-            <input  
-              type="file" 
-              name="pictureFile" 
-              id="pictureFile" 
-              accept="image/*" 
-              className={classes.file}
-              onChange={handlePictureFileChange}
+        <div className={classes.innerInfo}>
+          <Typography
+            className={classes.name}
+          >
+            { user.firstName !== undefined ? name : '' }
+          </Typography>
+          <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
+            <Rating 
+              name="half-rating-read"
+              value={rating} 
+              precision={0.5} 
+              readOnly 
+              size="small" 
+              style={{color:'#33ab9f', }}
+              emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
             />
-            <IconButton className={classes.editPicture}>
-              <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
-                <Avatar className={classes.pictureIcon}>
-                  <CameraAltIcon fontSize="small"/>
-                </Avatar>
-              </label>
-            </IconButton> 
-          </div>
-          <div className={classes.innerInfo}>
-            <Typography
-              className={classes.name}
-            >
-              { name }
-            </Typography>
-            <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
-              <Rating 
-                name="half-rating-read"
-                value={rating} 
-                precision={0.5} 
-                readOnly 
-                size="small" 
-                style={{color:'#33ab9f', }}
-                emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
-              />
-              <span className={classes.number}>({ rates })</span>
-            </Box>
-            <Typography
-              className={classes.location}
-            >
-              { town }
-            </Typography>
-          </div>
-        </div>    
-        <input 
-          type="file" 
-          name="backgroundFile" 
-          id="backgroundFile" 
-          accept="image/*" 
-          //multiple 
-          className={classes.file}
-          onChange={handleBackgroundFileChange}
-        />
-        <IconButton className={classes.editBackground}>
-          <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-            <Avatar style={{background: '#33ab9f'}}>
-              <PhotoSizeSelectActualIcon />
-            </Avatar>
-          </label>
-        </IconButton> 
-      </div>          
-    </>
+            <span className={classes.number}>({ rates })</span>
+          </Box>
+          <Typography
+            className={classes.location}
+          >
+            { town }
+          </Typography>
+        </div>
+      </div>    
+      <input 
+        type="file" 
+        name="backgroundFile" 
+        id="backgroundFile" 
+        accept="image/*" 
+        //multiple 
+        className={classes.file}
+        onChange={handleBackgroundFileChange}
+      />
+      { showEditBackground && <IconButton className={classes.editBackground}>
+        <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+          <Avatar style={{background: '#33ab9f'}}>
+            <PhotoSizeSelectActualIcon />
+          </Avatar>
+        </label>
+      </IconButton> }
+      {showPictureSave && <div className={classes.saveContainer}>
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{marginRight: 16}}
+          onClick={handleCancelPicture}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+        >
+          Save Profile Picture
+        </Button>
+      </div> }
+      {showBackgroundSave && <div className={classes.saveContainer}>
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{marginRight: 16}}
+          onClick={handleCancelBackground}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+        >
+          Save Profile Background
+        </Button>
+      </div> }
+    </div>          
   );
 }
  
