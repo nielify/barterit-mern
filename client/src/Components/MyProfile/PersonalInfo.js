@@ -122,17 +122,17 @@ const PersonalInfo = () => {
   const [ picture, setPicture ] = useState('');
   const [ background, setBackground ] = useState('');
   const [ name, setName ] = useState('John Doe');
-  const [ rating, setRating ] = useState(3.5);
-  const [ rates, setRates ] = useState(69);
+  const [ rating, setRating ] = useState(0);
+  const [ rates, setRates ] = useState(0);
   const [ town, setTown ] = useState('Mars');
 
-  const handlePictureFileChange = () => {
-    alert('Picture changed');
-  }
+  const handlePictureFileChange = () => { 
+    alert('Picture changed');  
+  } 
 
-  const handleBackgroundFileChange = () => {
-    alert('Background changed');
-  }
+  const handleBackgroundFileChange = () => { 
+    alert('Background changed'); 
+  } 
 
   return ( 
     <>
