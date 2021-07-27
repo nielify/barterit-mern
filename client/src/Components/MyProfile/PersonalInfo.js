@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   background: {
     height: '100%',
     width: '100%',
-    opacity: .8,
   },
   backgroundImg: {
     height: '100%',
@@ -126,12 +125,24 @@ const PersonalInfo = () => {
   const [ rates, setRates ] = useState(0);
   const [ town, setTown ] = useState('Mars');
 
-  const handlePictureFileChange = () => { 
-    alert('Picture changed');  
+  const handlePictureFileChange = (e) => { 
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => { 
+        setPicture(reader.result);
+      }
+    }
   } 
 
-  const handleBackgroundFileChange = () => { 
-    alert('Background changed'); 
+  const handleBackgroundFileChange = (e) => { 
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => { 
+        setBackground(reader.result);
+      }
+    }
   } 
 
   return ( 
