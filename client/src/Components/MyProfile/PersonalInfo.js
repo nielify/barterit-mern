@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
@@ -58,11 +59,24 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarContainer: {
     position: 'relative',
+    borderRadius: '50%',
   },
   avatar: {
     width: theme.spacing(10),
     height: theme.spacing(10),
     border: 'solid 2px #00695f',
+  },
+  avatarLoader: { 
+    position: 'absolute',
+    background: 'black',
+    opacity: .5,
+    width: '100%',
+    height: '100%',
+    top: 0,
+    borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   number: {
     color: '#fff',
@@ -142,7 +156,7 @@ const PersonalInfo = ({ user, setUser }) => {
   const [ showEditPicture, setShowEditPicture ] = useState(true);
   const [ showEditBackground, setShowEditBackground ] = useState(true);
 
-
+  const [ showAvatarLoader, setShowAvatarLoader ] = useState(false);
 
   const handlePictureFileChange = (e) => { 
     if (e.target.files[0]) { 
@@ -183,6 +197,11 @@ const PersonalInfo = ({ user, setUser }) => {
   }
 
   const handleSavePicture = async () => {
+    setTimeout(() => {
+      setShowAvatarLoader(true);
+      setShowPictureSave(false);
+    }, [500]);
+
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/change-picture`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -191,6 +210,7 @@ const PersonalInfo = ({ user, setUser }) => {
     });
     const data = await res.json();
     setUser(data);
+    setShowAvatarLoader(false);
   }
 
   const handleSaveBackground = () => {
@@ -206,6 +226,9 @@ const PersonalInfo = ({ user, setUser }) => {
       <div className={classes.info}>
         <div className={classes.avatarContainer}>
           <Avatar src={picture} className={classes.avatar} />
+          { showAvatarLoader && <div className={classes.avatarLoader}>
+            <CircularProgress size={28} />
+          </div>}
           <input  
             type="file" 
             name="pictureFile" 
