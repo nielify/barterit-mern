@@ -15,5 +15,6 @@ router.post('/:userId/reset-password/:token', userControllers.resetPassword_post
 
 //profile
 router.post('/change-picture', requireAuth, userControllers.changePicture_post);
+router.post('/change-background', requireAuth, userControllers.changeBackground_post);
 
 module.exports = router;

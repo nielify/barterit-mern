@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
     objectFit: 'cover',
-    position: 'relative',
   },
   backgroundOverlay: { 
     position: 'absolute',
@@ -40,6 +39,17 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     background: 'black',
     opacity: .35,
+  },
+  backgroundLoader: {
+    background: 'black',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    opacity: .5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
   },
   info: {
     position: 'absolute',
@@ -145,7 +155,7 @@ const PersonalInfo = ({ user, setUser }) => {
   const classes = useStyles();
 
   const [ picture, setPicture ] = useState(user.profilePicture);
-  const [ background, setBackground ] = useState('');
+  const [ background, setBackground ] = useState(user.backgroundPicture);
   const [ name, setName ] = useState(user.firstName + ' ' + user.middleName + ' ' + user.lastName);
   const [ rating, setRating ] = useState(0);
   const [ rates, setRates ] = useState(0);
@@ -157,6 +167,7 @@ const PersonalInfo = ({ user, setUser }) => {
   const [ showEditBackground, setShowEditBackground ] = useState(true);
 
   const [ showAvatarLoader, setShowAvatarLoader ] = useState(false);
+  const [ showBackgroundLoader, setShowBackgroundLoader ] = useState(false);
 
   const handlePictureFileChange = (e) => { 
     if (e.target.files[0]) { 
@@ -200,7 +211,7 @@ const PersonalInfo = ({ user, setUser }) => {
     setTimeout(() => {
       setShowAvatarLoader(true);
       setShowPictureSave(false);
-    }, [500]);
+    }, [300]);
 
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/change-picture`, {
       method: 'POST',
@@ -208,13 +219,31 @@ const PersonalInfo = ({ user, setUser }) => {
       credentials: 'include',
       body: JSON.stringify({ picture })
     });
+
     const data = await res.json();
     setUser(data);
     setShowAvatarLoader(false);
+    setShowEditBackground(true);
   }
 
-  const handleSaveBackground = () => {
-    alert('submitting background' + background);
+  const handleSaveBackground = async () => {
+    setTimeout(() => {
+      setShowBackgroundLoader(true);
+      setShowBackgroundSave(false);
+    }, [300]);
+
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/change-background`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ background })
+    });
+    const data = await res.json();
+    
+    setUser(data);
+    console.log(data);
+    setShowBackgroundLoader(false);
+    setShowEditPicture(true);
   }
 
   return ( 
@@ -222,6 +251,9 @@ const PersonalInfo = ({ user, setUser }) => {
       <div className={classes.background}>
         { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
         <div className={classes.backgroundOverlay}></div>
+        { showBackgroundLoader && <div className={classes.backgroundLoader}>
+          <CircularProgress />
+        </div>} 
       </div>
       <div className={classes.info}>
         <div className={classes.avatarContainer}>

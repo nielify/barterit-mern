@@ -161,7 +161,33 @@ module.exports.changePicture_post = async (req, res) => {
       console.log(err);
     }
   });
+}
 
+module.exports.changeBackground_post = async (req, res) => {
+  const backgroundPicture = req.body.background;
+  const userToken = req.cookies.jwt;
 
-  
+  jwt.verify(userToken, process.env.JWT_SECRET, async (err, decodedToken) => {
+    const userId = decodedToken.id;
+    try {
+      const user = await User.findById(userId);
+      if (user) {
+        cloudinary.uploader.upload(backgroundPicture, async (error, result) => {
+          if (error) { 
+            console.log('upload error', error); 
+          } 
+          else {
+            user.backgroundPicture = result.url;
+            const newUser = await user.save();
+            console.log(result);
+            res.status(200).send(newUser);
+          }
+        });
+      } else {
+        console.log('no user found');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
 }
