@@ -159,7 +159,7 @@ module.exports.login_post = async (req, res) => {
       const token = createToken(user._id);
       res.cookie('jwt', token, { 
         httpOnly: true, 
-        maxAge: maxAge * 1000, 
+        maxAge: maxAge * 1000, //3days x 1000 
         secure: process.env.ENVIRONMENT === 'dev' ? false : true  
       });
       console.log(user);

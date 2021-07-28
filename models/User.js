@@ -3,6 +3,14 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
+  profilePicture: {
+    type: String,
+    default: '',
+  },
+  backgroundPicture: {
+    type: String,
+    default: '',
+  },
   lastName: {
     type: String,
     required: [true, "Last Name is required"]

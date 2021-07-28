@@ -127,10 +127,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PersonalInfo = ({ user }) => {
+const PersonalInfo = ({ user, setUser }) => {
   const classes = useStyles();
 
-  const [ picture, setPicture ] = useState('');
+  const [ picture, setPicture ] = useState(user.profilePicture);
   const [ background, setBackground ] = useState('');
   const [ name, setName ] = useState(user.firstName + ' ' + user.middleName + ' ' + user.lastName);
   const [ rating, setRating ] = useState(0);
@@ -182,8 +182,15 @@ const PersonalInfo = ({ user }) => {
     setShowBackgroundSave(false);
   }
 
-  const handleSavePicture = () => {
-    alert('submitting picture' + picture);
+  const handleSavePicture = async () => {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/change-picture`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ picture })
+    });
+    const data = await res.json();
+    setUser(data);
   }
 
   const handleSaveBackground = () => {

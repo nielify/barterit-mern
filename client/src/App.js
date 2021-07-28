@@ -64,7 +64,7 @@ function App() {
             <Item />
           </Route>
           <Route exact path="/profile">
-            <MyProfile user={user} />
+            <MyProfile user={user} setUser={setUser}/>
           </Route>
           <Route exact path="/saved-items">
             <SavedItems />

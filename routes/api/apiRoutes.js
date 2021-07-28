@@ -13,9 +13,9 @@ const requireAuth = require('../../middlewares/requireAuth');
 const userRoutes = require('./user/userRoutes');
 
 //controllers
-const apiController = require('../../controllers/apiControllers');
+const userControllers = require('../../controllers/userControllers');
 
-router.get('/marketplace', requireAuth, apiController.marketplace_get);
+router.get('/marketplace', requireAuth, userControllers.marketplace_get);
 
 router.use('/user', userRoutes);
 
