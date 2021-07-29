@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -12,6 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
+
+import { UserContext } from '../../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -151,8 +153,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PersonalInfo = ({ user, setUser }) => {
+const PersonalInfo = () => {
   const classes = useStyles();
+
+  const [ user, setUser ] = useContext(UserContext);
 
   const [ picture, setPicture ] = useState(user.profilePicture);
   const [ background, setBackground ] = useState(user.backgroundPicture);

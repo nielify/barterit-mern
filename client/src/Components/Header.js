@@ -1,5 +1,5 @@
 import { useHistory, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -24,7 +24,7 @@ import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import MessageIcon from '@material-ui/icons/Message';
 
-import JakePhoto from '../Images/jake_rebullo.jpg'
+import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,11 +81,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ user, setUser }) => {
+const Header = () => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [ profilePicture, setProfilePicture ] = useState('');
+  const [ user, setUser ] = useContext(UserContext);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -159,7 +159,7 @@ const Header = ({ user, setUser }) => {
             <div className={classes.right}>
               <Avatar 
                 className={classes.avatar} 
-                src={profilePicture}
+                src={user.profilePicture}
                 component={Link}
                 to="/profile"
               />

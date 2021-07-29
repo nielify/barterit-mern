@@ -1,5 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
+import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -67,9 +68,11 @@ const GoogleButton = withStyles((theme) => ({
   },
 }))(Button);*/
 
-const Signin = ({ setShowProgress, setFirstName, setUser }) => {
+const Signin = ({ setShowProgress }) => {
   const classes = useStyles();
   const history = useHistory();
+
+  const [ user, setUser ] = useContext(UserContext);
 
   const [ showAlert, setShowAlert ] = useState(false);
 
@@ -107,7 +110,6 @@ const Signin = ({ setShowProgress, setFirstName, setUser }) => {
       setPasswordTextHelper(data.password);
     }
     if (data.user) {
-      setFirstName(data.user.firstName);
       setUser(data.user);
       history.push('/');
     }

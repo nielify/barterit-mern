@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Components/DefaultHeader';
@@ -25,7 +25,7 @@ import ResetPassword from './TestComponents/ResetPassword';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-
+import { UserContext } from './Context/UserContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,15 +44,13 @@ const theme = createMuiTheme({
 
 function App() {
   const [ showProgress, setShowProgress ] = useState(false);
-
-  const [ firstName, setFirstName ] = useState(''); 
-  const [ user, setUser ] = useState({});
+  const [ user, setUser ] = useContext(UserContext);
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <LinearLoader showProgress={showProgress} />
-        { user._id ? <Header user={user} setUser={setUser} /> : <DefaultHeader />}
+        { user._id ? <Header /> : <DefaultHeader />}
         <Switch>
           <Route exact path="/">
             <Marketplace />
@@ -64,7 +62,7 @@ function App() {
             <Item />
           </Route>
           <Route exact path="/profile">
-            <MyProfile user={user} setUser={setUser}/>
+            <MyProfile />
           </Route>
           <Route exact path="/saved-items">
             <SavedItems />
@@ -82,7 +80,7 @@ function App() {
             <SMSForm />
           </Route>
           <Route exact path="/signin">
-            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} setUser={setUser}/>
+            <Signin setShowProgress={setShowProgress} />
           </Route>
           <Route exact path="/signup">
             <Signup setShowProgress={setShowProgress}/>
