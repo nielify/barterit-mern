@@ -196,13 +196,13 @@ const PersonalInfo = ({ user, setUser }) => {
   } 
 
   const handleCancelPicture = () => {
-    setPicture('');
+    setPicture(user.profilePicture);
     setShowEditBackground(true);
     setShowPictureSave(false);
   }
 
   const handleCancelBackground = () => {
-    setBackground('');
+    setBackground(user.backgroundPicture);
     setShowEditPicture(true);
     setShowBackgroundSave(false);
   }
@@ -221,6 +221,7 @@ const PersonalInfo = ({ user, setUser }) => {
     });
 
     const data = await res.json();
+
     setUser(data);
     setShowAvatarLoader(false);
     setShowEditBackground(true);
@@ -238,10 +239,10 @@ const PersonalInfo = ({ user, setUser }) => {
       credentials: 'include',
       body: JSON.stringify({ background })
     });
+
     const data = await res.json();
     
     setUser(data);
-    console.log(data);
     setShowBackgroundLoader(false);
     setShowEditPicture(true);
   }

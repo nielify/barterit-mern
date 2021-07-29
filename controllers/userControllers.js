@@ -150,7 +150,6 @@ module.exports.changePicture_post = async (req, res) => {
           else {
             user.profilePicture = result.url;
             const newUser = await user.save();
-            console.log(result);
             res.status(200).send(newUser);
           }
         });
@@ -179,7 +178,6 @@ module.exports.changeBackground_post = async (req, res) => {
           else {
             user.backgroundPicture = result.url;
             const newUser = await user.save();
-            console.log(result);
             res.status(200).send(newUser);
           }
         });

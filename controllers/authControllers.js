@@ -162,7 +162,6 @@ module.exports.login_post = async (req, res) => {
         maxAge: maxAge * 1000, //3days x 1000 
         secure: process.env.ENVIRONMENT === 'dev' ? false : true  
       });
-      console.log(user);
       return res.status(200).send({user});
       //return res.status(200).send({ user: user._id, firstName: user.firstName , loginSuccess: true });
     }
