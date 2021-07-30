@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -155,15 +156,15 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonalInfo = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [ user, setUser ] = useContext(UserContext);
 
-  const [ picture, setPicture ] = useState(user.profilePicture);
-  const [ background, setBackground ] = useState(user.backgroundPicture);
-  const [ name, setName ] = useState(user.firstName + ' ' + user.middleName + ' ' + user.lastName);
+  const [ pictureHolder, setPictureHolder ] = useState('');
+  const [ backgroundHolder, setBackgroundHolder ] = useState('');
+
   const [ rating, setRating ] = useState(0);
   const [ rates, setRates ] = useState(0);
-  const [ town, setTown ] = useState(user.town);
 
   const [ showBackgroundSave, setShowBackgroundSave ] = useState(false);
   const [ showPictureSave, setShowPictureSave ] = useState(false);
@@ -178,7 +179,7 @@ const PersonalInfo = () => {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => { 
-        setPicture(reader.result);
+        setPictureHolder(reader.result);
       }
     }
     setShowPictureSave(true);
@@ -191,7 +192,7 @@ const PersonalInfo = () => {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => { 
-        setBackground(reader.result);
+        setBackgroundHolder(reader.result);
       }
     }
     setShowBackgroundSave(true);
@@ -200,13 +201,13 @@ const PersonalInfo = () => {
   } 
 
   const handleCancelPicture = () => {
-    setPicture(user.profilePicture);
+    setPictureHolder('');
     setShowEditBackground(true);
     setShowPictureSave(false);
   }
 
   const handleCancelBackground = () => {
-    setBackground(user.backgroundPicture);
+    setBackgroundHolder('');
     setShowEditPicture(true);
     setShowBackgroundSave(false);
   }
@@ -221,14 +222,20 @@ const PersonalInfo = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ picture })
+      body: JSON.stringify({ pictureHolder })
     });
 
     const data = await res.json();
-
-    setUser(data);
-    setShowAvatarLoader(false);
-    setShowEditBackground(true);
+    
+    if (data.redirect) {
+      setUser({});
+      history.push(data.url);
+    }
+    else {
+      setUser(data);
+      setShowAvatarLoader(false);
+      setShowEditBackground(true);
+    }
   }
 
   const handleSaveBackground = async () => {
@@ -241,7 +248,7 @@ const PersonalInfo = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify({ background })
+      body: JSON.stringify({ backgroundHolder })
     });
 
     const data = await res.json();
@@ -254,7 +261,7 @@ const PersonalInfo = () => {
   return ( 
     <div className={classes.root}>
       <div className={classes.background}>
-        { background && <img src={background} alt="background" className={classes.backgroundImg} /> }
+        <img src={backgroundHolder ? backgroundHolder : user.backgroundPicture} alt="background" className={classes.backgroundImg} />
         <div className={classes.backgroundOverlay}></div>
         { showBackgroundLoader && <div className={classes.backgroundLoader}>
           <CircularProgress />
@@ -262,7 +269,7 @@ const PersonalInfo = () => {
       </div>
       <div className={classes.info}>
         <div className={classes.avatarContainer}>
-          <Avatar src={picture} className={classes.avatar} />
+          <Avatar src={pictureHolder ? pictureHolder : user.profilePicture} className={classes.avatar} />
           { showAvatarLoader && <div className={classes.avatarLoader}>
             <CircularProgress size={28} />
           </div>}
@@ -287,7 +294,7 @@ const PersonalInfo = () => {
           <Typography
             className={classes.name}
           >
-            { user.firstName !== undefined ? name : '' }
+            { user.firstName + ' ' + user.middleName + ' ' + user.lastName }
           </Typography>
           <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
             <Rating 
@@ -304,7 +311,7 @@ const PersonalInfo = () => {
           <Typography
             className={classes.location}
           >
-            { town }
+            { user.town }
           </Typography>
         </div>
       </div>    

@@ -10,26 +10,29 @@ const cloudinary = require('../utils/cloudinary');
 const { sendPasswordResetMail } = require('../utils/nodemailer');
 //const { async } = require('crypto-random-string');
 
-module.exports.marketplace_get = async (req, res) => { 
+module.exports.user_get = async (req, res) => {   
   const token = req.cookies.jwt;
-
+  
+  //check token if exists and verified
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-      const userId = decodedToken.id;
-      try {
-        const user = await User.findById(userId);
-        res.status(200).send(user);
-      } catch (err) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
+      if (err) {
         console.log(err);
+        res.status(401).send({ redirect: true, url: '/signin' });
+      }
+      else {
+        try {
+          const user = await User.findById(verifiedToken.id);
+          res.status(200).send({user});
+        } catch (err) {
+          console.log(err);
+        }
       }
     });
-  } 
-  else if (req.user) {
-    res.status(200).send(req.user)
-  }
+  }  
 }
 
-module.exports.user_get = async (req, res) => {
+module.exports.userToBeReplaced_get = async (req, res) => {
   const userId = req.params.userId
   
   try {
@@ -135,7 +138,7 @@ module.exports.resetPassword_post = async (req, res) => {
 }
 
 module.exports.changePicture_post = async (req, res) => {
-  const profilePicture = req.body.picture;
+  const profilePicture = req.body.pictureHolder;
   const userToken = req.cookies.jwt;
 
   jwt.verify(userToken, process.env.JWT_SECRET, async (err, decodedToken) => {
@@ -163,7 +166,7 @@ module.exports.changePicture_post = async (req, res) => {
 }
 
 module.exports.changeBackground_post = async (req, res) => {
-  const backgroundPicture = req.body.background;
+  const backgroundPicture = req.body.backgroundHolder;
   const userToken = req.cookies.jwt;
 
   jwt.verify(userToken, process.env.JWT_SECRET, async (err, decodedToken) => {

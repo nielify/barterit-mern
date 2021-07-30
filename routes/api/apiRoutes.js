@@ -15,8 +15,6 @@ const userRoutes = require('./user/userRoutes');
 //controllers
 const userControllers = require('../../controllers/userControllers');
 
-router.get('/marketplace', requireAuth, userControllers.marketplace_get);
-
 router.use('/user', userRoutes);
 
 router.post('/recaptcha', async (req, res) => {
