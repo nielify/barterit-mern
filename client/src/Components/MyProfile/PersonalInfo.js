@@ -147,9 +147,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     top: 0,
     right: 0,
-    background: '#000',
+    background: 'rgba(0,0,0,.6)',
     width: '100%',
-    opacity: .6,
     padding: theme.spacing(1, 2),
   }
 }));
