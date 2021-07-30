@@ -261,7 +261,7 @@ const PersonalInfo = () => {
   return ( 
     <div className={classes.root}>
       <div className={classes.background}>
-        <img src={backgroundHolder ? backgroundHolder : user.backgroundPicture} alt="background" className={classes.backgroundImg} />
+        <img src={backgroundHolder ? backgroundHolder : user.backgroundPicture} alt="background" className={classes.backgroundImg} style={{display: user.backgroundPicture || backgroundHolder ? 'inline' : 'none'}}/>
         <div className={classes.backgroundOverlay}></div>
         { showBackgroundLoader && <div className={classes.backgroundLoader}>
           <CircularProgress />
