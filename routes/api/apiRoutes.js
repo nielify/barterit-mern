@@ -11,11 +11,13 @@ const requireAuth = require('../../middlewares/requireAuth');
 
 //routes
 const userRoutes = require('./user/userRoutes');
+const postRoutes = require('./post/postRoutes');
 
 //controllers
 const userControllers = require('../../controllers/userControllers');
 
 router.use('/user', userRoutes);
+router.use('/post', postRoutes);
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;

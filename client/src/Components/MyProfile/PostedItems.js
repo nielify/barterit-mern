@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -6,8 +7,10 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import shoesImg from '../../Images/shoes-image.jpg'
+
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -19,11 +22,39 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     padding: theme.spacing(1),
+  },
+  note: {
+    margin: '0 auto',
   }
 }));
 
 const PostedItems = () => {
   const classes = useStyles();
+
+  const [ posts, setPosts ] = useState([]);
+  const [ showLoader, setShowLoader ] = useState(true);
+  const [ note, setNote ] = useState('');
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post`, { 
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+    })
+    .then(res => res.json())
+    .then(data => {
+      setPosts(data.posts);
+      if (!data.posts[0]) {
+        setNote(`You don't have posted any items on Marketplace yet`);
+      }
+      setShowLoader(false);
+    })
+    .catch(err => {
+      console.log(err);
+      setNote('An error has occured');
+      setShowLoader(false);
+    });
+
+  }, []);
 
   return (  
     <>
@@ -35,22 +66,18 @@ const PostedItems = () => {
       >
         Your items in Marketplace
       </Typography>
+      { showLoader && <Loader /> }
       <Grid container className={classes.container}>
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        { !posts[0] && !showLoader && 
+        <Typography
+          variant="body2"
+          className={classes.note}
+        >
+          { note }
+        </Typography> }
+        {posts.map((post) => (
+          <PostCard />
+        ))}      
       </Grid>
       {/* {<Typography
         style={{textAlign:'center', width: '100%'}}
@@ -87,6 +114,19 @@ function PostCard() {
       </Card>
     </Grid>
   )
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{textAlign: 'center'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
+
 }
 
 export default PostedItems;
