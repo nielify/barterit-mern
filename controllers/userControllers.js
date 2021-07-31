@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const User = require('../models/User');
+const { User } = require('../models/User');
 const PasswordResetToken = require('../models/PasswordResetToken');
 
 const cloudinary = require('../utils/cloudinary');

@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { User } = require('../models/User');
 const jwt = require('jsonwebtoken');
 const cryptoRandomString = require('crypto-random-string');
 const { sendVerificationMail } = require('../utils/nodemailer');

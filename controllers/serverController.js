@@ -2,7 +2,7 @@
 const cloudinary = require('../utils/cloudinary');
 const client = require('../utils/twilio');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const { User } = require('../models/User');
 
 //controllers
 module.exports.singleUpload_post = (req, res) => {
