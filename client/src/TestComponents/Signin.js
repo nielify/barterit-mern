@@ -1,5 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
+import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -67,9 +68,11 @@ const GoogleButton = withStyles((theme) => ({
   },
 }))(Button);*/
 
-const Signin = ({ setShowProgress, setFirstName }) => {
+const Signin = ({ setShowProgress }) => {
   const classes = useStyles();
   const history = useHistory();
+
+  const [ user, setUser ] = useContext(UserContext);
 
   const [ showAlert, setShowAlert ] = useState(false);
 
@@ -96,7 +99,7 @@ const Signin = ({ setShowProgress, setFirstName }) => {
       body: JSON.stringify({ email, password })
     }); 
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     setShowProgress(false);
     if (data.email) {
       setEmailError(true);
@@ -106,8 +109,8 @@ const Signin = ({ setShowProgress, setFirstName }) => {
       setPasswordError(true);
       setPasswordTextHelper(data.password);
     }
-    if (data.loginSuccess) {
-      setFirstName(data.firstName);
+    if (data.user) {
+      setUser(data.user);
       history.push('/');
     }
     if (data.loginSuccess === false) {

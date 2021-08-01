@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
 
+import LoadingCover from './Components/LoadingCover';
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Components/DefaultHeader';
 import Header from './Components/Header';
@@ -25,7 +26,7 @@ import ResetPassword from './TestComponents/ResetPassword';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-
+import { UserContext } from './Context/UserContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -43,75 +44,95 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const [ showProgress, setShowProgress ] = useState(false);
+  const history = useHistory();
 
-  const [ firstName, setFirstName ] = useState(''); 
+  const [ showProgress, setShowProgress ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ user, setUser ] = useContext(UserContext);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user`, { 
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+    }) 
+      .then(res => res.json())
+      .then(data => {
+        if (data.redirect) {
+          history.push(data.url);
+          setIsLoading(false);
+        }
+        else {
+          setUser(data.user);
+          setIsLoading(false);
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <LinearLoader showProgress={showProgress} />
-        { firstName ? <Header firstName={firstName} setFirstName={setFirstName} /> : <DefaultHeader />}
-        <Switch>
-          <Route exact path="/">
-            <Marketplace />
-          </Route>
-          <Route exact path="/create-post">
-            <CreatePost />
-          </Route>
-          <Route exact path="/item">
-            <Item />
-          </Route>
-          <Route exact path="/profile">
-            <MyProfile />
-          </Route>
-          <Route exact path="/saved-items">
-            <SavedItems />
-          </Route>
-          <Route exact path="/user">
-            <User />
-          </Route>
-          <Route exact path="/upload">
-            <Upload />
-          </Route>
-          <Route exact path="/cloudinary">
-            <Cloudinary />
-          </Route>
-          <Route exact path="/sms">
-            <SMSForm />
-          </Route>
-          <Route exact path="/signin">
-            <Signin setShowProgress={setShowProgress} setFirstName={setFirstName} />
-          </Route>
-          <Route exact path="/signup">
-            <Signup setShowProgress={setShowProgress}/>
-          </Route>
-          <Route exact path="/signup/verify">
-            <Verify />
-          </Route>
-          <Route exact path="/signup/success">
-            <Success />
-          </Route>
-          <Route exact path="/forgot-password">
-            <ForgotPassword setShowProgress={setShowProgress}/>
-          </Route>
-          <Route exact path="/forgot-password/email-sent">
-            <EmailSent />
-          </Route>
-          <Route exact path="/forgot-password/expired">
-            <Expired />
-          </Route>
-          <Route exact path="/forgot-password/success">
-            <ResetPasswordSuccess />
-          </Route>
-          <Route exact path="/user/:userId/reset-password/:token">
-            <ResetPassword setShowProgress={setShowProgress} />
-          </Route>
-          <Route path="/*">
-            <h2>Error 404: Page Not Found</h2>
-          </Route>
-        </Switch>
-      </Router>
+      { isLoading && <LoadingCover /> }
+      <LinearLoader showProgress={showProgress} />
+      { user._id ? <Header /> : <DefaultHeader />}
+      <Switch>
+        <Route exact path="/">
+          <Marketplace />
+        </Route>
+        <Route exact path="/create-post">
+          <CreatePost />
+        </Route>
+        <Route exact path="/item">
+          <Item />
+        </Route>
+        <Route exact path="/profile">
+          <MyProfile />
+        </Route>
+        <Route exact path="/saved-items">
+          <SavedItems />
+        </Route>
+        <Route exact path="/user">
+          <User />
+        </Route>
+        <Route exact path="/upload">
+          <Upload />
+        </Route>
+        <Route exact path="/cloudinary">
+          <Cloudinary />
+        </Route>
+        <Route exact path="/sms">
+          <SMSForm />
+        </Route>
+        <Route exact path="/signin">
+          <Signin setShowProgress={setShowProgress} />
+        </Route>
+        <Route exact path="/signup">
+          <Signup setShowProgress={setShowProgress}/>
+        </Route>
+        <Route exact path="/signup/verify">
+          <Verify />
+        </Route>
+        <Route exact path="/signup/success">
+          <Success />
+        </Route>
+        <Route exact path="/forgot-password">
+          <ForgotPassword setShowProgress={setShowProgress}/>
+        </Route>
+        <Route exact path="/forgot-password/email-sent">
+          <EmailSent />
+        </Route>
+        <Route exact path="/forgot-password/expired">
+          <Expired />
+        </Route>
+        <Route exact path="/forgot-password/success">
+          <ResetPasswordSuccess />
+        </Route>
+        <Route exact path="/user/:userId/reset-password/:token">
+          <ResetPassword setShowProgress={setShowProgress} />
+        </Route>
+        <Route path="/*">
+          <h2>Error 404: Page Not Found</h2>
+        </Route>
+      </Switch>
     </ThemeProvider>
   );
 }

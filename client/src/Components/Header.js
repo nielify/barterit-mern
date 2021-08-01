@@ -1,5 +1,5 @@
 import { useHistory, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -24,7 +24,7 @@ import Divider from '@material-ui/core/Divider';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import MessageIcon from '@material-ui/icons/Message';
 
-import JakePhoto from '../Images/jake_rebullo.jpg'
+import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,12 +81,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({ firstName, setFirstName }) => {
+const Header = () => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [ profilePicture, setProfilePicture ] = useState('');
-  //const [ firstName, setFirstName ] = useState('');
+  const [ user, setUser ] = useContext(UserContext);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -98,7 +97,7 @@ const Header = ({ firstName, setFirstName }) => {
     setAccountAnchorEl(null);
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
       .then(res => {
         return res.json();
@@ -109,22 +108,22 @@ const Header = ({ firstName, setFirstName }) => {
           history.push(data.url);
         }
         else {
-          /* setFirstName(data.firstName);
-          setProfilePicture(data.profilePicture); */
+          //setFirstName(data.firstName);
+          //setProfilePicture(data.profilePicture); 
         }
       })
       .catch(err => {
         console.log(err.message);
         history.push('/signin');
       });
-  }, [history])
+  }, [history]) */
 
   const handleLogout = async () => { 
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, { credentials: 'include' }); 
     const data = await res.json(); 
     
     if (data.logoutSuccess) { 
-      setFirstName('');
+      setUser({});
       history.push('/signin'); 
     } 
   } 
@@ -160,18 +159,18 @@ const Header = ({ firstName, setFirstName }) => {
             <div className={classes.right}>
               <Avatar 
                 className={classes.avatar} 
-                src={profilePicture}
+                src={user.profilePicture}
                 component={Link}
                 to="/profile"
               />
-              { firstName && 
+              { user.firstName && 
               <Typography 
                 variant="subtitle2" 
                 className={classes.firstName}
                 component={Link}
                 to="/profile"
               >
-                {firstName}
+                {user.firstName}
               </Typography> }
               <ClickAwayListener onClickAway={handleClickAway}>
                 <div>

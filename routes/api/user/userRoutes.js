@@ -2,12 +2,20 @@
 const  { Router } = require('express');
 const router = Router();
 
-//controller imports
-const apiController = require('../../../controllers/apiControllers');
+//middleware
+const requireAuth = require('../../../middlewares/requireAuth');
 
-router.get('/:userId', apiController.user_get);
-router.post('/forgot-password', apiController.forgotPassword_post);
-router.get('/:userId/reset-password/:token', apiController.resetPassword_get);
-router.post('/:userId/reset-password/:token', apiController.resetPassword_post);
+//controller imports
+const userControllers = require('../../../controllers/userControllers');
+
+router.get('/', requireAuth, userControllers.user_get);
+router.get('/:userId', userControllers.userToBeReplaced_get);
+router.post('/forgot-password', userControllers.forgotPassword_post);
+router.get('/:userId/reset-password/:token', userControllers.resetPassword_get);
+router.post('/:userId/reset-password/:token', userControllers.resetPassword_post);
+
+//profile
+router.post('/change-picture', requireAuth, userControllers.changePicture_post);
+router.post('/change-background', requireAuth, userControllers.changeBackground_post);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const { User } = require('../models/User');
 const jwt = require('jsonwebtoken');
 const cryptoRandomString = require('crypto-random-string');
 const { sendVerificationMail } = require('../utils/nodemailer');
@@ -159,10 +159,11 @@ module.exports.login_post = async (req, res) => {
       const token = createToken(user._id);
       res.cookie('jwt', token, { 
         httpOnly: true, 
-        maxAge: maxAge * 1000, 
+        maxAge: maxAge * 1000, //3days x 1000 
         secure: process.env.ENVIRONMENT === 'dev' ? false : true  
       });
-      return res.status(200).send({ user: user._id, firstName: user.firstName , loginSuccess: true });
+      return res.status(200).send({user});
+      //return res.status(200).send({ user: user._id, firstName: user.firstName , loginSuccess: true });
     }
     else {
       return res.status(200).send({ loginSuccess: false, reason: 'Account is not active yet' });
