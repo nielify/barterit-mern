@@ -28,7 +28,7 @@ const CreatePost = () => {
     <Container maxWidth="md" className={classes.root}> 
       <PageTitle />
       <AddPhotos imageFiles={imageFiles} setImagesFiles={setImagesFiles} imageError={imageError} setImageError={setImageError} />
-      <Fields imageFiles={imageFiles} imageError={imageError} setImageError={setImageError} />
+      <Fields imageFiles={imageFiles} setImagesFiles={setImagesFiles} imageError={imageError} setImageError={setImageError} />
     </Container>  
   );
 }

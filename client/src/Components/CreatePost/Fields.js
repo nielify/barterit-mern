@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Fields = ({ imageFiles, setImageError }) => {
+const Fields = ({ imageFiles, setImagesFiles, setImageError }) => {
   const classes = useStyles();
 
   //title state
@@ -193,6 +193,16 @@ const Fields = ({ imageFiles, setImageError }) => {
           })
         });
         const data = await res.json();
+
+        setImagesFiles([]);
+        setTitle('');
+        setCategory('');
+        setDescription('');
+        setLocation('');
+        setInReturn([]);
+        setTypeInReturn('');
+        window.scrollTo(0, 0);
+
         if (data.message === 'post created') setSuccessNotif(true);
         else if (data.message === 'error occured') setErrorNotif(true);
       } catch (err) {
@@ -213,12 +223,14 @@ const Fields = ({ imageFiles, setImageError }) => {
         fullWidth
         error={titleError}
         onChange={handleTitleChange}
+        value={title}
       />
       <FormControl variant="outlined" className={classes.select} fullWidth size="small" error={categoryError}>
         <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
         <Select
           label="Categories"
           onChange={handleCategoryChange}
+          value={category}
         >
           {categories.map((category) => (
             <MenuItem value={category} key={category}>{category}</MenuItem>
@@ -235,12 +247,14 @@ const Fields = ({ imageFiles, setImageError }) => {
         rows={4}
         className={classes.description}
         onChange={handleDescriptionChange}
+        value={description}
       />
       <FormControl variant="outlined" className={classes.select} fullWidth size="small" error={locationError}>
         <InputLabel id="demo-simple-select-outlined-label">Location</InputLabel>
         <Select
           label="Location"
           onChange={handleLocationChange}
+          value={location}
         >
           {towns.map((towns) => (
             <MenuItem value={towns} key={towns}>{towns}</MenuItem>
@@ -272,11 +286,11 @@ const Fields = ({ imageFiles, setImageError }) => {
           className={classes.description}
         >
           <OutlinedInput
-             onChange={(e) =>  handleInReturnChange(e)}
-             onKeyDown={handleInReturnEnter}
-             placeholder="Type the items you want in return here..."
-             value={typeInReturn}
-             error={inReturnError}
+            onChange={(e) =>  handleInReturnChange(e)}
+            onKeyDown={handleInReturnEnter}
+            placeholder="Type the items you want in return here..."
+            value={typeInReturn}
+            error={inReturnError}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
