@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Fields = () => {
+const Fields = ({ imageFiles, setImageError }) => {
   const classes = useStyles();
 
   //title state
@@ -62,6 +62,7 @@ const Fields = () => {
   const [ location, setLocation ] = useState('');
   const [ locationError, setLocationError ] = useState(false); 
 
+  //inReturn state
   const [ inReturn, setInReturn ] = useState([]);
   const [ typeInReturn, setTypeInReturn ] = useState('');
   const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: "1 tray of eggs"');
@@ -130,12 +131,17 @@ const Fields = () => {
   }
 
   const handlePost = () => {
+    if (!imageFiles[0]) setImageError(true);
     if (!title) setTitleError(true);
     if (!category) setCategoryError(true);
     if (!description) setDescriptionError(true);
     if (!location) setLocationError(true);
     if (!inReturn[0]) setInReturnError(true);
     if (titleError || categoryError || descriptionError || locationError) window.scrollTo(0, 0);
+
+    if (titleError === false && categoryError === false && descriptionError === false && locationError === false && inReturnError === false) {
+      console.log('Posting...');
+    }
   }
 
   return (  

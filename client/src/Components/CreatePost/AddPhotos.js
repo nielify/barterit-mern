@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
     overflow: 'hidden',
     background: '#eee',
+    margin: theme.spacing(.5),
     "&:hover": {
       cursor: 'pointer',
     }
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
   imageCard: {
     height: 100,
     position: 'relative',
+    margin: theme.spacing(.5),
   },
   iconButton: {
     display: 'flex',
@@ -63,11 +65,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AddPhotos = () => {
+const AddPhotos = ({ imageFiles, setImagesFiles, imageError }) => {
   const classes = useStyles();
-
-  //const imageFiles = useRef([]);
-  const [ imageFiles, setImagesFiles ] = useState([]);
+    
   const imageFilesKey = useRef(0);
 
   const handleRemovePhoto = (key) => {
@@ -98,11 +98,12 @@ const AddPhotos = () => {
           gutterBottom
           variant="body2"
           className={imageFiles.length > 10 ? classes.red : ''}
+          style={{marginLeft:8}}
         >
           Add Photos { imageFiles.length }/10 - You can add up to 10 photos.
         </Typography>
       </Grid>
-      <Grid container item spacing={1} className={classes.root}>
+      <Grid container item className={classes.root}>
         { imageFiles && imageFiles.map((imageFile) => (
           <PreviewImage image={imageFile.image} index={imageFile.key} handleRemovePhoto={handleRemovePhoto} key={imageFile.key}/>
         ))}
