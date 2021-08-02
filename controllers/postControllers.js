@@ -1,6 +1,7 @@
 const { Post } = require('../models/Post');
 
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../utils/cloudinary');
 
 module.exports.post_get = async (req, res) => {
   const token = req.cookies.jwt;
@@ -17,11 +18,13 @@ module.exports.create_post = async (req, res) => {
   const token = req.cookies.jwt;
   let userId = null;
   let filteredInReturn = req.body.inReturn.map(item => item.label);
+  const imageFiles = req.body.imageFiles;
 
-  console.log('received');
-  res.send({ message: 'received' });
+  let multiplePicturePromise = imageFiles.map((imageFile) => cloudinary.uploader.upload(imageFile.image));
+  let cloudinaryResults =  await Promise.all(multiplePicturePromise);
+  let cloudinaryImageFiles = cloudinaryResults.map(result => result.url);
 
-  /* if (token) {
+  if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, verifiedToken) => {
       userId = verifiedToken.id;
     });
@@ -29,7 +32,7 @@ module.exports.create_post = async (req, res) => {
 
   const post = {
     userId,
-    //images: //req.body.imageFiles, //new array image links saved to cloudinary
+    images: cloudinaryImageFiles,
     title: req.body.title,
     category: req.body.category,
     description: req.body.description,
@@ -38,10 +41,11 @@ module.exports.create_post = async (req, res) => {
   }
 
   try {
-    const newPost = await Post.create(post);
-    console.log('post created');
+    await Post.create(post);
+    res.send({ message: 'post created' });
   } catch(err) {
     console.log(err)
-  } */
+    res.send({ message: 'error occured' });
+  }
 
 }

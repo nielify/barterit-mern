@@ -14,11 +14,18 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
 import categories from '../../others/categories';
 import towns from '../../others/towns'
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +76,9 @@ const Fields = ({ imageFiles, setImageError }) => {
   const [ inReturnError, setInReturnError ] = useState(false);
   
   const postPassed = useRef(true);
+  const [ submitting, setSubmitting ] = useState(false);
+  const [ successNotif, setSuccessNotif ] = useState(false);
+  const [ errorNotif, setErrorNotif ] = useState(false);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -133,6 +143,9 @@ const Fields = ({ imageFiles, setImageError }) => {
   }
 
   const handlePost = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+
     if (!imageFiles[0] || imageFiles[10]){
       setImageError(true);
       window.scrollTo(0, 0);
@@ -165,21 +178,29 @@ const Fields = ({ imageFiles, setImageError }) => {
     } 
 
     if (postPassed.current) {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/create`, {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          imageFiles,
-          title,
-          category,
-          description,
-          location,
-          inReturn
-        })
-      });
+      try {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/create`, {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            imageFiles,
+            title,
+            category,
+            description,
+            location,
+            inReturn
+          })
+        });
+        const data = await res.json();
+        if (data.message === 'post created') setSuccessNotif(true);
+        else if (data.message === 'error occured') setErrorNotif(true);
+      } catch (err) {
+        setErrorNotif(true);
+      } 
     }
 
+    setSubmitting(false);
     postPassed.current = true;
   }
 
@@ -276,12 +297,67 @@ const Fields = ({ imageFiles, setImageError }) => {
           fullWidth
           className={classes.postButton}
           onClick={handlePost}
+          disabled={submitting}
+          startIcon={submitting ? <CircularProgress size={20} /> : null}
         >
           Post to Marketplace
         </Button>
+        <SuccessNotification successNotif={successNotif} setSuccessNotif={setSuccessNotif} />
+        <ErrorNotification errorNotif={errorNotif} setErrorNotif={setErrorNotif} />
       </div>
     </>
   );
 }
  
+function SuccessNotification({ successNotif, setSuccessNotif }) {
+  const classes = useStyles();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSuccessNotif(false);
+  }; 
+
+  return (
+    <Snackbar 
+      open={successNotif} 
+      autoHideDuration={5000} 
+      onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      style={{marginTop: 56}}
+    >
+      <Alert severity="success">
+        Item posted successfully!
+      </Alert>
+    </Snackbar>
+  )
+
+}
+
+function ErrorNotification({ errorNotif, setErrorNotif }) {
+  const classes = useStyles();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setErrorNotif(false);
+  }; 
+
+  return (
+    <Snackbar 
+      open={errorNotif} 
+      autoHideDuration={5000} 
+      onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      style={{marginTop: 56}}
+    >
+      <Alert severity="error">
+        An error has occured!
+      </Alert>
+    </Snackbar>
+  )
+}
+
 export default Fields;
