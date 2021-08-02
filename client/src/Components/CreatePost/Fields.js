@@ -132,7 +132,7 @@ const Fields = ({ imageFiles, setImageError }) => {
     setInReturnHelperText('Include the amount and name of the items. eg: "1 tray of eggs"');
   }
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (!imageFiles[0] || imageFiles[10]){
       setImageError(true);
       window.scrollTo(0, 0);
@@ -165,11 +165,22 @@ const Fields = ({ imageFiles, setImageError }) => {
     } 
 
     if (postPassed.current) {
-      alert('Posting...');
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/create`, {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          imageFiles,
+          title,
+          category,
+          description,
+          location,
+          inReturn
+        })
+      });
     }
 
     postPassed.current = true;
-    //setPostPassed(true);
   }
 
   return (  
