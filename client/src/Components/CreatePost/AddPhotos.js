@@ -65,17 +65,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AddPhotos = ({ imageFiles, setImagesFiles, imageError }) => {
+const AddPhotos = ({ imageFiles, setImagesFiles, imageError, setImageError }) => {
   const classes = useStyles();
     
   const imageFilesKey = useRef(0);
-
+  const imagesLength = useRef(0);
+  
   const handleRemovePhoto = (key) => {
     setImagesFiles(imageFiles.filter(imageFile => imageFile.key !== key));
+    imagesLength.current = imagesLength.current - 1;
+    if (imagesLength.current <= 10) setImageError(false);
   }
-
+  
   const handleInputChange = (e) => {
-    console.log(e.target.files);
     Array.prototype.forEach.call(e.target.files, (file) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -86,6 +88,12 @@ const AddPhotos = ({ imageFiles, setImagesFiles, imageError }) => {
         }
         setImagesFiles(oldImageFiles => [...oldImageFiles, imageFile]);
         imageFilesKey.current = imageFilesKey.current + 1;
+        imagesLength.current = imagesLength.current + 1;
+        if (imagesLength.current > 10) {
+          setImageError(true);
+        } else {
+          setImageError(false);
+        }
       }
     });
     e.target.value = null;
@@ -95,15 +103,21 @@ const AddPhotos = ({ imageFiles, setImagesFiles, imageError }) => {
     <Grid container>
       <Grid>
         <Typography
-          gutterBottom
           variant="body2"
           className={imageFiles.length > 10 ? classes.red : ''}
           style={{marginLeft:8}}
         >
-          Add Photos { imageFiles.length }/10 - You can add up to 10 photos.
+          <small>Add Photos { imageFiles.length }/10 - You can add up to 10 photos.</small>  <small>*must add atleast 1</small>
+        </Typography>
+        <Typography
+          gutterBottom
+          variant="body2"
+          style={{marginLeft:8}}
+        >
+          
         </Typography>
       </Grid>
-      <Grid container item className={classes.root}>
+      <Grid container item className={classes.root} style={{border: imageError ? 'solid 1px red' : 'solid 1px #bbb'}}>
         { imageFiles && imageFiles.map((imageFile) => (
           <PreviewImage image={imageFile.image} index={imageFile.key} handleRemovePhoto={handleRemovePhoto} key={imageFile.key}/>
         ))}

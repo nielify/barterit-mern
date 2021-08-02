@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -68,6 +68,8 @@ const Fields = ({ imageFiles, setImageError }) => {
   const [ inReturnHelperText, setInReturnHelperText ] = useState('Include the amount and name of the items. eg: "1 tray of eggs"');
   const [ inReturnError, setInReturnError ] = useState(false);
   
+  const postPassed = useRef(true);
+
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     setTitleError(false);
@@ -131,17 +133,43 @@ const Fields = ({ imageFiles, setImageError }) => {
   }
 
   const handlePost = () => {
-    if (!imageFiles[0]) setImageError(true);
-    if (!title) setTitleError(true);
-    if (!category) setCategoryError(true);
-    if (!description) setDescriptionError(true);
-    if (!location) setLocationError(true);
-    if (!inReturn[0]) setInReturnError(true);
-    if (titleError || categoryError || descriptionError || locationError) window.scrollTo(0, 0);
+    if (!imageFiles[0] || imageFiles[10]){
+      setImageError(true);
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
+    if (!title) {
+      setTitleError(true);
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
+    if (!category) {
+      setCategoryError(true); 
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
+    if (!description) {
+      setDescriptionError(true);
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
+    if (!location) {
+      setLocationError(true);
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
+    if (!inReturn[0]) {
+      setInReturnError(true);
+      window.scrollTo(0, 0);
+      postPassed.current = false;
+    } 
 
-    if (titleError === false && categoryError === false && descriptionError === false && locationError === false && inReturnError === false) {
-      console.log('Posting...');
+    if (postPassed.current) {
+      alert('Posting...');
     }
+
+    postPassed.current = true;
+    //setPostPassed(true);
   }
 
   return (  

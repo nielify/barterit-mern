@@ -10,7 +10,6 @@ import Fields from './Fields';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: 'solid 1px blue',
     padding: theme.spacing(5, 2, 10, 2),
   },
   typography: {
@@ -28,8 +27,8 @@ const CreatePost = () => {
   return (  
     <Container maxWidth="md" className={classes.root}> 
       <PageTitle />
-      <AddPhotos imageFiles={imageFiles} setImagesFiles={setImagesFiles} imageError={imageError} />
-      <Fields imageFiles={imageFiles} setImageError={setImageError} />
+      <AddPhotos imageFiles={imageFiles} setImagesFiles={setImagesFiles} imageError={imageError} setImageError={setImageError} />
+      <Fields imageFiles={imageFiles} imageError={imageError} setImageError={setImageError} />
     </Container>  
   );
 }
