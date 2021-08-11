@@ -37,5 +37,11 @@
     "passport-google-oauth20": "^2.0.0",
     "twilio": "^3.62.0",
     "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2"
   }
 }
