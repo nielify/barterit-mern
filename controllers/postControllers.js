@@ -3,17 +3,25 @@ const { Post } = require('../models/Post');
 const jwt = require('jsonwebtoken');
 const cloudinary = require('../utils/cloudinary');
 
-module.exports.post_get = async (req, res) => {
+//all post (marketplace)
+module.exports.allPost_get = async (req, res) => {
+  const allPosts = await Post.find();
+  res.send({ allPosts });
+}
+
+//own post
+module.exports.myPost_get = async (req, res) => {
   const token = req.cookies.jwt;
 
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
       const posts = await Post.find({ userId: verifiedToken.id });
-      res.send({posts});
+      res.send({ posts });
     });
   }
 }
 
+//create-post
 module.exports.create_post = async (req, res) => { 
   const token = req.cookies.jwt;
   let userId = null;

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -7,15 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
-//test images
-import computerImg from '../../Images/computer-image.jpg'
-import mugImg from '../../Images/mug-image.jpg'
-import phoneImg from '../../Images/phone-image.jpg'
-import puppyImg from '../../Images/puppy-image.jpg'
-import shoesImg from '../../Images/shoes-image.jpg'
-import tshirtImg from '../../Images/tshirt-image.jpg'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,22 +29,40 @@ const useStyles = makeStyles((theme) => ({
 const PostList = () => {
   const classes = useStyles();
 
+  const [ showLoader, setShowLoader ] = useState(true);
+  const [ posts, setPosts ] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+    })
+    .then(res => res.json())
+    .then(data => {
+      setPosts(data.allPosts);
+      setShowLoader(false);
+    })
+    .catch(err => {
+      console.log(err);
+      setShowLoader(false);
+    });
+
+  }, []);
+
   return (
     <Grid container item xs={12} md={8} lg={9} style={{ display: "table", padding: 8 }}>
-      <Grid container item xs={12}>  
-        { PostCard("Computer", computerImg) }
-        { PostCard("Mug", mugImg) }
-        { PostCard("Phone", phoneImg) }
-        { PostCard("Puppy", puppyImg) }
-        { PostCard("Shoes", shoesImg) }
-        { PostCard("Shirt", tshirtImg) }
-      </Grid>  
+      { showLoader && <Loader /> } 
+      <Grid container item xs={12}> 
+        { posts.map((post, i) => (
+          <PostCard title={post.title} image={post.images[0]} key={i}/>
+        )) }
+      </Grid> 
     </Grid>
   );
 }
  
 //title, image, location, userID?, 
-function PostCard(title, image) {
+function PostCard({ title, image }) {
   const classes = useStyles();
 
   const handleClick = async () => {
@@ -70,7 +81,7 @@ function PostCard(title, image) {
         <CardActionArea>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
+            alt={ title }
             height="180"
             image={image}
             //style={{objectFit: 'fill'}}
@@ -87,6 +98,18 @@ function PostCard(title, image) {
       </Card>
     </Grid>
   );
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{textAlign: 'center'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
 }
 
 export default PostList;

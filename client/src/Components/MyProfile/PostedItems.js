@@ -33,7 +33,7 @@ const PostedItems = () => {
   const [ note, setNote ] = useState('');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post`, { 
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/my-post`, { 
       headers: { 'Content-Type': 'application/json' }, 
       credentials: 'include', 
     })
