@@ -8,7 +8,9 @@ const requireAuth = require('../../../middlewares/requireAuth');
 //controller imports
 const postControllers = require('../../../controllers/postControllers');
 
-router.get('/', requireAuth, postControllers.post_get);
-router.post('/create', /* requireAuth, */ postControllers.create_post);
+//routes
+router.get('/', requireAuth, postControllers.allPost_get);
+router.get('/my-post', requireAuth, postControllers.myPost_get);
+router.post('/create', requireAuth, postControllers.create_post);
 
 module.exports = router;
