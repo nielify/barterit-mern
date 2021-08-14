@@ -40,7 +40,6 @@ const PostedItems = () => {
     .then(res => res.json())
     .then(data => {
       setPosts(data.posts);
-      console.log(data.posts);
       if (!data.posts[0]) {
         setNote(`You have not posted any items on Marketplace yet`);
       }
@@ -73,8 +72,8 @@ const PostedItems = () => {
         >
           { note }
         </Typography> }
-        {posts.map((post) => (
-          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} />
+        {posts.map((post,i) => (
+          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} key={i} />
         ))}      
       </Grid>
       {/* {<Typography
