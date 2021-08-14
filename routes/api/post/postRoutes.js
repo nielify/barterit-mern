@@ -12,5 +12,6 @@ const postControllers = require('../../../controllers/postControllers');
 router.get('/', requireAuth, postControllers.allPost_get);
 router.get('/my-post', requireAuth, postControllers.myPost_get);
 router.post('/create', requireAuth, postControllers.create_post);
+router.get('/category/:category', requireAuth, postControllers.category_get);
 
 module.exports = router;

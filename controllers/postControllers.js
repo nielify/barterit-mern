@@ -57,3 +57,33 @@ module.exports.create_post = async (req, res) => {
   }
 
 }
+
+//category
+module.exports.category_get = async (req, res) => {
+  let category = req.params.category;
+
+  if (category === 'antiques-and-collections') category = 'Antiques & Collections';
+  if (category === 'arts-and-crafts') category = 'Arts & Crafts';
+  if (category === 'auto-parts-and-accessories') category = 'Auto Parts & Accessories';
+  if (category === 'baby-products') category = 'Baby Products';
+  if (category === 'bags-and-luggage') category = 'Bags & Luggage';
+  if (category === 'phones-and-accessories') category = 'Phones & Accessories';
+  if (category === 'clothing-shoes-and-accessories') category = 'Clothing, Shoes, & Accessories';
+  if (category === 'electronics') category = 'Electronics';
+  if (category === 'furniture') category = 'Furniture';
+  if (category === 'health-and-beauty') category = 'Health & Beauty';
+  if (category === 'home-and-kitchen') category = 'Home & Kitchen';
+  if (category === 'jewelry-and-watches') category = 'Jewelry & Watches';
+  if (category === 'miscellaneous') category = 'Miscellaneous';
+  if (category === 'office-supplies') category = 'Office Supplies';
+  if (category === 'patio-garden') category = 'Patio Garden';
+  if (category === 'pet-supplies') category = 'Pet Supplies';
+  if (category === 'sporting-goods') category = 'Sporting Goods';
+  if (category === 'tools-and-home-improvements') category = 'Tools & Home Improvements';
+  if (category === 'toys-and-games') category = 'Toys & Games';
+  if (category === 'video-games-and-consoles') category = 'Video Games & Consoles';
+
+  const posts = await Post.find({ category });
+
+  res.send({ posts });
+}
