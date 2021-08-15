@@ -81,7 +81,7 @@ function App() {
         <Route exact path="/create-post">
           <CreatePost />
         </Route>
-        <Route exact path="/item">
+        <Route exact path="/item/:id">
           <Item />
         </Route>
         <Route exact path="/profile">
