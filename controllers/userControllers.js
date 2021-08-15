@@ -32,12 +32,12 @@ module.exports.user_get = async (req, res) => {
   }  
 }
 
-module.exports.userToBeReplaced_get = async (req, res) => {
+module.exports.viewUser_get = async (req, res) => {
   const userId = req.params.userId
   
   try {
     const user = await User.findById(userId);
-    res.send(user);
+    res.send({ user });
   } catch(err) {
     console.log(err);
   }
