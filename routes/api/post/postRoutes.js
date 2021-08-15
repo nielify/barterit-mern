@@ -10,7 +10,8 @@ const postControllers = require('../../../controllers/postControllers');
 
 //routes
 router.get('/', requireAuth, postControllers.allPost_get);
-router.get('/my-post', requireAuth, postControllers.myPost_get);
+router.get('/:id', requireAuth, postControllers.post_get);
+router.get('/my-posts', requireAuth, postControllers.myPosts_get);
 router.post('/create', requireAuth, postControllers.create_post);
 router.get('/category/:category', requireAuth, postControllers.category_get);
 

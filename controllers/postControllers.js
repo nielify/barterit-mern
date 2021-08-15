@@ -9,8 +9,15 @@ module.exports.allPost_get = async (req, res) => {
   res.send({ allPosts });
 }
 
-//own post
-module.exports.myPost_get = async (req, res) => {
+//get single post 
+module.exports.post_get = async (req, res) => {
+  const postId = req.params.id;
+  const post = await Post.findOne({ _id: postId }).populate('userId').exec();
+  res.send({ post });
+}
+
+//own posts
+module.exports.myPosts_get = async (req, res) => {
   const token = req.cookies.jwt;
 
   if (token) {

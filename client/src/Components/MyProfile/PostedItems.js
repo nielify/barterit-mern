@@ -33,13 +33,12 @@ const PostedItems = () => {
   const [ note, setNote ] = useState('');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/my-post`, { 
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/my-posts`, { 
       headers: { 'Content-Type': 'application/json' }, 
       credentials: 'include', 
     })
     .then(res => res.json())
     .then(data => {
-      setPosts(data.posts);
       if (!data.posts[0]) {
         setNote(`You have not posted any items on Marketplace yet`);
       }

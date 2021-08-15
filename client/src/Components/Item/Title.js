@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Title = () => {
+const Title = ({ post }) => {
   const classes = useStyles();
 
   const [ title, setTitle ] = useState('Some random shits');
@@ -28,13 +28,13 @@ const Title = () => {
         className={classes.root}
         color="primary"
       >
-        {title}
+        { post.title }
       </Typography>
       <Typography
         className={classes.posted}
         gutterBottom
       >
-        Posted 3 hours ago in Sariaya
+        Posted on { post.createdAt }
       </Typography>
     </>
   );

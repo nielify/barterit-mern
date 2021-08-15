@@ -3,6 +3,12 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0,
+  },
   profilePicture: {
     type: String,
     default: '',

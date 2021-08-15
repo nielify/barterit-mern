@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Description = () => {
+const Description = ({ post }) => {
   const classes = useStyles();
 
   return (  
@@ -24,7 +24,7 @@ const Description = () => {
         variant="body2"
         style={{marginBottom:12}}
       >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
+        { post.description }
       </Typography>
     </>
   );
