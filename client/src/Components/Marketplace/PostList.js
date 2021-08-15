@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     margin: 5,
     textDecoration: 'none',
   },
+  note: {
+    marginTop: theme.spacing(3),
+    textAlign: 'center',
+  },
   cardContent: {
     padding: theme.spacing(.5, 1, .4, 1),
   },
@@ -26,11 +30,8 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const PostList = () => {
+const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setShowNote }) => {
   const classes = useStyles();
-
-  const [ showLoader, setShowLoader ] = useState(true);
-  const [ posts, setPosts ] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
@@ -39,6 +40,7 @@ const PostList = () => {
     })
     .then(res => res.json())
     .then(data => {
+      if (!data.allPosts[0]) setShowNote(true);
       setPosts(data.allPosts);
       setShowLoader(false);
     })
@@ -51,6 +53,15 @@ const PostList = () => {
 
   return (
     <Grid container item xs={12} md={8} lg={9} style={{ display: "table", padding: 8 }}>
+      {/* <Typography
+        color="primary"
+        style={{ marginLeft: 8 }}
+      >
+        Showing results for: 
+      </Typography> */}
+      { showNote && <Typography className={classes.note}>
+        No posts to show
+      </Typography> }
       { showLoader && <Loader /> } 
       <Grid container item xs={12}> 
         { posts.map((post, i) => (
@@ -104,7 +115,7 @@ function Loader() {
   const classes = useStyles();
 
   return(
-    <div style={{textAlign: 'center'}}>
+    <div style={{textAlign: 'center', marginTop: 24}}>
       <CircularProgress 
         style={{color: '#999'}}
       />
