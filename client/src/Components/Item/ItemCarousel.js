@@ -36,17 +36,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ItemCarousel = () => {
+const ItemCarousel = ({ post }) => {
   const classes = useStyles();
-
-  const [ images, setImages ] = useState([
-    computerImg,
-    mugImg,
-    phoneImg,
-    puppyImg,
-    shoesImg,
-    tshirtImg
-  ]);
 
   return (  
     <Carousel 
@@ -62,9 +53,9 @@ const ItemCarousel = () => {
       autoPlay={false}
       timeout={250}
     >
-      { images.map((image, i) => (
+      { post._id ? post.images.map((image, i) => (
         <Item key={i} image={image} />
-      ))}
+      )) : null }
     </Carousel>
   );
 }

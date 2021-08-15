@@ -9,10 +9,11 @@ module.exports.allPost_get = async (req, res) => {
   res.send({ allPosts });
 }
 
-//get single post
+//get single post 
 module.exports.post_get = async (req, res) => {
   const postId = req.params.id;
-  console.log(postId);
+  const post = await Post.findOne({ _id: postId }).populate('userId').exec();
+  res.send({ post });
 }
 
 //own posts

@@ -18,13 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InReturn = () => {
+const InReturn = ({ post }) => {
   const classes = useStyles();
-
-  const [ inReturns, setInReturns ] = useState([
-    '1 case Redrose',
-    '1 whole Baliwag Chicken',
-  ]);
 
   return (  
     <>
@@ -35,8 +30,8 @@ const InReturn = () => {
         In Return:
       </Typography>
       <ul className={classes.list}>
-        {inReturns.map((inReturn, i) => (
-          <li className={classes.li}>
+        {post._id && post.inReturn.map((inReturn, i) => (
+          <li className={classes.li} key={ post._id }>
             <Typography
               variant="body2"
             >

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,7 +22,7 @@ const Item = () => {
   const classes = useStyles();
   const params = useParams();
 
-  const postId = 
+  const [ post, setPost ] = useState({});
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/${params.id}`, { 
@@ -31,21 +31,20 @@ const Item = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      setPost(data.post);
     })
     .catch(err => {
       console.log(err);
-      
     });
   }, []);
 
   return (  
     <Container maxWidth="md" className={classes.root}>
-      <ItemCarousel />
-      <Title />
-      <Owner />
-      <Description />
-      <InReturn />
+      <ItemCarousel post={post} />
+      <Title post={post} />
+      <Owner post={post} />
+      <Description post={post} />
+      <InReturn post={post} />
       <SubmitButton />
     </Container>
   );
