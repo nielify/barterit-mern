@@ -17,7 +17,7 @@ module.exports.post_get = async (req, res) => {
 }
 
 //own posts
-module.exports.myPosts_get = async (req, res) => {
+module.exports.myPosts_get = (req, res) => {
   const token = req.cookies.jwt;
 
   if (token) {

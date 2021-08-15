@@ -42,6 +42,7 @@ const PostedItems = () => {
       if (!data.posts[0]) {
         setNote(`You have not posted any items on Marketplace yet`);
       }
+      setPosts(data.posts);
       setShowLoader(false);
     })
     .catch(err => {
