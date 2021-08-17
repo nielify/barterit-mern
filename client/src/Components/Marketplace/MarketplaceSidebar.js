@@ -123,8 +123,6 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote }) => {
 
     const urlCategory = renameCategory(category);
 
-    console.log(urlCategory);
-
     try {
       const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/category/${urlCategory}`, { 
         headers: { 'Content-Type': 'application/json' }, 
