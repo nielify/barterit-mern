@@ -24,7 +24,6 @@ const User = () => {
     }) 
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setUser(data.user);
       })
       .catch(err => console.log(err));

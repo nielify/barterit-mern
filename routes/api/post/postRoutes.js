@@ -14,5 +14,6 @@ router.get('/my-posts', requireAuth, postControllers.myPosts_get);
 router.post('/create', requireAuth, postControllers.create_post);
 router.get('/:id', requireAuth, postControllers.post_get);
 router.get('/category/:category', requireAuth, postControllers.category_get);
+router.get('/user/:userId', requireAuth, postControllers.userPosts_get);
 
 module.exports = router;

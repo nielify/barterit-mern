@@ -36,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
     left: 20,
     display: 'flex',
     alignItems: 'center',
+    width: 350,
   },
   innerInfo: {
     display: 'flex',
     flexDirection: 'column',
     marginLeft: theme.spacing(1.5),
     position: 'relative',
+    width: '100%',
   },
   avatarContainer: {
     position: 'relative',
@@ -64,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '.95rem',
     position: 'absolute',
     top: '-70%',
-    left: '5%',
+    left: 6,
   },
   location: {
     color: '#fff',
@@ -72,15 +74,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '.75rem',
     position: 'absolute',
     bottom: '-50%',
-    left: '5%',
+    left: 6,
   },
 }));
 
 const PersonalInfo = ({ user }) => {
   const classes = useStyles();
-  
-  const [ rating, setRating ] = useState(3.5);
-  const [ town, setTown ] = useState('Lucena');
 
   return ( 
     <>
