@@ -26,7 +26,15 @@ const Marketplace = () => {
   return (  
     <Grid container>
       <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal} />
-      <CategoryModal open={openCategoryModal} setOpen={setOpenCategoryModal} setPosts={setPosts} setShowLoader={setShowLoader} setShowNote={setShowNote} />
+      <CategoryModal 
+        open={openCategoryModal} 
+        setOpen={setOpenCategoryModal} 
+        setPosts={setPosts} 
+        setShowLoader={setShowLoader} 
+        setShowNote={setShowNote} 
+        currentCategory={currentCategory} 
+        setCurrentCategory={setCurrentCategory}
+      />
       <LocationModal open={openLocationModal} setOpen={setOpenLocationModal} />
       <MarketplaceSidebar 
         setPosts={setPosts} 
