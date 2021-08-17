@@ -36,7 +36,7 @@ const PostedItems = () => {
       >
         Posted Items in Marketplace
       </Typography>
-      <Grid container xs={12}  className={classes.container}>
+      <Grid container className={classes.container}>
         <PostCard title={'Unknown Breed Puppy'}/>
         <PostCard title={'Unknown Breed Puppy'}/>
         <PostCard title={'Unknown Breed Puppy'}/>

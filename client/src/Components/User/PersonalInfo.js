@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   background: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${AraBackground})`,
+    //backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${AraBackground})`,
+    background: '#aaa',
     height: '100%',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -75,45 +76,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PersonalInfo = () => {
+const PersonalInfo = ({ user }) => {
   const classes = useStyles();
-
-  const [ picture, setPicture ] = useState(AraMerillo);
-  const [ background, setBackground ] = useState(AraBackground);
-  const [ name, setName ] = useState('Ara Merillo');
+  
   const [ rating, setRating ] = useState(3.5);
   const [ town, setTown ] = useState('Lucena');
 
   return ( 
     <>
       <div className={classes.bgContainer}>
-        <div className={classes.background}></div>
+        <div className={classes.background} 
+          style={{ backgroundImage: user ? `linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url(${user.backgroundPicture})` : '' }} >    
+        </div>
         <div className={classes.info}>
           <div className={classes.avatarContainer}>
-            <Avatar src={picture} className={classes.avatar} />
+            <Avatar src={user.profilePicture} className={classes.avatar} />
           </div>
           <div className={classes.innerInfo}>
             <Typography
               className={classes.name}
             >
-              { name }
+              { user.firstName + ' ' + user.middleName + ' ' + user.lastName }
             </Typography>
             <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
               <Rating 
                 name="half-rating-read"
-                value={rating} 
+                value={user.rating ? user.rating : 0} 
                 precision={0.5} 
                 readOnly 
                 size="small" 
                 style={{color:'#33ab9f', }}
                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
               />
-              <span className={classes.number}>(23)</span>
+              <span className={classes.number}>({user.numberOfRating})</span>
             </Box>
             <Typography
               className={classes.location}
             >
-              { town }
+              { user.town }
             </Typography>
           </div>
         </div>    

@@ -9,6 +9,10 @@ const userSchema = mongoose.Schema({
     max: 5,
     default: 0,
   },
+  numberOfRating: {
+    type: Number,
+    default: 0,
+  },
   profilePicture: {
     type: String,
     default: '',

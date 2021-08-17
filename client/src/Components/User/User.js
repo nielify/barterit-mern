@@ -7,8 +7,6 @@ import Container from '@material-ui/core/Container';
 import PersonalInfo from './PersonalInfo';
 import PostedItems from './PostedItems';
 
-
-
 const useStyles = makeStyles((theme) => ({
 
 }));
@@ -34,7 +32,7 @@ const User = () => {
 
   return (  
     <Container maxWidth="md" className={classes.root}>
-      <PersonalInfo />
+      <PersonalInfo user={user} />
       <PostedItems />
     </Container>
   );
