@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
-
+import { useState ,useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import puppyImg from '../../Images/puppy-image.jpg'
 
@@ -20,11 +22,39 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     padding: theme.spacing(1),
+  },
+  note: {
+    textAlign: 'center',
   }
 }));
 
-const PostedItems = () => {
+const PostedItems = ({ user }) => {
   const classes = useStyles();
+  const params = useParams();
+
+  const [ posts, setPosts ] = useState([]);
+  const [ showLoader, setShowLoader ] = useState(true);
+  const [ note, setNote ] = useState('');
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/user/${params.id}`, { 
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.posts[0]) {
+        setNote(`The user has no items posted in Marketplace`);
+      }
+      setPosts(data.posts);
+      setShowLoader(false);
+    })
+    .catch(err => {
+      console.log(err);
+      setNote('An error has occured');
+      setShowLoader(false);
+    });
+  }, []);
 
   return (  
     <>
@@ -36,31 +66,24 @@ const PostedItems = () => {
       >
         Posted Items in Marketplace
       </Typography>
-      <Grid container xs={12}  className={classes.container}>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
-        <PostCard title={'Unknown Breed Puppy'}/>
+      { showLoader && <Loader /> }
+      { !posts[0] && !showLoader && 
+        <Typography
+          variant="body2"
+          className={classes.note}
+        >
+          { note }
+        </Typography> }
+      <Grid container className={classes.container}>
+        {posts.map((post,i) => (
+          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} key={i} />
+        ))} 
       </Grid>
-      {/* {<Typography
-        style={{textAlign:'center', width: '100%'}}
-      >
-        You do not have any posted items in Marketplace.
-      </Typography>} */}
     </>
   );
 }
  
-function PostCard({ title }) {
+function PostCard({ title, image, date }) {
   const classes = useStyles();
 
   return (
@@ -75,7 +98,7 @@ function PostCard({ title }) {
             component="img"
             alt="Contemplative Reptile"
             height="180"
-            image={puppyImg}
+            image={image}
             //style={{objectFit: 'fill'}}
           />
           <CardContent className={classes.cardContent}>
@@ -83,13 +106,26 @@ function PostCard({ title }) {
               { title }
             </Typography>
             <Typography variant="h6" component="p" style={{fontSize: '.8rem',}}>
-              Posted on July 15, 2021
+              { date }
             </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
     </Grid>
   )
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{textAlign: 'center'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
+
 }
 
 export default PostedItems;

@@ -94,3 +94,10 @@ module.exports.category_get = async (req, res) => {
 
   res.send({ posts });
 }
+
+//get posts of specific user
+module.exports.userPosts_get = async (req, res) => {
+  const userId = req.params.userId;
+  const posts = await Post.find({ userId });
+  res.send({posts});
+}
