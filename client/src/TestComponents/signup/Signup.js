@@ -107,7 +107,7 @@ const Signup = ({ setShowProgress }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ captcha, setCaptcha] = useState(false);
+  const [ captcha, setCaptcha] = useState(true); //off on during test production
   const [ isChecked, setIsChecked] = useState(false);
   const [ isTownSelected, setIsTownSelected ] = useState(false);
   
