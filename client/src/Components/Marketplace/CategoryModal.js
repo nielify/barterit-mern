@@ -107,7 +107,31 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote }) 
     } catch (err) {
       setShowLoader(false);
     }
-    
+  }
+
+  const handleClickAllPost = async () => {
+    setOpen(false);
+    setPosts([]);
+    setShowLoader(true);
+    setShowNote(false);
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (!data.allPosts[0]) setShowNote(true);
+      else setShowNote(false);
+  
+      setPosts(data.allPosts); 
+      setShowLoader(false);
+
+    } catch (err) {
+      setShowLoader(false);
+    }
   }
 
   useEffect(() => {
@@ -143,27 +167,28 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote }) 
           </Typography>
           <Divider />
           <List component="nav" className={classes.list}>
-          {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon, handleCategoryClick)}
-                  {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fa fa-list-alt ${classes.icon}`, 'All Posts', classes.listItemIcon, handleClickAllPost)}
+            {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon, handleCategoryClick)}
+            {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon, handleCategoryClick)}
+            {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon, handleCategoryClick)}
           </List>
         </div>
       </Fade>
