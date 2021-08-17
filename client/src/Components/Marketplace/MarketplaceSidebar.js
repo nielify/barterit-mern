@@ -123,8 +123,6 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote }) => {
 
     const urlCategory = renameCategory(category);
 
-    console.log(urlCategory);
-
     try {
       const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/category/${urlCategory}`, { 
         headers: { 'Content-Type': 'application/json' }, 
@@ -140,7 +138,30 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote }) => {
     } catch (err) {
       setShowLoader(false);
     }
-    
+  }
+
+  const handleClickAllPost = async () => {
+    setPosts([]);
+    setShowLoader(true);
+    setShowNote(false);
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (!data.allPosts[0]) setShowNote(true);
+      else setShowNote(false);
+  
+      setPosts(data.allPosts); 
+      setShowLoader(false);
+
+    } catch (err) {
+      setShowLoader(false);
+    }
   }
 
   useEffect(() => {
@@ -222,6 +243,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote }) => {
               <Grid item xs={12}>	
                 <Typography variant="h6" className={classes.typographyCategories}>Categories</Typography>
                 <List component="nav" className={classes.categories}>
+                  {Category(`fa fa-list-alt ${classes.icon}`, 'All Posts', classes.listItemIcon, handleClickAllPost)}
                   {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon, handleCategoryClick)}
                   {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon, handleCategoryClick)}
                   {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon, handleCategoryClick)}
