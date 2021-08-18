@@ -9,16 +9,41 @@ import LocationModal from './LocationModal'
 import Grid from '@material-ui/core/Grid';
 
 const Marketplace = () => {
-  const [ openCategoryModal, setOpenCategoryModal ] = useState(false);
+
+  //category modal
+  const [ openCategoryModal, setOpenCategoryModal ] = useState(false); 
+  //location modal
   const [ openLocationModal, setOpenLocationModal ] = useState(false);
+
+  //postList
+  const [ posts, setPosts ] = useState([]);
+  const [ showLoader, setShowLoader ] = useState(true);
+  const [ showNote, setShowNote ] = useState(false);
+
+  //active category
+  const [ currentCategory, setCurrentCategory ] = useState('All Posts');
 
   return (  
     <Grid container>
-      <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal}/>
-      <CategoryModal open={openCategoryModal} setOpen={setOpenCategoryModal}/>
-      <LocationModal open={openLocationModal} setOpen={setOpenLocationModal}/>
-      <MarketplaceSidebar />
-      <PostList />
+      <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal} />
+      <CategoryModal 
+        open={openCategoryModal} 
+        setOpen={setOpenCategoryModal} 
+        setPosts={setPosts} 
+        setShowLoader={setShowLoader} 
+        setShowNote={setShowNote} 
+        currentCategory={currentCategory} 
+        setCurrentCategory={setCurrentCategory}
+      />
+      <LocationModal open={openLocationModal} setOpen={setOpenLocationModal} />
+      <MarketplaceSidebar 
+        setPosts={setPosts} 
+        setShowLoader={setShowLoader} 
+        setShowNote={setShowNote} 
+        currentCategory={currentCategory} 
+        setCurrentCategory={setCurrentCategory}
+      />
+      <PostList posts={posts} setPosts={setPosts} showLoader={showLoader} setShowLoader={setShowLoader} showNote={showNote} setShowNote={setShowNote} />
     </Grid>
   );
 }

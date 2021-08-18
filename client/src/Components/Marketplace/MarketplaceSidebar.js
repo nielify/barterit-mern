@@ -86,10 +86,85 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MarketplaceSidebar = () => {
+const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory }) => {
   const classes = useStyles();
 
   const kilometers = [ 2, 5, 10, 20, 30, 40, 50 ];
+
+  const renameCategory = (category) => {
+    if (category === 'Antiques & Collections') category = 'antiques-and-collections';
+    if (category === 'Arts & Crafts') category = 'arts-and-crafts';
+    if (category === 'Auto Parts & Accessories') category = 'auto-parts-and-accessories';
+    if (category === 'Baby Products') category = 'baby-products';
+    if (category === 'Bags & Luggage') category = 'bags-and-luggage';
+    if (category === 'Phones & Accessories') category = 'phones-and-accessories';
+    if (category === 'Clothing, Shoes, & Accessories') category = 'clothing-shoes-and-accessories';
+    if (category === 'Electronics') category = 'electronics';
+    if (category === 'Furniture') category = 'furniture';
+    if (category === 'Health & Beauty') category = 'health-and-beauty';
+    if (category === 'Home & Kitchen') category = 'home-and-kitchen';
+    if (category === 'Jewelry & Watches') category = 'jewelry-and-watches';
+    if (category === 'Miscellaneous') category = 'miscellaneous';
+    if (category === 'Office Supplies') category = 'office-supplies';
+    if (category === 'Patio Garden') category = 'patio-garden';
+    if (category === 'Pet Supplies') category = 'pet-supplies';
+    if (category === 'Sporting Goods') category = 'sporting-goods';
+    if (category === 'Tools & Home Improvements') category = 'tools-and-home-improvements';
+    if (category === 'Toys & Games') category = 'toys-and-games';
+    if (category === 'Video Games & Consoles') category = 'video-games-and-consoles';
+
+    return category;
+  }
+
+  const handleCategoryClick = async (category) => {
+    setCurrentCategory(category);
+    setPosts([]);
+    setShowLoader(true);
+    setShowNote(false);
+
+    const urlCategory = renameCategory(category);
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/category/${urlCategory}`, { 
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      })
+      const data = await res.json();
+      
+      if (!data.posts[0]) setShowNote(true);
+      else setShowNote(false);
+  
+      setPosts(data.posts); 
+      setShowLoader(false);
+    } catch (err) {
+      setShowLoader(false);
+    }
+  }
+
+  const handleClickAllPost = async (category) => {
+    setCurrentCategory(category);
+    setPosts([]);
+    setShowLoader(true);
+    setShowNote(false);
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (!data.allPosts[0]) setShowNote(true);
+      else setShowNote(false);
+  
+      setPosts(data.allPosts); 
+      setShowLoader(false);
+
+    } catch (err) {
+      setShowLoader(false);
+    }
+  }
 
   useEffect(() => {
     const node = loadCSS(
@@ -170,27 +245,28 @@ const MarketplaceSidebar = () => {
               <Grid item xs={12}>	
                 <Typography variant="h6" className={classes.typographyCategories}>Categories</Typography>
                 <List component="nav" className={classes.categories}>
-                  {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon)}
-                  {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon)}
-                  {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon)}
-                  {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon)}
-                  {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon)}
-                  {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon)}
-                  {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon)}
-                  {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon)}
-                  {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon)}
-                  {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon)}
-                  {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon)}
-                  {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon)}
-                  {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon)}
-                  {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon)}
-                  {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon)}
-                  {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon)}
-                  {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon)}
-                  {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon)}
-                  {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon)}
-                  {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon)}
-                  {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon)}
+                  {Category(`fa fa-list-alt ${classes.icon}`, 'All Posts', classes.listItemIcon, handleClickAllPost, currentCategory)}
+                  {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-palette ${classes.icon}`, 'Arts & Crafts', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-car-alt ${classes.icon}`, 'Auto Parts & Accessories', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-baby-carriage ${classes.icon}`, 'Baby Products', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-suitcase-rolling ${classes.icon}`, 'Bags & Luggage', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-mobile-alt ${classes.icon}`, 'Phones and Accessories', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-tshirt ${classes.icon}`, 'Clothing, Shoes, & Accessories', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-plug ${classes.icon}`, 'Electronics', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-chair ${classes.icon}`, 'Furniture', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-heart ${classes.icon}`, 'Health & Beauty', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-couch ${classes.icon}`, 'Home & Kitchen', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`far fa-gem ${classes.icon}`, 'Jewelry & Watches', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-toolbox ${classes.icon}`, 'Miscellaneous', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-drum ${classes.icon}`, 'Musical Instruments', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-mail-bulk ${classes.icon}`, 'Office Supplies', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-seedling ${classes.icon}`, 'Patio Garden', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-paw ${classes.icon}`, 'Pet Supplies', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-futbol ${classes.icon}`, 'Sporting Goods', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-hammer ${classes.icon}`, 'Tools & Home Improvements', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-chess ${classes.icon}`, 'Toys & Games', classes.listItemIcon, handleCategoryClick, currentCategory)}
+                  {Category(`fas fa-gamepad ${classes.icon}`, 'Video Games & Consoles', classes.listItemIcon, handleCategoryClick, currentCategory)}
                 </List>
               </Grid>
             </Grid>
@@ -201,11 +277,11 @@ const MarketplaceSidebar = () => {
   );
 }
 
-function Category(icon, text, cssClass) {
+function Category(icon, text, cssClass, onClickFunction, activeCategory) {
   return (
-    <ListItem button>
-      <ListItemIcon className={cssClass}>
-        <Icon className={icon} />
+    <ListItem button onClick={() => onClickFunction(text)} style={{background: activeCategory === text ? '#ccc' : '', borderRadius: 5, paddingLeft: 30}} >
+      <ListItemIcon className={cssClass} >
+        <Icon className={icon} style={{color: activeCategory === text ? '#009688' : ''}} />
       </ListItemIcon>
       <ListItemText primary={text} />
     </ListItem>

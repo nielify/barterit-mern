@@ -91,7 +91,7 @@ function App() {
         <Route exact path="/create-post">
           <CreatePost />
         </Route>
-        <Route exact path="/item">
+        <Route exact path="/item/:id">
           <Item />
         </Route>
         <Route exact path="/profile">
@@ -100,7 +100,7 @@ function App() {
         <Route exact path="/saved-items">
           <SavedItems />
         </Route>
-        <Route exact path="/user">
+        <Route exact path="/user/:id">
           <User />
         </Route>
         <Route exact path="/upload">

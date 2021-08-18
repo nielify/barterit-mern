@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const { userSchema } = require('../models/User');
 
 const postSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User',
-    required: true,
+    ref: 'user', 
+    required: true, 
   },
   title: {
     type: String,
@@ -25,7 +24,7 @@ const postSchema = mongoose.Schema({
     required: true,
   },
   inReturn: {
-    type: String,
+    type: [String],
     required: true,
   },
   createdAt: {

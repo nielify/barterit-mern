@@ -9,9 +9,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import shoesImg from '../../Images/shoes-image.jpg'
-
-
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'normal',
@@ -36,16 +33,16 @@ const PostedItems = () => {
   const [ note, setNote ] = useState('');
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post`, { 
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/my-posts`, { 
       headers: { 'Content-Type': 'application/json' }, 
       credentials: 'include', 
     })
     .then(res => res.json())
     .then(data => {
-      setPosts(data.posts);
       if (!data.posts[0]) {
-        setNote(`You don't have posted any items on Marketplace yet`);
+        setNote(`You have not posted any items on Marketplace yet`);
       }
+      setPosts(data.posts);
       setShowLoader(false);
     })
     .catch(err => {
@@ -75,8 +72,8 @@ const PostedItems = () => {
         >
           { note }
         </Typography> }
-        {posts.map((post) => (
-          <PostCard />
+        {posts.map((post,i) => (
+          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} key={i} />
         ))}      
       </Grid>
       {/* {<Typography
@@ -88,8 +85,11 @@ const PostedItems = () => {
   );
 }
  
-function PostCard() {
+function PostCard({ title, image, date }) {
   const classes = useStyles();
+
+  let newDate = new Date(date);
+  let actualDate = newDate.toLocaleString('default', { month: 'long' }) + " " + newDate.getDate() + ", " + newDate.getFullYear();
 
   return (
     <Grid item xs={6} sm={4} lg={3}>
@@ -99,15 +99,15 @@ function PostCard() {
             component="img"
             alt="Contemplative Reptile"
             height="180"
-            image={shoesImg}
+            image={image}
             //style={{objectFit: 'fill'}}
           />
           <CardContent className={classes.cardContent}>
             <Typography variant="h6" component="h3" style={{fontSize: '.9rem' }}>
-              Test Title
+              { title }
             </Typography>
             <Typography variant="h6" component="p" style={{fontSize: '.8rem',}}>
-              Posted: January 12, 2021
+              Posted: { actualDate }
             </Typography>
           </CardContent>
         </CardActionArea>
