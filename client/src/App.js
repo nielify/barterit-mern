@@ -1,7 +1,6 @@
 import { useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 
-import LoadingCover from './Components/LoadingCover';
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Components/DefaultHeader';
 import Header from './Components/Header';
@@ -71,7 +70,6 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      { isLoading && <LoadingCover /> }
       <LinearLoader showProgress={showProgress} />
       { user._id ? <Header /> : <DefaultHeader />}
       <Switch>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import PostList from './PostList';
 import MarketplaceSidebar from './MarketplaceSidebar';
@@ -8,7 +8,12 @@ import LocationModal from './LocationModal'
 
 import Grid from '@material-ui/core/Grid';
 
+import LoadingCover from '../LoadingCover';
+
+import { UserContext } from '../../Context/UserContext';
+
 const Marketplace = () => {
+  const [ user, setUser ] = useContext(UserContext);
 
   //category modal
   const [ openCategoryModal, setOpenCategoryModal ] = useState(false); 
@@ -25,6 +30,7 @@ const Marketplace = () => {
 
   return (  
     <Grid container>
+      { !user._id && <LoadingCover /> }
       <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal} />
       <CategoryModal 
         open={openCategoryModal} 
