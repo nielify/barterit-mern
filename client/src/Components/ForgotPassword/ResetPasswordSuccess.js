@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import Button from '@material-ui/core/Button';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 
 
@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ResetPasswordSuccess = () => {
+  useRemoveCover();
+
   const classes = useStyles();
 
   return (  

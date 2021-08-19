@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 
 
@@ -22,12 +23,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 const EmailSent = () => {
+  useRemoveCover();
+
   const classes = useStyles();
   const location = useLocation();
 
   return (  
     <div className={classes.container}>
-      {location.state && <Alert 
+      <Alert 
         severity="success"
         className={classes.alert}
       >
@@ -35,8 +38,7 @@ const EmailSent = () => {
           Password reset email sent to {location.state ? location.state.email : ''}
         </AlertTitle>
           Check your email to continue resetting your password
-      </Alert> }
-      {!location.state && <h2>Error 404: Page not found</h2>}
+      </Alert>
     </div>
     
   );

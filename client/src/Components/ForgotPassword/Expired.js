@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Expired = () => {
+  useRemoveCover();
+
   const classes = useStyles();
 
   return (  
