@@ -58,12 +58,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Cards = ({ savedPosts, setSavedPosts, showLoader, showEmpty }) => {
+const Cards = ({ savedPosts, setSavedPosts, showLoader, showEmpty, setShowEmpty }) => {
   const classes = useStyles();
 
-  const handleRemoveItem = (key) => {
-    //remove post request
+  const handleRemoveItem = async (key, id) => {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/saved-items/${id}`, { 
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+    })
+    const data = await res.json()
     setSavedPosts(savedPosts.filter((item,i) => i !== key));
+    if (!data.savedPosts[0]) setShowEmpty(true);
   }
 
   return (  
@@ -124,13 +130,13 @@ function ItemCard({ item, handleRemoveItem, index }) {
           </div>
         </Card>
       </Grid>
-      <DeleteConfirmationModal open={open} setOpen={setOpen} handleRemoveItem={handleRemoveItem} index={index}/>
+      <DeleteConfirmationModal open={open} setOpen={setOpen} handleRemoveItem={handleRemoveItem} index={index} id={item._id}/>
     </>
 
   )
 }
 
-function DeleteConfirmationModal({ open, setOpen, handleRemoveItem, index }) {
+function DeleteConfirmationModal({ open, setOpen, handleRemoveItem, index, id }) {
   const classes = useStyles();
 
   const handleClose = () => {
@@ -170,7 +176,7 @@ function DeleteConfirmationModal({ open, setOpen, handleRemoveItem, index }) {
               color="primary"
               fullWidth
               onClick={() => {
-                handleRemoveItem(index);
+                handleRemoveItem(index, id);
                 handleClose();
               }}
             >

@@ -48,6 +48,7 @@ const SavedItems = () => {
         setSavedPosts={setSavedPosts}
         showLoader={showLoader}
         showEmpty={showEmpty}
+        setShowEmpty={setShowEmpty}
       />
     </Container>
   );

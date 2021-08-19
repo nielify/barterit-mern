@@ -10,6 +10,7 @@ const userControllers = require('../../../controllers/userControllers');
 
 router.get('/', requireAuth, userControllers.user_get);
 router.get('/saved-items/', requireAuth, userControllers.savedItems_get);
+router.delete('/saved-items/:id', requireAuth, userControllers.savedItems_delete);
 router.post('/forgot-password', userControllers.forgotPassword_post);
 router.get('/:userId/reset-password/:token', userControllers.resetPassword_get);
 router.post('/:userId/reset-password/:token', userControllers.resetPassword_post);
