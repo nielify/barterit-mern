@@ -18,9 +18,9 @@ import EmailSent from './TestComponents/forgotPassword/EmailSent';
 import Expired from './TestComponents/forgotPassword/Expired';
 import ResetPasswordSuccess from './TestComponents/forgotPassword/ResetPasswordSuccess';
 import Signin from './Components/Signin';
-import Signup from './TestComponents/signup/Signup';
-import Verify from './TestComponents/signup/Verify'
-import Success from './TestComponents/signup/Success';
+import Signup from './TestComponents/SignUp/SignUp';
+import Verify from './TestComponents/SignUp/Verify'
+import Success from './TestComponents/SignUp/Success';
 import ResetPassword from './TestComponents/ResetPassword';
 import LoadingCover from './Components/LoadingCover';
 
