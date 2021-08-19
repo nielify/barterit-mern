@@ -6,12 +6,15 @@ import Container from '@material-ui/core/Container';
 
 import PersonalInfo from './PersonalInfo';
 import PostedItems from './PostedItems';
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 const useStyles = makeStyles((theme) => ({
 
 }));
 
 const User = () => {
+  useRequireAuth();
+
   const classes = useStyles();
   const params = useParams();
 

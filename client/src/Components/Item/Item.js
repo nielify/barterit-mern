@@ -11,6 +11,7 @@ import Description from './Description';
 import InReturn from './InReturn';
 import SubmitButton from './SubmitButton';
 
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Item = () => {
+  useRequireAuth();
+
   const classes = useStyles();
   const params = useParams();
 

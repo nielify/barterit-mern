@@ -1,7 +1,8 @@
+import { makeStyles } from '@material-ui/core/styles';
+
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-
-import { makeStyles } from '@material-ui/core/styles';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -11,27 +12,31 @@ const useStyles = makeStyles((theme) => ({
     height: '75vh',
   },
   alert: {
-    
-  },
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    maxWidth: 500,
+  }
 }));
 
-const Success = () => {
+const Expired = () => {
+  useRemoveCover();
+
   const classes = useStyles();
 
   return (  
     <div className={classes.container}>
       <Alert 
-        severity="success"
+        severity="error"
         className={classes.alert}
       >
         <AlertTitle>
-          Email verification success! You may now sign in with your account.
+          Your token has expired
         </AlertTitle>
-        To Sign in, click the 'SIGN IN' button above this page.
-      </Alert> 
+          The token for resetting your password has already expired. 
+          Try requesting for a new one in forgot password page.
+      </Alert>
     </div>
-    
   );
 }
  
-export default Success;
+export default Expired

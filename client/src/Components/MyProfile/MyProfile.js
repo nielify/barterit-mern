@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container';
 import PersonalInfo from './PersonalInfo';
 import PostedItems from './PostedItems';
 
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     
@@ -12,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyProfile = ({ user, setUser }) => {
+  useRequireAuth();
+
   const classes = useStyles();
 
   return (  

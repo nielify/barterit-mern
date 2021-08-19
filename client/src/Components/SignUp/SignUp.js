@@ -31,9 +31,11 @@ import {
 import MomentUtils from '@date-io/moment';
 
 import towns from '../../others/towns';
-import SignupSelectBarangay from './SignupSelectBarangay';
+import SelectBarangay from './SelectBarangay';
 
 import ReCAPTCHA from 'react-google-recaptcha';
+
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -92,6 +94,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Signup = ({ setShowProgress }) => {
+  useRemoveCover();
+
   const classes = useStyles();
   const history = useHistory();
   
@@ -107,7 +111,7 @@ const Signup = ({ setShowProgress }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ captcha, setCaptcha] = useState(false);
+  const [ captcha, setCaptcha] = useState(true); //off on during test production
   const [ isChecked, setIsChecked] = useState(false);
   const [ isTownSelected, setIsTownSelected ] = useState(false);
   
@@ -442,7 +446,7 @@ const Signup = ({ setShowProgress }) => {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <SignupSelectBarangay 
+              <SelectBarangay 
                 town={town} 
                 brgy={brgy} 
                 isTownSelected={isTownSelected} 

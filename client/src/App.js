@@ -1,10 +1,13 @@
 import { useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 
-import LoadingCover from './Components/LoadingCover';
+//Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
-import DefaultHeader from './Components/DefaultHeader';
-import Header from './Components/Header';
+import DefaultHeader from './Utilities/DefaultHeader';
+import Header from './Utilities/Header';
+import LoadingCover from './Utilities/LoadingCover';
+
+//Page Components
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
@@ -14,19 +17,24 @@ import User from './Components/User/User';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
-import ForgotPassword from './TestComponents/forgotPassword/ForgotPassword';
-import EmailSent from './TestComponents/forgotPassword/EmailSent';
-import Expired from './TestComponents/forgotPassword/Expired';
-import ResetPasswordSuccess from './TestComponents/forgotPassword/ResetPasswordSuccess';
-import Signin from './TestComponents/Signin';
-import Signup from './TestComponents/signup/Signup';
-import Verify from './TestComponents/signup/Verify'
-import Success from './TestComponents/signup/Success';
-import ResetPassword from './TestComponents/ResetPassword';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import EmailSent from './Components/ForgotPassword/EmailSent';
+import Expired from './Components/ForgotPassword/Expired';
+import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
+import Signin from './Components/Signin';
+import Signup from './Components/SignUp/SignUp';
+import Verify from './Components/SignUp/Verify'
+import Success from './Components/SignUp/Success';
+import ResetPassword from './Components/ResetPassword';
+
+//Contexts
+import { UserContext } from './Context/UserContext';
+import { CoverContext } from './Context/CoverContext';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { UserContext } from './Context/UserContext';
+
+
 
 const theme = createMuiTheme({
   palette: {
@@ -47,32 +55,13 @@ function App() {
   const history = useHistory();
 
   const [ showProgress, setShowProgress ] = useState(false);
-  const [ isLoading, setIsLoading ] = useState(true);
   const [ user, setUser ] = useContext(UserContext);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user`, { 
-      headers: { 'Content-Type': 'application/json' }, 
-      credentials: 'include', 
-    }) 
-      .then(res => res.json())
-      .then(data => {
-        if (data.redirect) {
-          history.push(data.url);
-          setIsLoading(false);
-        }
-        else {
-          setUser(data.user);
-          setIsLoading(false);
-        }
-      })
-      .catch(err => console.log(err));
-  }, []);
+  const [ cover, setCover ] = useContext(CoverContext);
 
   return (
     <ThemeProvider theme={theme}>
-      { isLoading && <LoadingCover /> }
       <LinearLoader showProgress={showProgress} />
+      { cover && <LoadingCover /> }
       { user._id ? <Header /> : <DefaultHeader />}
       <Switch>
         <Route exact path="/">

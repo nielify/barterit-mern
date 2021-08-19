@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../CustomHooks/useRemoveCover';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ResetPassword = ({ setShowProgress }) => {
+  useRemoveCover();
+
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
