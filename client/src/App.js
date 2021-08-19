@@ -25,7 +25,7 @@ import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
 import Verify from './Components/SignUp/Verify'
 import Success from './Components/SignUp/Success';
-import ResetPassword from './TestComponents/ResetPassword';
+import ResetPassword from './Components/ResetPassword';
 
 //Contexts
 import { UserContext } from './Context/UserContext';
