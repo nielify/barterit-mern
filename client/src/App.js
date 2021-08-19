@@ -17,10 +17,10 @@ import User from './Components/User/User';
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
-import ForgotPassword from './TestComponents/forgotPassword/ForgotPassword';
-import EmailSent from './TestComponents/forgotPassword/EmailSent';
-import Expired from './TestComponents/forgotPassword/Expired';
-import ResetPasswordSuccess from './TestComponents/forgotPassword/ResetPasswordSuccess';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import EmailSent from './Components/ForgotPassword/EmailSent';
+import Expired from './Components/ForgotPassword/Expired';
+import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
 import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
 import Verify from './Components/SignUp/Verify'
