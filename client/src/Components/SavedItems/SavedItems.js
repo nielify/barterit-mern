@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
@@ -17,6 +18,10 @@ const SavedItems = () => {
   useRequireAuth();
 
   const classes = useStyles();
+
+  useEffect(() => {
+
+  }, []);
 
   return (  
     <Container maxWidth="md" className={classes.root}> 
