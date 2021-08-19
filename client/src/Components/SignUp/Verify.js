@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles(theme => ({
   div: {
@@ -19,6 +20,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Verify = () => {
+  useRemoveCover();
+
   const classes = useStyles();
   const location = useLocation();
 

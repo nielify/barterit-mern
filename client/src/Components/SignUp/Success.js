@@ -3,6 +3,8 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -11,11 +13,15 @@ const useStyles = makeStyles((theme) => ({
     height: '75vh',
   },
   alert: {
-    
+    margin: theme.spacing(3),
+    padding: theme.spacing(3),
+    maxWidth: 500,
   },
 }));
 
 const Success = () => {
+  useRemoveCover();
+
   const classes = useStyles();
 
   return (  
