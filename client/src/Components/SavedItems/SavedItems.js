@@ -1,4 +1,4 @@
-import { useState ,useEffect, useContext } from 'react';
+import { useState ,useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
@@ -7,8 +7,6 @@ import Title from './Title';
 import Cards from './Cards';
 
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
-
-import { UserContext } from '../../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +19,9 @@ const SavedItems = () => {
 
   const classes = useStyles();
 
-  const [ user, setUser ] = useContext(UserContext);
+  const [ savedPosts, setSavedPosts ] = useState([]);
   const [ showLoader, setShowLoader ] = useState(true);
+  const [ showEmpty, setShowEmpty ] = useState(false);
 
   useEffect(() => { 
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/saved-items`, { 
@@ -31,7 +30,8 @@ const SavedItems = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      if (!data.savedPosts[0]) setShowEmpty(true);
+      setSavedPosts(data.savedPosts);
       setShowLoader(false);
     })
     .catch(err => {
@@ -40,12 +40,14 @@ const SavedItems = () => {
     });
   }, []);
 
-
   return (  
     <Container maxWidth="md" className={classes.root}> 
       <Title />
       <Cards 
+        savedPosts={savedPosts}
+        setSavedPosts={setSavedPosts}
         showLoader={showLoader}
+        showEmpty={showEmpty}
       />
     </Container>
   );

@@ -17,8 +17,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import phoneImg from '../../Images/phone-image.jpg'
-
 const useStyles = makeStyles((theme) => ({
   card: {
     margin:5,
@@ -60,31 +58,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Cards = ({ showLoader }) => {
+const Cards = ({ savedPosts, setSavedPosts, showLoader, showEmpty }) => {
   const classes = useStyles();
 
-  const [ items, setItems ] = useState([
-    /* { title: 'itemA', owner: 'user1' },
-    { title: 'itemB', owner: 'user2' },
-    { title: 'itemC', owner: 'user3' },
-    { title: 'itemD', owner: 'user4' },
-    { title: 'itemE', owner: 'user5' }, */
-  ]);
-
   const handleRemoveItem = (key) => {
-    setItems(items.filter((item,i) => i !== key));
+    //remove post request
+    setSavedPosts(savedPosts.filter((item,i) => i !== key));
   }
-
 
   return (  
     <Grid container className={classes.container}>
       { showLoader && <Loader /> }
-      {!items[0] && <Typography
+      {showEmpty && <Typography
         className={classes.empty}
       >
         Your saved items is empty
       </Typography>}
-      {items.map((item,i) => (
+      {savedPosts.map((item,i) => (
         <ItemCard item={item} key={i} handleRemoveItem={handleRemoveItem} index={i}/>
       ))} 
     </Grid>
@@ -106,14 +96,14 @@ function ItemCard({ item, handleRemoveItem, index }) {
         <Card className={classes.card}>
           <CardActionArea
             component={Link}
-            to="/item"
+            to={`/item/${item._id}`}
             style={{textDecoration: 'none'}}
           >
             <CardMedia
               component="img"
               alt="Contemplative Reptile"
               height="180"
-              image={phoneImg}
+              image={item.images[0]}
               //style={{objectFit: 'fill'}}
             />    
           </CardActionArea>
