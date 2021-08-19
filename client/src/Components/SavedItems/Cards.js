@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -59,31 +60,33 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Cards = () => {
+const Cards = ({ showLoader }) => {
   const classes = useStyles();
 
   const [ items, setItems ] = useState([
-    { title: 'itemA', owner: 'user1' },
+    /* { title: 'itemA', owner: 'user1' },
     { title: 'itemB', owner: 'user2' },
     { title: 'itemC', owner: 'user3' },
     { title: 'itemD', owner: 'user4' },
-    { title: 'itemE', owner: 'user5' },
+    { title: 'itemE', owner: 'user5' }, */
   ]);
 
   const handleRemoveItem = (key) => {
     setItems(items.filter((item,i) => i !== key));
   }
 
+
   return (  
-    <Grid container xs={12} className={classes.container}>
-      {items.map((item,i) => (
-        <ItemCard item={item} key={i} handleRemoveItem={handleRemoveItem} index={i}/>
-      ))}
+    <Grid container className={classes.container}>
+      { showLoader && <Loader /> }
       {!items[0] && <Typography
         className={classes.empty}
       >
         Your saved items is empty
       </Typography>}
+      {items.map((item,i) => (
+        <ItemCard item={item} key={i} handleRemoveItem={handleRemoveItem} index={i}/>
+      ))} 
     </Grid>
   );
 }
@@ -99,7 +102,7 @@ function ItemCard({ item, handleRemoveItem, index }) {
   
   return (
     <>
-      <Grid xs={6} sm={4} lg={3}>
+      <Grid item xs={6} sm={4} lg={3}>
         <Card className={classes.card}>
           <CardActionArea
             component={Link}
@@ -188,6 +191,19 @@ function DeleteConfirmationModal({ open, setOpen, handleRemoveItem, index }) {
       </div>
     </Modal>
   )
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{textAlign: 'center', width: '100%'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
+
 }
 
 export default Cards;

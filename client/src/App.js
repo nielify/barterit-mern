@@ -1,5 +1,5 @@
-import { useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { useState, useContext } from 'react';
 
 //Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
@@ -34,8 +34,6 @@ import { CoverContext } from './Context/CoverContext';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-
-
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -52,11 +50,9 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const history = useHistory();
-
   const [ showProgress, setShowProgress ] = useState(false);
-  const [ user, setUser ] = useContext(UserContext);
-  const [ cover, setCover ] = useContext(CoverContext);
+  const [ user ] = useContext(UserContext);
+  const [ cover ] = useContext(CoverContext);
 
   return (
     <ThemeProvider theme={theme}>
