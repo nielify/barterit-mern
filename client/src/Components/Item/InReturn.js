@@ -31,7 +31,7 @@ const InReturn = ({ post }) => {
       </Typography>
       <ul className={classes.list}>
         {post._id && post.inReturn.map((inReturn, i) => (
-          <li className={classes.li} key={ post._id }>
+          <li className={classes.li} key={i}>
             <Typography
               variant="body2"
             >
