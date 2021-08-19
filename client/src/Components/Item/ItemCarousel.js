@@ -1,15 +1,6 @@
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Carousel from 'react-material-ui-carousel';
-
-//test images
-import computerImg from '../../Images/computer-image.jpg'
-import mugImg from '../../Images/mug-image.jpg'
-import phoneImg from '../../Images/phone-image.jpg'
-import puppyImg from '../../Images/puppy-image.jpg'
-import shoesImg from '../../Images/shoes-image.jpg'
-import tshirtImg from '../../Images/tshirt-image.jpg'
 
 const useStyles = makeStyles((theme) => ({
   root: {   
@@ -19,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     borderRadius: 15,
-    height: '75vh',
+    height: '60vh',
     objectFit: 'contain',
     width: '80%',
   },
@@ -27,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 0,
     left: 0,
-    height: '75vh',
+    height: '60vh',
     zIndex: -999,
     filter: 'blur(20px)',
     width: '100%',
