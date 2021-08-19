@@ -6,7 +6,6 @@ import MarketplaceSidebar from './MarketplaceSidebar';
 import MarketplaceHeader from './MarketplaceHeader';
 import CategoryModal from './CategoryModal'
 import LocationModal from './LocationModal'
-import LoadingCover from '../LoadingCover';
 
 import Grid from '@material-ui/core/Grid';
 

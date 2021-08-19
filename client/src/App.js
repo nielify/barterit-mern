@@ -1,9 +1,13 @@
 import { useHistory, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 
+//Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
-import DefaultHeader from './Components/DefaultHeader';
-import Header from './Components/Header';
+import DefaultHeader from './Utilities/DefaultHeader';
+import Header from './Utilities/Header';
+import LoadingCover from './Utilities/LoadingCover';
+
+//Page Components
 import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
@@ -22,13 +26,15 @@ import Signup from './TestComponents/SignUp/SignUp';
 import Verify from './TestComponents/SignUp/Verify'
 import Success from './TestComponents/SignUp/Success';
 import ResetPassword from './TestComponents/ResetPassword';
-import LoadingCover from './Components/LoadingCover';
+
+//Contexts
+import { UserContext } from './Context/UserContext';
+import { CoverContext } from './Context/CoverContext';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import { UserContext } from './Context/UserContext';
-import { CoverContext } from './Context/CoverContext';
+
 
 const theme = createMuiTheme({
   palette: {
