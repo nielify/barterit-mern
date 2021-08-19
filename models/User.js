@@ -62,6 +62,10 @@ const userSchema = mongoose.Schema({
     required: [true, 'Password is required'],
     //minlength: [8, 'Password must be atleast 8 characters']
   },
+  savedPosts: [{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'post'
+  }],
   isActive: {
     type: Boolean,
     default: false
