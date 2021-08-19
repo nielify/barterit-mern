@@ -5,6 +5,8 @@ import Container from '@material-ui/core/Container';
 import Title from './Title';
 import Cards from './Cards';
 
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(5, 2, 10, 2),
@@ -12,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SavedItems = () => {
+  useRequireAuth();
+
   const classes = useStyles();
 
   return (  

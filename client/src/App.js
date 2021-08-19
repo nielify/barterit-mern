@@ -22,10 +22,13 @@ import Signup from './TestComponents/signup/Signup';
 import Verify from './TestComponents/signup/Verify'
 import Success from './TestComponents/signup/Success';
 import ResetPassword from './TestComponents/ResetPassword';
+import LoadingCover from './Components/LoadingCover';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+
 import { UserContext } from './Context/UserContext';
+import { CoverContext } from './Context/CoverContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -46,31 +49,13 @@ function App() {
   const history = useHistory();
 
   const [ showProgress, setShowProgress ] = useState(false);
-  const [ isLoading, setIsLoading ] = useState(true);
   const [ user, setUser ] = useContext(UserContext);
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user`, { 
-      headers: { 'Content-Type': 'application/json' }, 
-      credentials: 'include', 
-    }) 
-      .then(res => res.json())
-      .then(data => {
-        if (data.redirect) {
-          history.push(data.url);
-          setIsLoading(false);
-        }
-        else {
-          setUser(data.user);
-          setIsLoading(false);
-        }
-      })
-      .catch(err => console.log(err));
-  }, []);
+  const [ cover, setCover ] = useContext(CoverContext);
 
   return (
     <ThemeProvider theme={theme}>
       <LinearLoader showProgress={showProgress} />
+      { cover && <LoadingCover /> }
       { user._id ? <Header /> : <DefaultHeader />}
       <Switch>
         <Route exact path="/">
