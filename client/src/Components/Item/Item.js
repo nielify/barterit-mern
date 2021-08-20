@@ -26,6 +26,7 @@ const Item = () => {
   const params = useParams();
 
   const [ post, setPost ] = useState({});
+  const [ isOwnPost, setIsOwnPost ] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/${params.id}`, { 
@@ -34,6 +35,7 @@ const Item = () => {
     })
     .then(res => res.json())
     .then(data => {
+      console.log();
       setPost(data.post);
     })
     .catch(err => {
