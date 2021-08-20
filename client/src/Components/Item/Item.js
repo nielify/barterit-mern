@@ -51,7 +51,7 @@ const Item = () => {
     if (post.userId && user._id) {
       if (post.userId._id === user._id) setIsOwnPost(true);
       else setIsOwnPost(false);
-      setIsSaved(user.savedPosts.includes(post.userId.id));
+      setIsSaved(user.savedPosts.includes(post._id));
     }
   }, [post, user]);
 
