@@ -65,7 +65,7 @@ const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setSho
       { showLoader && <Loader /> } 
       <Grid container item xs={12}> 
         { posts.map((post, i) => (
-          <PostCard title={post.title} image={post.images[0]} id={post._id} key={i}/>
+          <PostCard title={post.title} location={post.location} image={post.images[0]} id={post._id} key={i}/>
         )) }
       </Grid> 
     </Grid>
@@ -73,7 +73,7 @@ const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setSho
 }
  
 //title, image, location, userID?, 
-function PostCard({ title, image, id }) {
+function PostCard({ title, location, image, id }) {
   const classes = useStyles();
 
   const handleClick = async () => {
@@ -102,7 +102,7 @@ function PostCard({ title, image, id }) {
               { title }
             </Typography>
             <Typography variant="body1" className={classes.location}>
-              Sariaya
+              { location }
             </Typography>
           </CardContent>
         </CardActionArea>
