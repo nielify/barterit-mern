@@ -21,14 +21,24 @@ const Buttons = ({ isSaved, setIsSaved }) => {
 
   const [ isSubmitting, setIsSubmitting ] = useState(false);
 
- /*  const handleRemoveSaveClick = async () => { 
+  const handleRemoveSaveClick = async () => { 
     if (isSubmitting) return console.log('already submitting');
     setIsSubmitting(true);
 
-    //const res = await fetch()
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/saved-items/${params.id}`, { 
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      })
+      const data = await res.json()
+      setIsSaved(false);
+    } catch (err) {
+      console.log(err);
+    }
 
-    setIsSaved(false);
-  } */
+    setIsSubmitting(false);
+  }
 
   const handleSaveClick = async () => {
     if (isSubmitting) return console.log('already submitting');
@@ -41,10 +51,11 @@ const Buttons = ({ isSaved, setIsSaved }) => {
         credentials: 'include', 
       })
       const data = await res.json()
-      setIsSaved(!isSaved);
+      setIsSaved(true);
     } catch (err) {
       console.log(err);
     }
+
     setIsSubmitting(false);
   }
 
@@ -63,7 +74,8 @@ const Buttons = ({ isSaved, setIsSaved }) => {
         color={ isSaved ? 'primary' : 'secondary'}
         variant="contained"
         startIcon={ isSaved ? <TurnedInIcon /> : <TurnedInNotIcon /> }
-        onClick={handleSaveClick}
+        onClick={ isSaved ? handleRemoveSaveClick : handleSaveClick }
+        style={{padding: '0 30px'}}
       >
         { isSaved ? 'Saved' : 'Save' }
       </Button>
