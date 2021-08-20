@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -10,6 +10,8 @@ import Owner from './Owner';
 import Description from './Description';
 import InReturn from './InReturn';
 import SubmitButton from './SubmitButton';
+
+import { UserContext } from '../../Context/UserContext';
 
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
@@ -25,9 +27,11 @@ const Item = () => {
   const classes = useStyles();
   const params = useParams();
 
+  const [ user, setUser ] = useContext(UserContext);
   const [ post, setPost ] = useState({});
-  const [ isOwnPost, setIsOwnPost ] = useState(false);
+  const [ isOwnPost, setIsOwnPost ] = useState(true);
 
+  
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/${params.id}`, { 
       headers: { 'Content-Type': 'application/json' }, 
@@ -35,13 +39,19 @@ const Item = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log();
       setPost(data.post);
     })
     .catch(err => {
       console.log(err);
     });
   }, []);
+
+  useEffect(() => {
+    if (post.userId && user._id) {
+      if (post.userId._id === user._id) setIsOwnPost(true);
+      else setIsOwnPost(false);
+    }
+  }, [post, user]);
 
   return (  
     <Container maxWidth="md" className={classes.root}>
@@ -50,7 +60,7 @@ const Item = () => {
       <Owner post={post} />
       <Description post={post} />
       <InReturn post={post} />
-      <SubmitButton />
+      { !isOwnPost && <SubmitButton /> }
     </Container>
   );
 }
