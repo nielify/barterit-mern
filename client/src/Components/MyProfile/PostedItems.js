@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -73,7 +74,7 @@ const PostedItems = () => {
           { note }
         </Typography> }
         {posts.map((post,i) => (
-          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} key={i} />
+          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} id={post._id} key={i} />
         ))}      
       </Grid>
       {/* {<Typography
@@ -85,14 +86,18 @@ const PostedItems = () => {
   );
 }
  
-function PostCard({ title, image, date }) {
+function PostCard({ title, image, date, id }) {
   const classes = useStyles();
 
   let newDate = new Date(date);
   let actualDate = newDate.toLocaleString('default', { month: 'long' }) + " " + newDate.getDate() + ", " + newDate.getFullYear();
 
   return (
-    <Grid item xs={6} sm={4} lg={3}>
+    <Grid item xs={6} sm={4} lg={3}
+      component={Link}
+      to={`/item/${id}`}
+      style={{textDecoration:'none'}}
+    >
       <Card style={{margin:5}}>
         <CardActionArea>
           <CardMedia
