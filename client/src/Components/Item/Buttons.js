@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -14,12 +13,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Buttons = () => {
+const Buttons = ({ isSaved, setIsSaved }) => {
   const classes = useStyles();
 
-  const [ isSaved, setIsSaved ] = useState(true);
+  const handleRemoveSaveClick = async () => { 
+    //const res = await fetch()
 
-  const handleSaveClick = () => { 
+    setIsSaved(false);
+  }
+
+  const handleSaveClick = async () => {
     setIsSaved(!isSaved);
   }
 
