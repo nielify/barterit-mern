@@ -74,8 +74,8 @@ const DefaultHeader = () => {
           <Grid item xs={12}>
             <Toolbar className={classes.toolbar}>
               <Button
-                component={Link}
-                to="/"
+                /* component={Link}
+                to="/" */
                 tabIndex={-1}
                 className={classes.brand}
                 //startIcon={<img href="qwe.jpg" alt="BIT" />}

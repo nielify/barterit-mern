@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -9,8 +9,11 @@ import Title from './Title';
 import Owner from './Owner';
 import Description from './Description';
 import InReturn from './InReturn';
-import SubmitButton from './SubmitButton';
+import Buttons from './Buttons';
 
+import { UserContext } from '../../Context/UserContext';
+
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,10 +22,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Item = () => {
+  useRequireAuth();
+
   const classes = useStyles();
   const params = useParams();
 
+  const [ user, setUser ] = useContext(UserContext);
   const [ post, setPost ] = useState({});
+  const [ isOwnPost, setIsOwnPost ] = useState(true);
+  const [ isSaved, setIsSaved ] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/${params.id}`, { 
@@ -38,6 +46,15 @@ const Item = () => {
     });
   }, []);
 
+  useEffect(() => {
+    //if there's already values of either state fetched from backend
+    if (post.userId && user._id) {
+      if (post.userId._id === user._id) setIsOwnPost(true);
+      else setIsOwnPost(false);
+      setIsSaved(user.savedPosts.includes(post._id));
+    }
+  }, [post, user]);
+
   return (  
     <Container maxWidth="md" className={classes.root}>
       <ItemCarousel post={post} />
@@ -45,7 +62,7 @@ const Item = () => {
       <Owner post={post} />
       <Description post={post} />
       <InReturn post={post} />
-      <SubmitButton />
+      { !isOwnPost && <Buttons post={post} isSaved={isSaved} setIsSaved={setIsSaved} /> }
     </Container>
   );
 }

@@ -76,20 +76,20 @@ const PostedItems = ({ user }) => {
         </Typography> }
       <Grid container className={classes.container}>
         {posts.map((post,i) => (
-          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} key={i} />
+          <PostCard title={post.title} image={post.images[0]} date={post.createdAt} id={post._id} key={i} />
         ))} 
       </Grid>
     </>
   );
 }
  
-function PostCard({ title, image, date }) {
+function PostCard({ title, image, date, id }) {
   const classes = useStyles();
 
   return (
     <Grid item xs={6} sm={4} lg={3} 
       component={Link}
-      to="item"
+      to={`/item/${id}`}
       style={{textDecoration:'none'}}
     >
       <Card style={{margin:5}}>

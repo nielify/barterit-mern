@@ -9,6 +9,7 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 
 import { makeStyles } from '@material-ui/core/styles';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ForgotPassword = ({ setShowProgress }) => {
+  useRemoveCover();
+
   const classes = useStyles();
   const history = useHistory();
 

@@ -7,6 +7,7 @@ import PageTitle from './PageTitle';
 import AddPhotos from './AddPhotos';
 import Fields from './Fields';
 
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreatePost = () => {
+  useRequireAuth();
+
   const classes = useStyles();
 
   //image state

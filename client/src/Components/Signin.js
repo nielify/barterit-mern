@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useState, useContext } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,12 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import Container from '@material-ui/core/Container';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
 import { UserContext } from '../Context/UserContext';
+
+import useRemoveCover from '../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -48,27 +50,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/*const FacebookButton = withStyles((theme) => ({
-  root: {
-    color: '#fff',
-    backgroundColor: '#4267B2',
-    '&:hover': {
-      backgroundColor: '#31559e',
-    },
-  },
-}))(Button);
-
-const GoogleButton = withStyles((theme) => ({
-  root: {
-    color: '#292929',
-    backgroundColor: '#d1d1d1',
-    '&:hover': {
-      backgroundColor: '#b1b1b1',
-    },
-  },
-}))(Button);*/
-
 const Signin = ({ setShowProgress }) => {
+  useRemoveCover();
+
   const classes = useStyles();
   const history = useHistory();
 

@@ -1,7 +1,11 @@
+import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
+
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -17,23 +21,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Expired = () => {
+
+const EmailSent = () => {
+  useRemoveCover();
+
   const classes = useStyles();
+  const location = useLocation();
 
   return (  
     <div className={classes.container}>
       <Alert 
-        severity="error"
+        severity="success"
         className={classes.alert}
       >
         <AlertTitle>
-          Your token has expired
+          Password reset email sent to {location.state ? location.state.email : ''}
         </AlertTitle>
-          The token for resetting your password has already expired. 
-          Try requesting for a new one in forgot password page.
+          Check your email to continue resetting your password
       </Alert>
     </div>
+    
   );
 }
  
-export default Expired
+export default EmailSent;

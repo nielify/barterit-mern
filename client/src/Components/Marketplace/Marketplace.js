@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 import PostList from './PostList';
 import MarketplaceSidebar from './MarketplaceSidebar';
@@ -8,7 +9,16 @@ import LocationModal from './LocationModal'
 
 import Grid from '@material-ui/core/Grid';
 
+import { UserContext } from '../../Context/UserContext';
+import useRequireAuth from '../../CustomHooks/useRequireAuth';
+
 const Marketplace = () => {
+  useRequireAuth();
+
+  const history = useHistory();
+
+  //app current user data
+  const [ user, setUser ] = useContext(UserContext);
 
   //category modal
   const [ openCategoryModal, setOpenCategoryModal ] = useState(false); 

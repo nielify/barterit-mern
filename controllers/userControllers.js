@@ -44,6 +44,45 @@ module.exports.viewUser_get = async (req, res) => {
 
 }
 
+module.exports.savedItems_get = async (req, res) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
+      const user = await User.findOne({ _id: verifiedToken.id }).populate('savedPosts').exec();
+      res.send({ savedPosts: user.savedPosts });
+    });
+  }
+}
+
+module.exports.saveItems_post = async (req, res) => {
+  const postId = req.params.id;
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
+      const user = await User.findOne({ _id: verifiedToken.id })
+      user.savedPosts.push(postId);
+      const newUser = await user.save();
+      res.send({ savedPosts: newUser.savedPosts });
+    });
+  }
+}
+
+module.exports.savedItems_delete = async (req, res) => {
+  const postId = req.params.id;
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
+      const user = await User.findOne({ _id: verifiedToken.id })
+      user.savedPosts.pull(postId);
+      const newUser = await user.save();
+      res.send({ savedPosts: newUser.savedPosts });
+    });
+  }
+}
+
 module.exports.forgotPassword_post = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });

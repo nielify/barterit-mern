@@ -3,11 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import useRemoveCover from '../../CustomHooks/useRemoveCover';
 
-
-
-const useStyles = makeStyles((theme) => ({
-  container: {
+const useStyles = makeStyles(theme => ({
+  div: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,29 +16,28 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3),
     padding: theme.spacing(3),
     maxWidth: 500,
-  }
+  },
 }));
 
+const Verify = () => {
+  useRemoveCover();
 
-const EmailSent = () => {
   const classes = useStyles();
   const location = useLocation();
 
-  return (  
-    <div className={classes.container}>
-      {location.state && <Alert 
-        severity="success"
-        className={classes.alert}
-      >
+  //const [ email, setEmail ] = useState(location.state.email);
+
+  return (
+    <div className={classes.div} >
+      {location.state && <Alert severity="success" className={classes.alert}>
         <AlertTitle>
-          Password reset email sent to {location.state ? location.state.email : ''}
+          Registration email sent to {location.state ? location.state.email : ''}
         </AlertTitle>
-          Check your email to continue resetting your password
-      </Alert> }
+        Verify your email to complete the registration
+      </Alert>}
       {!location.state && <h2>Error 404: Page not found</h2>}
     </div>
-    
   );
 }
  
-export default EmailSent;
+export default Verify;

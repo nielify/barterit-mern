@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { UserProvider } from './Context/UserContext';
+import { CoverProvider } from './Context/CoverContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CoverProvider>
     <UserProvider>
       <Router>
         <App />
       </Router>
     </UserProvider>
+    </CoverProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

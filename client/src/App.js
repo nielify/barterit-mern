@@ -34,6 +34,41 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import { UserContext } from './Context/UserContext'
 import Negotiation from './Components/Negotiation/Negotiation'
+import { Route, Switch } from 'react-router-dom';
+import { useState, useContext } from 'react';
+
+//Utilities Components
+import LinearLoader from './Utilities/LinearLoader';
+import DefaultHeader from './Utilities/DefaultHeader';
+import Header from './Utilities/Header';
+import LoadingCover from './Utilities/LoadingCover';
+
+//Page Components
+import Marketplace from './Components/Marketplace/Marketplace';
+import CreatePost from './Components/CreatePost/CreatePost';
+import Item from './Components/Item/Item';
+import MyProfile from './Components/MyProfile/MyProfile';
+import SavedItems from './Components/SavedItems/SavedItems';
+import User from './Components/User/User';
+import Upload from './TestComponents/Upload';
+import Cloudinary from './TestComponents/Cloudinary';
+import SMSForm from './TestComponents/SMSForm';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import EmailSent from './Components/ForgotPassword/EmailSent';
+import Expired from './Components/ForgotPassword/Expired';
+import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
+import Signin from './Components/Signin';
+import Signup from './Components/SignUp/SignUp';
+import Verify from './Components/SignUp/Verify'
+import Success from './Components/SignUp/Success';
+import ResetPassword from './Components/ResetPassword';
+
+//Contexts
+import { UserContext } from './Context/UserContext';
+import { CoverContext } from './Context/CoverContext';
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -42,45 +77,24 @@ const theme = createMuiTheme({
       main: '#009688',
       dark: '#00695f'
     },
-    seconday: {
-      light: '#5393ff',
-      main: '#009688',
-      dark: '#1c54b2'
-    }
-  }
-})
+    secondary: {
+      light: '#aaa',
+      main: '#888',
+      dark: '#aaa'
+    },
+  },
+});
 
 function App() {
-  const history = useHistory()
-
-  const [showProgress, setShowProgress] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [user, setUser] = useContext(UserContext)
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user`, {
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include'
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.redirect) {
-          history.push(data.url)
-          setIsLoading(false)
-        } else {
-          setUser(data.user)
-          setIsLoading(false)
-        }
-      })
-      .catch((err) => console.log(err))
-  }, [])
+  const [ showProgress, setShowProgress ] = useState(false);
+  const [ user ] = useContext(UserContext);
+  const [ cover ] = useContext(CoverContext);
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {isLoading && <LoadingCover />}
       <LinearLoader showProgress={showProgress} />
-      {user._id ? <Header /> : <DefaultHeader />}
+      { cover && <LoadingCover /> }
+      { user._id ? <Header /> : <DefaultHeader />}
       <Switch>
         <Route exact path="/">
           <Marketplace />
