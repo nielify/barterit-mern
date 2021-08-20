@@ -9,7 +9,7 @@ import Title from './Title';
 import Owner from './Owner';
 import Description from './Description';
 import InReturn from './InReturn';
-import SubmitButton from './SubmitButton';
+import Buttons from './Buttons';
 
 import { UserContext } from '../../Context/UserContext';
 
@@ -60,7 +60,7 @@ const Item = () => {
       <Owner post={post} />
       <Description post={post} />
       <InReturn post={post} />
-      { !isOwnPost && <SubmitButton /> }
+      { !isOwnPost && <Buttons /> }
     </Container>
   );
 }
