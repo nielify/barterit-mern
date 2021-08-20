@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -15,15 +17,35 @@ const useStyles = makeStyles((theme) => ({
 
 const Buttons = ({ isSaved, setIsSaved }) => {
   const classes = useStyles();
+  const params = useParams();
 
-  const handleRemoveSaveClick = async () => { 
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
+
+ /*  const handleRemoveSaveClick = async () => { 
+    if (isSubmitting) return console.log('already submitting');
+    setIsSubmitting(true);
+
     //const res = await fetch()
 
     setIsSaved(false);
-  }
+  } */
 
   const handleSaveClick = async () => {
-    setIsSaved(!isSaved);
+    if (isSubmitting) return console.log('already submitting');
+    setIsSubmitting(true);
+    
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/saved-items/${params.id}`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+      })
+      const data = await res.json()
+      setIsSaved(!isSaved);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsSubmitting(false);
   }
 
   return (  
