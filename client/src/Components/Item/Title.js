@@ -35,7 +35,7 @@ const Title = ({ post }) => {
         className={classes.posted}
         gutterBottom
       >
-        Posted { moment(post.createdAt).fromNow() }
+        Posted { moment(post.createdAt).fromNow() } in { post.location }, Quezon
       </Typography>
     </>
   );
