@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   image: {
+    marginTop: theme.spacing(1),
     borderRadius: 15,
     height: '60vh',
     objectFit: 'contain',
