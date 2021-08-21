@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, .5),
   },
   title: {
-    fontSize: '.95rem',
+    fontSize: '1rem',
     lineHeight: 1.1,
   },
-  owner: {
+  location: {
     fontSize: '.83rem',
   },
   cardActions: {
@@ -119,7 +119,7 @@ function ItemCard({ item, handleRemoveItem, index }) {
               <Typography variant="h6" component="h3" className={classes.title}>
                 { item.title }
               </Typography>
-              <Typography variant="body1" component="h3" className={classes.owner}>
+              <Typography variant="body1" component="h3" className={classes.location}>
                 { item.location }
               </Typography>
             </CardContent>
