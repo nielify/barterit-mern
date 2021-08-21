@@ -12,14 +12,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import puppyImg from '../../Images/puppy-image.jpg'
-
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
   },
   container: {
-    //border: 'solid 1px #bbb',
     width: '100%',
   },
   cardContent: {
@@ -98,7 +95,7 @@ function PostCard({ title, image, date, id }) {
         <CardActionArea>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
+            alt="post"
             height="180"
             image={image}
             style={{borderRadius: 7}}
