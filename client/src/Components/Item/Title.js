@@ -5,13 +5,14 @@ import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  title: {
     fontWeight: 'bold',
     fontSize:'1.4rem',
     margin: 0,
     padding: 0,
+    lineHeight: 1.3,
   },
-  posted: {
+  subtitle: {
     fontSize: '.8rem',
     marginLeft: theme.spacing(.2),
   }
@@ -26,13 +27,13 @@ const Title = ({ post }) => {
     <>
       <Typography
         variant="subtitle2"
-        className={classes.root}
+        className={classes.title}
         color="primary"
       >
         { post.title }
       </Typography>
       <Typography
-        className={classes.posted}
+        className={classes.subtitle}
         gutterBottom
       >
         Posted { moment(post.createdAt).fromNow() } in { post.location }, Quezon
