@@ -13,6 +13,7 @@ const Title = () => {
       component="h1" 
       variant="h5" 
       color="primary" 
+      style={{fontWeight: 'bold'}}
       gutterBottom
     >
       Saved items from Marketplace
