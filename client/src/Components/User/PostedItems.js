@@ -2,6 +2,8 @@ import { useState ,useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
+import moment from 'moment';
+
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -14,14 +16,14 @@ import puppyImg from '../../Images/puppy-image.jpg'
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    fontWeight: 'normal',
+    fontWeight: 'bold',
   },
   container: {
     //border: 'solid 1px #bbb',
     width: '100%',
   },
   cardContent: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(1, .5, 1, .5),
   },
   note: {
     textAlign: 'center',
@@ -92,21 +94,21 @@ function PostCard({ title, image, date, id }) {
       to={`/item/${id}`}
       style={{textDecoration:'none'}}
     >
-      <Card style={{margin:5}}>
+      <Card style={{margin:'0 4px 0 4px'}} elevation={0}>
         <CardActionArea>
           <CardMedia
             component="img"
             alt="Contemplative Reptile"
             height="180"
             image={image}
-            //style={{objectFit: 'fill'}}
+            style={{borderRadius: 7}}
           />
           <CardContent className={classes.cardContent}>
-            <Typography variant="h6" component="h3" style={{fontSize: '.9rem' }}>
+            <Typography variant="h6" component="h3" style={{fontSize: '1rem', lineHeight: 1.1 }}>
               { title }
             </Typography>
-            <Typography variant="h6" component="p" style={{fontSize: '.8rem',}}>
-              { date }
+            <Typography variant="body1" component="p" style={{fontSize: '.8rem',}}>
+              { moment(date).fromNow() }
             </Typography>
           </CardContent>
         </CardActionArea>
