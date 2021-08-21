@@ -19,16 +19,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin:5,
+    margin: '0 4px 2px 4px',
   },
   cardContent: {
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(1, .5),
   },
   title: {
-    fontSize: '.9rem',
+    fontSize: '1rem',
+    lineHeight: 1.1,
   },
-  owner: {
-    fontSize: '.8rem',
+  location: {
+    fontSize: '.83rem',
   },
   cardActions: {
     padding: theme.spacing(0),
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   bottomArea: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: theme.spacing(.5, 1),
+    //padding: theme.spacing(.5, 0),
   },
   modal: {
     display: 'flex',
@@ -99,7 +100,7 @@ function ItemCard({ item, handleRemoveItem, index }) {
   return (
     <>
       <Grid item xs={6} sm={4} lg={3}>
-        <Card className={classes.card}>
+        <Card className={classes.card} elevation={0}>
           <CardActionArea
             component={Link}
             to={`/item/${item._id}`}
@@ -110,7 +111,7 @@ function ItemCard({ item, handleRemoveItem, index }) {
               alt="Contemplative Reptile"
               height="180"
               image={item.images[0]}
-              //style={{objectFit: 'fill'}}
+              style={{borderRadius: 7}}
             />    
           </CardActionArea>
           <div className={classes.bottomArea}>
@@ -118,12 +119,12 @@ function ItemCard({ item, handleRemoveItem, index }) {
               <Typography variant="h6" component="h3" className={classes.title}>
                 { item.title }
               </Typography>
-              <Typography variant="h6" component="h3" className={classes.owner}>
-                Posted by: { item.owner }
+              <Typography variant="body1" component="h3" className={classes.location}>
+                { item.location }
               </Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-              <IconButton onClick={handleDeleteModalOpen}>
+              <IconButton size="small" onClick={handleDeleteModalOpen}>
                 <DeleteIcon />
               </IconButton> 
             </CardActions>

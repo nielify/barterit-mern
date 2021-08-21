@@ -12,7 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: 5,
+    margin: '0 4px 0 4px ',
     textDecoration: 'none',
   },
   note: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   cardContent: {
-    padding: theme.spacing(.5, 1, .4, 1),
+    padding: theme.spacing(1, .5, .5, .5),
   },
   location: {
     position: 'relative',
@@ -88,17 +88,17 @@ function PostCard({ title, location, image, id }) {
       to={`/item/${id}`}
       style={{textDecoration: 'none'}}
     >
-      <Card className={classes.root} >
+      <Card className={classes.root} elevation={0} >
         <CardActionArea>
           <CardMedia
             component="img"
             alt={ title }
             height="180"
             image={image}
-            //style={{objectFit: 'fill'}}
+            style={{borderRadius: 7}}
           />
           <CardContent className={classes.cardContent}>
-            <Typography variant="h6" component="h3" style={{fontSize: '1rem' }}>
+            <Typography variant="h6" component="h3" style={{fontSize: '1rem', lineHeight: 1.1, marginBottom: 3 }}>
               { title }
             </Typography>
             <Typography variant="body1" className={classes.location}>
