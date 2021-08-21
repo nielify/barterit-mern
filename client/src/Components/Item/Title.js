@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -34,7 +35,7 @@ const Title = ({ post }) => {
         className={classes.posted}
         gutterBottom
       >
-        Posted on { post.createdAt }
+        Posted { moment(post.createdAt).fromNow() }
       </Typography>
     </>
   );
