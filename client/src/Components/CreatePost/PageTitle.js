@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(2),
     fontWeight: 'bold',
-    lineHeight: 1.1
   }  
 }));
 
