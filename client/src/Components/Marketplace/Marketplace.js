@@ -33,9 +33,42 @@ const Marketplace = () => {
   //active category
   const [ currentCategory, setCurrentCategory ] = useState('All Posts');
 
+  //search feature mobile/desktop
+  const [ searchText, setSearchText ] = useState('');
+
+  const handleSearchTextChange = (e) => {
+    setSearchText(e.target.value);
+  }
+
+  const handleSearchEnter = async (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (!searchText) return;
+      setPosts([]);
+      setShowLoader(true);
+      try {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/search/${searchText}`, { 
+          headers: { 'Content-Type': 'application/json' }, 
+          credentials: 'include', 
+        })
+        const data = await res.json();
+        console.log(data.posts);
+      } catch (err) {
+        setShowLoader(false);
+        alert('An error has occured!');
+      }
+    }
+  }
+
   return (  
     <Grid container>
-      <MarketplaceHeader setOpenCategoryModal={setOpenCategoryModal} setOpenLocationModal={setOpenLocationModal} />
+      <MarketplaceHeader 
+        setOpenCategoryModal={setOpenCategoryModal} 
+        setOpenLocationModal={setOpenLocationModal}
+        searchText={searchText}
+        handleSearchTextChange={handleSearchTextChange}
+        handleSearchEnter={handleSearchEnter}
+      />
       <CategoryModal 
         open={openCategoryModal} 
         setOpen={setOpenCategoryModal} 
@@ -52,6 +85,9 @@ const Marketplace = () => {
         setShowNote={setShowNote} 
         currentCategory={currentCategory} 
         setCurrentCategory={setCurrentCategory}
+        searchText={searchText}
+        handleSearchTextChange={handleSearchTextChange}
+        handleSearchEnter={handleSearchEnter}
       />
       <PostList posts={posts} setPosts={setPosts} showLoader={showLoader} setShowLoader={setShowLoader} showNote={showNote} setShowNote={setShowNote} />
     </Grid>

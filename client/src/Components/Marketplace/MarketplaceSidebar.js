@@ -86,35 +86,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory }) => {
+const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory, searchText, handleSearchTextChange, handleSearchEnter }) => {
   const classes = useStyles();
 
-  const [ searchText, setSearchText ] = useState('');
   const kilometers = [ 2, 5, 10, 20, 30, 40, 50 ];
-
-  const handleSearchTextChange = (e) => {
-    setSearchText(e.target.value);
-  }
-
-  const handleSearchEnter = async (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      if (!searchText) return;
-      setPosts([]);
-      setShowLoader(true);
-      try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/search/${searchText}`, { 
-          headers: { 'Content-Type': 'application/json' }, 
-          credentials: 'include', 
-        })
-        const data = await res.json();
-        console.log(data.posts);
-      } catch (err) {
-        setShowLoader(false);
-        alert('An error has occured!');
-      }
-    }
-  }
 
   const renameCategory = (category) => {
     if (category === 'Antiques & Collections') category = 'antiques-and-collections';
