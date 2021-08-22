@@ -52,8 +52,9 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 0,
   },
   typography: {
-    fontWeight: 500,
-    marginBottom: theme.spacing(3),
+    fontWeight: 'bold',
+    lineHeight: 1.1,
+    marginBottom: theme.spacing(2),
     width: '100%',
   },
   alert: {

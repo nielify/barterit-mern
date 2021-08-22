@@ -11,7 +11,7 @@ import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(5, 2, 10, 2),
+    padding: theme.spacing(2, 2, 10, 2),
   },
   typography: {
     //letterSpacing: -2,
