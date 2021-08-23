@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal }) => {
+const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal, searchText, handleSearchTextChange, handleSearchEnter }) => {
   const classes = useStyles();
 
   const handleOpenCategoryModal = () => {
@@ -79,6 +79,9 @@ const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal }) => {
               variant="outlined"
               size="small"
               placeholder="Search for items"
+              onKeyDown={handleSearchEnter}
+              onChange={handleSearchTextChange} 
+              value={searchText}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

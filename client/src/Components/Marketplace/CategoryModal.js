@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory }) => {
+const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory, setSearchText }) => {
   const classes = useStyles();
 
   const handleClose = () => {
@@ -85,6 +85,7 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, cu
   }
 
   const handleCategoryClick = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setOpen(false);
     setPosts([]);
@@ -111,6 +112,7 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, cu
   }
 
   const handleClickAllPost = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setOpen(false);
     setPosts([]);

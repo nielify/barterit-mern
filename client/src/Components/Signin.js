@@ -19,7 +19,7 @@ import useRemoveCover from '../CustomHooks/useRemoveCover';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(5),
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   typography: {
     textAlign: 'center',
-    fontWeight: 500,
+    fontWeight: 'bold',
     marginBottom: theme.spacing(3),
   },
   alert: {
@@ -112,7 +112,7 @@ const Signin = ({ setShowProgress }) => {
         variant="h4"
         color="primary"
       >
-        Sign in to Barter.it
+        Sign in to BarterIT
       </Typography>
       {showAlert && <Alert 
         severity="warning"
