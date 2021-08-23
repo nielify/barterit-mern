@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory }) => {
+const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory, searchText, handleSearchTextChange, handleSearchEnter, setSearchText }) => {
   const classes = useStyles();
 
   const kilometers = [ 2, 5, 10, 20, 30, 40, 50 ];
@@ -117,6 +117,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
   }
 
   const handleCategoryClick = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setPosts([]);
     setShowLoader(true);
@@ -142,6 +143,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
   }
 
   const handleClickAllPost = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setPosts([]);
     setShowLoader(true);
@@ -183,13 +185,16 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
       <Grid container item md={4} lg={3} className={classes.root} style={{ display: "table" }}>
         <Grid item xs={12}>
           <div className={classes.forms}>
-            <form className={classes.search}>
+            <form className={classes.search} >
               <TextField
                 className={classes.searchBox}
                 fullWidth
                 variant="outlined"
                 size="small"
                 placeholder="Search for items"
+                onKeyDown={handleSearchEnter}
+                onChange={handleSearchTextChange} 
+                value={searchText}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

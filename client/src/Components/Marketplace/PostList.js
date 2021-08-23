@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setShowNote }) => {
+const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setShowNote, showPosts }) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setSho
       </Typography> }
       { showLoader && <Loader /> } 
       <Grid container item xs={12}> 
-        { posts.map((post, i) => (
+        { showPosts && posts.map((post, i) => (
           <PostCard title={post.title} location={post.location} image={post.images[0]} id={post._id} key={i}/>
         )) }
       </Grid> 
