@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router';
 
+import Fuse from 'fuse.js';
+
 import PostList from './PostList';
 import MarketplaceSidebar from './MarketplaceSidebar';
 import MarketplaceHeader from './MarketplaceHeader';
@@ -29,6 +31,7 @@ const Marketplace = () => {
   const [ posts, setPosts ] = useState([]);
   const [ showLoader, setShowLoader ] = useState(true);
   const [ showNote, setShowNote ] = useState(false);
+  const [ showPosts, setShowPosts ] = useState(true);
 
   //active category
   const [ currentCategory, setCurrentCategory ] = useState('All Posts');
@@ -44,18 +47,38 @@ const Marketplace = () => {
     if (e.keyCode === 13) {
       e.preventDefault();
       if (!searchText) return;
-      setPosts([]);
+      setShowNote(false);
+      setCurrentCategory('');
+      setShowPosts(false);
       setShowLoader(true);
+      
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/search/${searchText}`, { 
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
           headers: { 'Content-Type': 'application/json' }, 
           credentials: 'include', 
         })
         const data = await res.json();
-        console.log(data.posts);
-      } catch (err) {
+        
+        //fuse search
+        const options = {
+          includeScore: true,
+          useExtendedSearch: true,
+          keys: [ 'title' ],
+        }
+        const fuse = new Fuse(data.allPosts, options);
+        const results = fuse.search(`'${searchText}`);
+        const searchResult = results.map((result) => result.item);
+
+        if (!searchResult[0]) setShowNote(true);
+
         setShowLoader(false);
-        alert('An error has occured!');
+        setPosts(searchResult);
+        setShowPosts(true);
+        
+      } catch (err) {
+        console.log(err);
+        setShowLoader(false);
+        alert('An error has occured! Please refresh the page.');
       }
     }
   }
@@ -77,6 +100,7 @@ const Marketplace = () => {
         setShowNote={setShowNote} 
         currentCategory={currentCategory} 
         setCurrentCategory={setCurrentCategory}
+        setSearchText={setSearchText}
       />
       <LocationModal open={openLocationModal} setOpen={setOpenLocationModal} />
       <MarketplaceSidebar 
@@ -88,8 +112,18 @@ const Marketplace = () => {
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}
         handleSearchEnter={handleSearchEnter}
+        setSearchText={setSearchText}
       />
-      <PostList posts={posts} setPosts={setPosts} showLoader={showLoader} setShowLoader={setShowLoader} showNote={showNote} setShowNote={setShowNote} />
+      <PostList 
+        posts={posts}
+        setPosts={setPosts} 
+        showLoader={showLoader} 
+        setShowLoader={setShowLoader} 
+        showNote={showNote} 
+        setShowNote={setShowNote}
+        showPosts={showPosts}
+      />
+        
     </Grid>
   );
 }

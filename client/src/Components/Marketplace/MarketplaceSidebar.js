@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory, searchText, handleSearchTextChange, handleSearchEnter }) => {
+const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCategory, setCurrentCategory, searchText, handleSearchTextChange, handleSearchEnter, setSearchText }) => {
   const classes = useStyles();
 
   const kilometers = [ 2, 5, 10, 20, 30, 40, 50 ];
@@ -117,6 +117,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
   }
 
   const handleCategoryClick = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setPosts([]);
     setShowLoader(true);
@@ -142,6 +143,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
   }
 
   const handleClickAllPost = async (category) => {
+    setSearchText('');
     setCurrentCategory(category);
     setPosts([]);
     setShowLoader(true);
