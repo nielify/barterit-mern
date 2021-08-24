@@ -1,101 +1,101 @@
-import { useHistory, Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useHistory, Link } from 'react-router-dom'
+import { useState, useContext } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Popper from '@material-ui/core/Popper';
-import Paper from '@material-ui/core/Paper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Popper from '@material-ui/core/Popper'
+import Paper from '@material-ui/core/Paper'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonIcon from '@material-ui/icons/Person';
-import Divider from '@material-ui/core/Divider';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import MessageIcon from '@material-ui/icons/Message';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import PersonIcon from '@material-ui/icons/Person'
+import Divider from '@material-ui/core/Divider'
+import BookmarkIcon from '@material-ui/icons/Bookmark'
+import MessageIcon from '@material-ui/icons/Message'
 
-import { UserContext } from '../Context/UserContext';
+import { UserContext } from '../Context/UserContext'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-  },
+  root: {},
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
+    height: '10vh'
   },
   barter: {
     fontSize: '1.5rem',
     fontWeight: 500,
     color: '#fff',
     marginRight: 2,
-    textTransform: 'capitalize',
+    textTransform: 'capitalize'
   },
   it: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#fff'
   },
   right: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   firstName: {
     marginRight: theme.spacing(2),
     textDecoration: 'none',
-    color: '#fff',
+    color: '#fff'
   },
   avatar: {
     marginRight: theme.spacing(1.5),
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   logout: {
     marginRight: theme.spacing(1),
     backgroundColor: '#26a69a',
     color: '#fff',
-    padding: 11,
+    padding: 11
   },
   dropdown: {
-    color: '#fff',
+    color: '#fff'
   },
   accountMenu: {
-    marginTop: theme.spacing(0),
+    marginTop: theme.spacing(0)
   },
   listItem: {
-    paddingRight: theme.spacing(10),
+    paddingRight: theme.spacing(10)
   },
   listItemIcon: {
-    minWidth: '40px',
+    minWidth: '40px'
   },
   zIndex: {
-    zIndex: 9999,
+    zIndex: 9999
   }
-}));
+}))
 
 const Header = () => {
-  const classes = useStyles();
-  const history = useHistory();
-  
-  const [ user, setUser ] = useContext(UserContext);
+  const classes = useStyles()
+  const history = useHistory()
 
-  const [accountAnchorEl, setAccountAnchorEl] = useState(null);
+  const [user, setUser] = useContext(UserContext)
+
+  const [accountAnchorEl, setAccountAnchorEl] = useState(null)
 
   const toggleAccountPopper = (event) => {
-    setAccountAnchorEl(accountAnchorEl ? null : event.currentTarget);
-  };
+    setAccountAnchorEl(accountAnchorEl ? null : event.currentTarget)
+  }
 
   const handleClickAway = () => {
-    setAccountAnchorEl(null);
-  };
+    setAccountAnchorEl(null)
+  }
 
   /* useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
@@ -118,21 +118,24 @@ const Header = () => {
       });
   }, [history]) */
 
-  const handleLogout = async () => { 
-    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, { credentials: 'include' }); 
-    const data = await res.json(); 
-    
-    if (data.logoutSuccess) { 
-      setUser({});
-      history.push('/signin'); 
-    } 
-  } 
+  const handleLogout = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`,
+      { credentials: 'include' }
+    )
+    const data = await res.json()
 
-  return (   
-    <AppBar className={classes.root} position="sticky">     
+    if (data.logoutSuccess) {
+      setUser({})
+      history.push('/signin')
+    }
+  }
+
+  return (
+    <AppBar className={classes.root} position="sticky">
       <Grid container>
         {/* <Grid item lg={1}></Grid> */}
-        <Grid item xs={12} /* lg={10} */> 
+        <Grid item xs={12} /* lg={10} */>
           <Toolbar className={classes.toolbar}>
             <Button
               component={Link}
@@ -144,51 +147,56 @@ const Header = () => {
               <Typography
                 className={classes.barter}
                 variant="h6"
-                style={{letterSpacing: 1}}
+                style={{ letterSpacing: 1 }}
               >
                 Barter
               </Typography>
               <Typography
                 className={classes.it}
                 variant="h6"
-                style={{letterSpacing: 1}}
+                style={{ letterSpacing: 1 }}
               >
                 IT
-              </Typography>   
+              </Typography>
             </Button>
             <div className={classes.right}>
-              <Avatar 
-                className={classes.avatar} 
+              <Avatar
+                className={classes.avatar}
                 src={user.profilePicture}
                 component={Link}
                 to="/profile"
               />
-              { user.firstName && 
-              <Typography 
-                variant="subtitle2" 
-                className={classes.firstName}
-                component={Link}
-                to="/profile"
-              >
-                {user.firstName}
-              </Typography> }
+              {user.firstName && (
+                <Typography
+                  variant="subtitle2"
+                  className={classes.firstName}
+                  component={Link}
+                  to="/profile"
+                >
+                  {user.firstName}
+                </Typography>
+              )}
               <ClickAwayListener onClickAway={handleClickAway}>
                 <div>
-                  <IconButton 
-                    className={classes.dropdown} 
-                    onClick={toggleAccountPopper} 
-                    size="small" 
+                  <IconButton
+                    className={classes.dropdown}
+                    onClick={toggleAccountPopper}
+                    size="small"
                   >
                     <ArrowDropDownIcon fontSize="large" />
                   </IconButton>
-                  <Popper open={Boolean(accountAnchorEl)} anchorEl={accountAnchorEl} className={classes.zIndex}>
+                  <Popper
+                    open={Boolean(accountAnchorEl)}
+                    anchorEl={accountAnchorEl}
+                    className={classes.zIndex}
+                  >
                     <Paper className={classes.accountMenu} elevation={6}>
                       <List component="nav">
-                        <ListItem 
+                        <ListItem
                           onClick={toggleAccountPopper}
                           component={Link}
                           to="/profile"
-                          button 
+                          button
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
@@ -196,11 +204,11 @@ const Header = () => {
                           </ListItemIcon>
                           <ListItemText primary="My Profile" />
                         </ListItem>
-                        <ListItem 
+                        <ListItem
                           onClick={toggleAccountPopper}
                           component={Link}
                           to="/negotiations"
-                          button 
+                          button
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
@@ -208,11 +216,11 @@ const Header = () => {
                           </ListItemIcon>
                           <ListItemText primary="Negotiations" />
                         </ListItem>
-                        <ListItem 
+                        <ListItem
                           onClick={toggleAccountPopper}
                           component={Link}
                           to="/saved-items"
-                          button 
+                          button
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
@@ -223,13 +231,13 @@ const Header = () => {
                       </List>
                       <Divider />
                       <List component="nav">
-                        <ListItem 
-                          button 
-                          className={classes.listItem} 
-                          onClick={ () => {
-                            handleLogout();
-                            toggleAccountPopper();
-                          }} 
+                        <ListItem
+                          button
+                          className={classes.listItem}
+                          onClick={() => {
+                            handleLogout()
+                            toggleAccountPopper()
+                          }}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
                             <ExitToAppIcon />
@@ -247,7 +255,7 @@ const Header = () => {
         {/* <Grid item lg={1}></Grid> */}
       </Grid>
     </AppBar>
-  );
+  )
 }
- 
-export default Header;
+
+export default Header
