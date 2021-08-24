@@ -10,6 +10,7 @@ import Owner from './Owner';
 import Description from './Description';
 import InReturn from './InReturn';
 import Buttons from './Buttons';
+import OwnerButtons from './OwnerButtons';
 
 import { UserContext } from '../../Context/UserContext';
 
@@ -63,6 +64,7 @@ const Item = () => {
       <Description post={post} />
       <InReturn post={post} />
       { !isOwnPost && <Buttons post={post} isSaved={isSaved} setIsSaved={setIsSaved} /> }
+      { isOwnPost && <OwnerButtons /> }
     </Container>
   );
 }
