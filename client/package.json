@@ -17,10 +17,13 @@
     "env-cmd": "^10.1.0",
     "fg-loadcss": "^3.1.0",
     "fuse.js": "^6.4.6",
+    "leaflet": "^1.7.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-recaptcha": "^2.1.0",
+    "react-leaflet": ">=3.1.0 <3.2.0 || ^3.2.1",
+    "@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
     "react-material-ui-carousel": "^2.2.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -38,16 +41,9 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
     ]
-  }
 }
