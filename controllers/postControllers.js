@@ -16,6 +16,18 @@ module.exports.post_get = async (req, res) => {
   res.send({ post });
 }
 
+//delete single post
+module.exports.post_delete = async (req, res) => {
+  const postId = req.params.id;
+
+  try { 
+    const post = await Post.findByIdAndDelete(postId);
+    res.send({ message: 'Success' });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //own posts
 module.exports.myPosts_get = (req, res) => {
   const token = req.cookies.jwt;
