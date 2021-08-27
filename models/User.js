@@ -66,6 +66,10 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'post'
   }],
+  isVerified: {
+    type:Boolean,
+    default: false
+  },
   isActive: {
     type: Boolean,
     default: false
