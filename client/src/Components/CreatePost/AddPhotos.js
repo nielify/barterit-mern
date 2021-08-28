@@ -132,17 +132,15 @@ const AddPhotos = ({ imageFiles, setImagesFiles, imageError, setImageError }) =>
               className={classes.inputfile}
               onChange={handleInputChange}
             />
-            <label htmlFor="file">
-              <Card className={classes.card}>
-                <AddPhotoAlternateOutlinedIcon color="primary" style={{fontSize:24}} />
-                <Typography
-                  variant="subtitle1"
-                  style={{fontSize:12}}
-                >
-                  Add Photo
-                </Typography>
-              </Card>
-            </label>
+            <Card component="label" htmlFor="file" className={classes.card}>
+              <AddPhotoAlternateOutlinedIcon color="primary" style={{fontSize:24}} />
+              <Typography
+                variant="subtitle1"
+                style={{fontSize:12}}
+              >
+                Add Photo
+              </Typography>
+            </Card>
           </form>
         </Grid>
       </Grid>
