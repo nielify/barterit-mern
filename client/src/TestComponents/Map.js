@@ -22,7 +22,7 @@ const Map = () => {
       /* setPosition([pos.coords.latitude, pos.coords.longitude]); */
       /* console.log(pos.coords.latitude);
       console.log(pos.coords.longitude); */
-    }, error => console.log(error))
+    }, error => console.log(error), { enableHighAccuracy: true })
   }, [position]);
 
   return (
