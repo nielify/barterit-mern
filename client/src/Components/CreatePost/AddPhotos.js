@@ -122,26 +122,28 @@ const AddPhotos = ({ imageFiles, setImagesFiles, imageError, setImageError }) =>
           <PreviewImage image={imageFile.image} index={imageFile.key} handleRemovePhoto={handleRemovePhoto} key={imageFile.key}/>
         ))}
         <Grid item xs={3} sm={2}>
-          <input 
-            type="file" 
-            name="file" 
-            id="file" 
-            accept="image/*" 
-            multiple 
-            className={classes.inputfile}
-            onChange={handleInputChange}
-          />
-          <label htmlFor="file">
-            <Card className={classes.card}>
-              <AddPhotoAlternateOutlinedIcon color="primary" style={{fontSize:24}} />
-              <Typography
-                variant="subtitle1"
-                style={{fontSize:12}}
-              >
-                Add Photo
-              </Typography>
-            </Card>
-          </label>
+          <form>
+            <input 
+              type="file" 
+              name="file" 
+              id="file" 
+              accept="image/*" 
+              multiple 
+              className={classes.inputfile}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="file">
+              <Card className={classes.card}>
+                <AddPhotoAlternateOutlinedIcon color="primary" style={{fontSize:24}} />
+                <Typography
+                  variant="subtitle1"
+                  style={{fontSize:12}}
+                >
+                  Add Photo
+                </Typography>
+              </Card>
+            </label>
+          </form>
         </Grid>
       </Grid>
     </Grid>
