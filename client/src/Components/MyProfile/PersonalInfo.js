@@ -281,12 +281,10 @@ const PersonalInfo = () => {
               className={classes.file}
               onChange={handlePictureFileChange}
             />
-            { showEditPicture && <IconButton className={classes.editPicture}>
-              <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
-                <Avatar className={classes.pictureIcon}>
-                  <CameraAltIcon fontSize="small"/>
-                </Avatar>
-              </label>
+            { showEditPicture && <IconButton className={classes.editPicture}>             
+              <Avatar component="label" htmlFor="pictureFile" className={classes.pictureIcon} style={{cursor: 'pointer'}}>
+                <CameraAltIcon fontSize="small"/>
+              </Avatar>
             </IconButton> }
           </form>
         </div>
@@ -326,11 +324,9 @@ const PersonalInfo = () => {
           onChange={handleBackgroundFileChange}
         />
         { showEditBackground && <IconButton className={classes.editBackground}>
-          <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-            <Avatar style={{background: '#33ab9f'}}>
-              <PhotoSizeSelectActualIcon />
-            </Avatar>
-          </label>
+          <Avatar component="label" htmlFor="backgroundFile" style={{background: '#33ab9f', cursor: 'pointer'}}>
+            <PhotoSizeSelectActualIcon />
+          </Avatar>         
         </IconButton> }
       </form>
       
