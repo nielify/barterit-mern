@@ -4,13 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
 import Rating from '@material-ui/lab/Rating';
 
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-
-import AraBackground from '../../Images/ara_background.jpg';
-import AraMerillo from '../../Images/ara_merillo.jpg';
 
 const useStyles = makeStyles((theme) => ({
   bgContainer: {
