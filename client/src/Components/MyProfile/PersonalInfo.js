@@ -272,22 +272,23 @@ const PersonalInfo = () => {
           { showAvatarLoader && <div className={classes.avatarLoader}>
             <CircularProgress size={28} />
           </div>}
-          <input  
-            type="file" 
-            name="pictureFile" 
-            id="pictureFile" 
-            accept="image/*" 
-            className={classes.file}
-            onChange={handlePictureFileChange}
-          />
-          { showEditPicture && <IconButton className={classes.editPicture}>
-            <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
-              <Avatar className={classes.pictureIcon}>
-                <CameraAltIcon fontSize="small"/>
-              </Avatar>
-            </label>
-          </IconButton> }
-          
+          <form>
+            <input  
+              type="file" 
+              name="pictureFile" 
+              id="pictureFile" 
+              accept="image/*" 
+              className={classes.file}
+              onChange={handlePictureFileChange}
+            />
+            { showEditPicture && <IconButton className={classes.editPicture}>
+              <label htmlFor="pictureFile" style={{cursor: 'pointer'}}>
+                <Avatar className={classes.pictureIcon}>
+                  <CameraAltIcon fontSize="small"/>
+                </Avatar>
+              </label>
+            </IconButton> }
+          </form>
         </div>
         <div className={classes.innerInfo}>
           <Typography
@@ -314,22 +315,25 @@ const PersonalInfo = () => {
           </Typography>
         </div>
       </div>    
-      <input 
-        type="file" 
-        name="backgroundFile" 
-        id="backgroundFile" 
-        accept="image/*" 
-        //multiple 
-        className={classes.file}
-        onChange={handleBackgroundFileChange}
-      />
-      { showEditBackground && <IconButton className={classes.editBackground}>
-        <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
-          <Avatar style={{background: '#33ab9f'}}>
-            <PhotoSizeSelectActualIcon />
-          </Avatar>
-        </label>
-      </IconButton> }
+      <form>
+        <input 
+          type="file" 
+          name="backgroundFile" 
+          id="backgroundFile" 
+          accept="image/*" 
+          //multiple 
+          className={classes.file}
+          onChange={handleBackgroundFileChange}
+        />
+        { showEditBackground && <IconButton className={classes.editBackground}>
+          <label htmlFor="backgroundFile" style={{cursor: 'pointer'}}>  
+            <Avatar style={{background: '#33ab9f'}}>
+              <PhotoSizeSelectActualIcon />
+            </Avatar>
+          </label>
+        </IconButton> }
+      </form>
+      
       {showPictureSave && <div className={classes.saveContainer}>
         <Button
           variant="outlined"

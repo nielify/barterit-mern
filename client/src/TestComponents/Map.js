@@ -38,6 +38,10 @@ const Map = () => {
           </Popup>
         </Marker>
       </MapContainer>
+      <form>
+        <input type="file" id="testFile" multiple  />
+        <label htmlFor="testFile" />
+      </form>
     </Container>
   );
 }
