@@ -43,6 +43,7 @@ const Map = () => {
       
       newSocket.on("connect", () => { 
         setNotifOpen(true);
+        newSocket.emit('newUser', user);
 
         myPosition = navigator.geolocation.watchPosition((pos) => { 
           setPosition([pos.coords.latitude, pos.coords.longitude]);
@@ -56,7 +57,7 @@ const Map = () => {
 
         }, error => console.log(error), { enableHighAccuracy: true }); 
 
-        newSocket.emit('newUser', user);
+        
       }); 
 
       //when new other use joins
