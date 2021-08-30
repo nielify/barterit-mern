@@ -42,9 +42,17 @@ const apiRoutes = require('./routes/api/apiRoutes');
 
 //socketio
 io.on("connection", socket => {
-  console.log('a user connected');
-  socket.on('marker', (arg) => {
-    socket.broadcast.emit('marker', arg);
+  //when a user connects
+  socket.on('newUser', (user) => {
+    socket.broadcast.emit('newUser', { 
+      id: user._id,
+      name: user.firstName + ' ' + user.lastName,
+    });
+  });
+
+  socket.on('locationUpdate', (update) => {
+    console.log(update)
+    socket.broadcast.emit('locationUpdate', update);
   })
 });
 

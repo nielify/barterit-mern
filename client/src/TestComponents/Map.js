@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
-import useRemoveCover from '../CustomHooks/useRemoveCover';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+import { UserContext } from '../Context/UserContext'
+import useRequireAuth from '../CustomHooks/useRequireAuth';
 
 import { io } from "socket.io-client";
 
@@ -12,35 +16,73 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Map = () => {
-  useRemoveCover();
+  useRequireAuth()
   const classes = useStyles();
   
+  //logged in user
+  const [ user, setUser ] = useContext(UserContext);
+
+  //socket
   const [ socket, setSocket ] = useState(null);
+
+  //positions
+  const positionRef = useRef([0,0]);
   const [ position, setPosition ] = useState([0,0]);
   const [ markers, setMarkers ] = useState([]);
 
-  useEffect(() => {  
-    //alert(`Reminder: In order for this feature to function properly, you must turn on your mobile device's GPS, Location permission for the browser(ie. Chrome, Safari, Firefox, etc.) you are using, and allow this website to access your location when prompt `);
-    const myPosition = navigator.geolocation.watchPosition((pos) => {
-      setPosition([pos.coords.latitude, pos.coords.longitude]);  
-    }, error => console.log(error), { enableHighAccuracy: true });
-    
-    return () => {
-      navigator.geolocation.clearWatch(myPosition);
-    }
-  }, []);
+  //notif
+  const [ notifOpen, setNotifOpen ] = useState(false);
+  const [ name, setName ] = useState(null);
 
   useEffect(() => {
-    const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`);
-    setSocket(newSocket);
+    let myPosition;
 
-    newSocket.on("connect", () => {
-      newSocket.on('marker', (arg) => {
-        setMarkers(oldMarkers => [...oldMarkers, arg]);
-      })
-    });
-    
-  }, []);
+    if (Object.keys(user).length !== 0) {
+      const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`);
+      setSocket(newSocket);
+      
+      newSocket.on("connect", () => { 
+        setNotifOpen(true);
+
+        myPosition = navigator.geolocation.watchPosition((pos) => { 
+          setPosition([pos.coords.latitude, pos.coords.longitude]);
+          positionRef.current = [pos.coords.latitude, pos.coords.longitude];
+          
+          newSocket.emit('locationUpdate', { 
+            id: user._id,
+            name: user.firstName + ' ' + user.lastName,
+            position: positionRef.current
+          });
+
+        }, error => console.log(error), { enableHighAccuracy: true }); 
+
+        newSocket.emit('newUser', user);
+      }); 
+
+      //when new other use joins
+      newSocket.on('newUser', (mapUser) => {
+        if (mapUser.id !== user._id) {
+          setName(mapUser.name);
+          setNotifOpen(true);
+          /* setMarkers(oldMarkers => [...oldMarkers, {
+            id: user._id,
+            name: user.firstName + ' ' + user.lastName,
+            location: [  ]
+          }]); */
+        }
+      });
+
+      //when other users position updates]
+      newSocket.on('locationUpdate', update => {
+        console.log(update)
+        setMarkers(oldMarker => [...oldMarker, update]);
+      });
+
+    }
+
+    return () => navigator.geolocation.clearWatch(myPosition);
+  }, [user]);
+
 
   return (
     <Container maxWidth="md">
@@ -59,17 +101,21 @@ const Map = () => {
           </Popup>
         </Marker>
         { markers.map((marker, i )=> (
-          <Marker position={marker} key={i}>
+          <Marker position={marker.position} key={i}>
+            <Popup>
+              { marker.name } is here!
+            </Popup>
           </Marker>
         )) }
-        <MapClick setMarkers={setMarkers} socket={socket} />
+        {/* <MapClick setMarkers={setMarkers} socket={socket} /> */}
         <ChangeMapView coords={position} />
+        <Notification notifOpen={notifOpen} setNotifOpen={setNotifOpen} name={name} setName={setName} />
       </MapContainer>
     </Container>
   );
 }
 
-const MapClick = ({ setMarkers, socket }) => {
+/* const MapClick = ({ setMarkers, socket }) => {
   const map = useMapEvents({
     click(e) {
       setMarkers(oldMarkers => [...oldMarkers, [e.latlng.lat, e.latlng.lng]]);
@@ -77,13 +123,45 @@ const MapClick = ({ setMarkers, socket }) => {
     }
   })
   return null;
-}
+} */
 
 function ChangeMapView({ coords }) {
   const map = useMap();
   map.setView(coords, map.getZoom());
 
   return null;
+}
+
+
+
+function Notification({ notifOpen, setNotifOpen, name, setName }) {
+  const classes = useStyles();
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotifOpen(false);
+    setName(null);
+  }; 
+
+  return (
+    <Snackbar 
+      open={notifOpen} 
+      autoHideDuration={3000} 
+      onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      style={{marginTop: 50, marginRight: 15}}
+    >
+      <Alert severity="info">
+        { name ? `${name} has joined the map!` : 'You joined the map!' }
+      </Alert>
+    </Snackbar>
+  )
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default Map;
