@@ -124,9 +124,9 @@ const Map = () => {
       <h5>People in this map:</h5>
       <ul>
         <li>You</li>
-        {markers.map(marker => {
+        {markers.map(marker => (
           <li key={marker.id}>{marker.name}</li>
-        })}
+        ))}
       </ul>
     </Container>
   );
