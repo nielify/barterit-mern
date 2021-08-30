@@ -123,7 +123,6 @@ const Map = () => {
       </MapContainer>
       <h5>People in this map:</h5>
       <ul>
-        <li>You</li>
         {markers.map(marker => (
           <li key={marker.id}>{marker.name}</li>
         ))}
