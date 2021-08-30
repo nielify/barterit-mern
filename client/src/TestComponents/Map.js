@@ -75,8 +75,17 @@ const Map = () => {
 
       //when other users position updates]
       newSocket.on('locationUpdate', update => {
-        console.log(update)
-        setMarkers(oldMarker => [...oldMarker, update]);
+        setMarkers(prevMarkers => {  
+          let updated = false;
+          prevMarkers.forEach(prevMarker => {
+            if (prevMarker.id === update.id) {
+              prevMarker.position = update.position;
+              updated = true;
+            } 
+          });
+          if (updated) return prevMarkers;
+          else return [...prevMarkers, update];
+        });  
       });
 
     }
