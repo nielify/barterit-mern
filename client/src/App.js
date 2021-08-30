@@ -81,6 +81,9 @@ function App() {
         <Route exact path="/saved-items">
           <SavedItems />
         </Route>
+        <Route exact path="/negotiations">
+          <Map />
+        </Route>
         <Route exact path="/user/:id">
           <User />
         </Route>
