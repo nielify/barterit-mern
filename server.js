@@ -1,15 +1,18 @@
+//with socketio
+const express = require('express');
+const app = require('express')();
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer, { cors: { origin: '*' } });
+
 //basic server setups
 require('dotenv').config();
 require('isomorphic-fetch');
-const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 //const passport = require('passport');
 //const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-
-const app = express();
 
 //utils
 const upload = require('./utils/multer');
@@ -37,11 +40,19 @@ app.use(cors({
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/api/apiRoutes');
 
+//socketio
+io.on("connection", socket => {
+  console.log('a user connected');
+  socket.on('marker', (arg) => {
+    socket.broadcast.emit('marker', arg);
+  })
+});
+
 //database and server connection
 const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((res) => {
-    app.listen(PORT || 3001);
+    httpServer.listen(PORT || 3001);
     console.log('SERVER: now listening and connected to db');
   })
   .catch(err => {
@@ -63,3 +74,5 @@ if (process.env.ENVIRONMENT === 'production') {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+
