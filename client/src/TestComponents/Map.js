@@ -18,21 +18,21 @@ const useStyles = makeStyles((theme) => ({
 const Map = () => {
   useRequireAuth()
   const classes = useStyles();
-  
+
   //logged in user
-  const [ user, setUser ] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   //socket
-  const [ socket, setSocket ] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   //positions
-  const positionRef = useRef([0,0]);
-  const [ position, setPosition ] = useState([0,0]);
-  const [ markers, setMarkers ] = useState([]);
+  const positionRef = useRef([0, 0]);
+  const [position, setPosition] = useState([0, 0]);
+  const [markers, setMarkers] = useState([]);
 
   //notif
-  const [ notifOpen, setNotifOpen ] = useState(false);
-  const [ name, setName ] = useState(null);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [name, setName] = useState(null);
 
   useEffect(() => {
     let myPosition;
@@ -40,25 +40,25 @@ const Map = () => {
     if (Object.keys(user).length !== 0) {
       const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`);
       setSocket(newSocket);
-      
-      newSocket.on("connect", () => { 
+
+      newSocket.on("connect", () => {
         setNotifOpen(true);
         newSocket.emit('newUser', user);
 
-        myPosition = navigator.geolocation.watchPosition((pos) => { 
+        myPosition = navigator.geolocation.watchPosition((pos) => {
           setPosition([pos.coords.latitude, pos.coords.longitude]);
           positionRef.current = [pos.coords.latitude, pos.coords.longitude];
-          
-          newSocket.emit('locationUpdate', { 
+
+          newSocket.emit('locationUpdate', {
             id: user._id,
             name: user.firstName + ' ' + user.lastName,
             position: positionRef.current
           });
 
-        }, error => console.log(error), { enableHighAccuracy: true }); 
+        }, error => console.log(error), { enableHighAccuracy: true });
 
-        
-      }); 
+
+      });
 
       //when new other use joins
       newSocket.on('newUser', (mapUser) => {
@@ -75,17 +75,17 @@ const Map = () => {
 
       //when other users position updates]
       newSocket.on('locationUpdate', update => {
-        setMarkers(prevMarkers => {  
+        setMarkers(prevMarkers => {
           let updated = false;
           prevMarkers.forEach(prevMarker => {
             if (prevMarker.id === update.id) {
               prevMarker.position = update.position;
               updated = true;
-            } 
+            }
           });
           if (updated) return prevMarkers;
           else return [...prevMarkers, update];
-        });  
+        });
       });
 
     }
@@ -95,10 +95,10 @@ const Map = () => {
 
 
   return (
-    <Container maxWidth="md">
-      <MapContainer 
+    <>
+      <MapContainer
         center={position}
-        zoom={15} 
+        zoom={15}
         scrollWheelZoom={true}
       >
         <TileLayer
@@ -110,24 +110,28 @@ const Map = () => {
             You are here!
           </Popup>
         </Marker>
-        { markers.map((marker, i )=> (
+        {markers.map((marker, i) => (
           <Marker position={marker.position} key={i}>
             <Popup>
-              { marker.name } is here!
+              {marker.name} is here!
             </Popup>
           </Marker>
-        )) }
+        ))}
         {/* <MapClick setMarkers={setMarkers} socket={socket} /> */}
         <ChangeMapView coords={position} />
         <Notification notifOpen={notifOpen} setNotifOpen={setNotifOpen} name={name} setName={setName} />
       </MapContainer>
-      <h5>People in this map:</h5>
-      <ul>
-        {markers.map(marker => (
-          <li key={marker.id}>{marker.name}</li>
-        ))}
-      </ul>
-    </Container>
+      
+      <Container maxWidth="md">
+        <h5>People in this map:</h5>
+        <ul>
+          {markers.map(marker => (
+            <li key={marker.id}>{marker.name}</li>
+          ))}
+        </ul>
+      </Container>
+    </>
+
   );
 }
 
@@ -159,18 +163,18 @@ function Notification({ notifOpen, setNotifOpen, name, setName }) {
     }
     setNotifOpen(false);
     setName(null);
-  }; 
+  };
 
   return (
-    <Snackbar 
-      open={notifOpen} 
-      autoHideDuration={3000} 
+    <Snackbar
+      open={notifOpen}
+      autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      style={{marginTop: 50, marginRight: 15}}
+      style={{ marginTop: 50, marginRight: 15 }}
     >
       <Alert severity="info">
-        { name ? `${name} has joined the map!` : 'You joined the map!' }
+        {name ? `${name} has joined the map!` : 'You joined the map!'}
       </Alert>
     </Snackbar>
   )
