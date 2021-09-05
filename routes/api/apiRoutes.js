@@ -16,8 +16,12 @@ const postRoutes = require('./post/postRoutes');
 //controllers
 const userControllers = require('../../controllers/userControllers');
 
+//controllers
+const apiController = require('../../controllers/apiControllers');
+
+router.get('/marketplace', requireAuth, apiController.marketplace_get);
+
 router.use('/user', userRoutes);
-router.use('/post', postRoutes);
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;

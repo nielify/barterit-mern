@@ -1,6 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 
+<<<<<<< HEAD
 //test components
 import Map from './TestComponents/Map';
 import TestMap from './TestComponents/TestMap';
@@ -34,6 +35,23 @@ import ResetPassword from './Components/ResetPassword';
 //Contexts
 import { UserContext } from './Context/UserContext';
 import { CoverContext } from './Context/CoverContext';
+=======
+import Header from './Components/Header'; 
+import DefaultHeader from './Components/DefaultHeader';
+import PostList from './Components/PostList';
+import Upload from './TestComponents/Upload';
+import Cloudinary from './TestComponents/Cloudinary';
+import SMSForm from './TestComponents/SMSForm';
+import ForgotPassword from './TestComponents/forgotPassword/ForgotPassword';
+import EmailSent from './TestComponents/forgotPassword/EmailSent';
+import Expired from './TestComponents/forgotPassword/Expired';
+import ResetPasswordSuccess from './TestComponents/forgotPassword/ResetPasswordSuccess';
+import Signin from './TestComponents/Signin';
+import Signup from './TestComponents/signup/Signup';
+import Verify from './TestComponents/signup/Verify'
+import Success from './TestComponents/signup/Success';
+import ResetPassword from './TestComponents/ResetPassword';
+>>>>>>> 5893ac4152f0f0f9dcd8cb42ceaac17ff47421e3
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';

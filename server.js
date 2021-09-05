@@ -14,6 +14,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 
+const app = express();
+
 //utils
 const upload = require('./utils/multer');
 //const passportStrategies = require('./utils/passportStrategies');
@@ -78,9 +80,10 @@ app.post('/api/sms', serverController.sms_post);
 //improved backend routes
 app.use('/api', apiRoutes);
 
-//production routes setup
+//production
 if (process.env.ENVIRONMENT === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')));
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
   });
