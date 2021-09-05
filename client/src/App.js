@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 
 //test components
 import Map from './TestComponents/Map';
+import TestMap from './TestComponents/TestMap';
 
 //Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
@@ -65,6 +66,9 @@ function App() {
       <Switch>
         <Route exact path="/map">
           <Map />
+        </Route>
+        <Route exact path="/testmap/:id">
+          <TestMap />
         </Route>
         <Route exact path="/">
           <Marketplace />

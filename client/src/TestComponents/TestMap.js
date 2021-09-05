@@ -1,23 +1,58 @@
 import { useEffect, useState, useContext, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
 import { makeStyles } from '@material-ui/core/styles';
 
-import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
 import { UserContext } from '../Context/UserContext'
 import useRequireAuth from '../CustomHooks/useRequireAuth';
 
 import { io } from "socket.io-client";
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-
+  root: {
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    padding: 16,
+    borderRadius: 5,
+    background: 'rgba(0,0,0,.75)',
+    height: 120,
+    position: 'absolute',
+    zIndex: 999,
+    bottom: 80,
+    right: 10,
+    transform: 'translateX(102%)',
+    transition: 'transform 0.3s ease-out',
+  },
+  buttonsOpen: {
+    transform: 'translateX(0%)',
+  },
+  arrowIcon: {
+    borderRadius: '50%',
+    background: '#009688',
+    position: 'absolute',
+    top: 'calc(50% - 20px)',
+    left: -30,
+  }
 }));
 
-const Map = () => {
+const TestMap = () => {
   useRequireAuth()
   const classes = useStyles();
+  const params = useParams();
 
   //logged in user
   const [user, setUser] = useContext(UserContext);
@@ -28,6 +63,7 @@ const Map = () => {
   //positions
   const positionRef = useRef([0, 0]);
   const [position, setPosition] = useState([0, 0]);
+  const [currentView, setCurrentView] = useState([0,0]);
   const [markers, setMarkers] = useState([]);
   const markersRef = useRef([]);
 
@@ -36,27 +72,40 @@ const Map = () => {
   const [successNotifOpen, setSuccessNotifOpen] = useState(false);
   const [name, setName] = useState(null);
 
-  /* useEffect(() => {
+  //collapse
+  const [ collapseButtons, setCollapseButtons ] = useState(true);
+
+  const handleCollapseButtons = () => {
+    setCollapseButtons(!collapseButtons);
+  }
+
+  useEffect(() => {
     let myPosition;
 
-    //if there's already a user object on rerender. Just ignore if none
     if (Object.keys(user).length !== 0) {
-      const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); //create socket connection instance
-      //setSocket(newSocket); //assign socket instance to useState
-
-      //put set the self initial position in the map and emit join event
+      //create socket connection instance
+      const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
+      
+      //get self initial position
+      //notificate self
+      //emit join-room event
       navigator.geolocation.getCurrentPosition((pos) => {
+        
         setPosition([pos.coords.latitude, pos.coords.longitude]);
         positionRef.current = [pos.coords.latitude, pos.coords.longitude];
+        setCurrentView([pos.coords.latitude, pos.coords.longitude]);
         setInfoNotifOpen(true);
 
-        newSocket.emit('join', { 
+        newSocket.emit('join-room', { 
           id: user._id,
           name: `${user.firstName} ${user.lastName}`,
-          position: positionRef.current
+          position: positionRef.current,
+          roomId: params.id
         });
       }, error => console.log(error), { enableHighAccuracy: true });
 
+      //watch and update self position
+      //emit locationUpdate event if there are other users in map
       myPosition = navigator.geolocation.watchPosition((pos) => {
         setPosition([pos.coords.latitude, pos.coords.longitude]);
         positionRef.current = [pos.coords.latitude, pos.coords.longitude];
@@ -65,85 +114,80 @@ const Map = () => {
           newSocket.emit('locationUpdate', { 
             id: user._id,
             name: `${user.firstName} ${user.lastName}`,
-            position: positionRef.current
+            position: positionRef.current,
+            roomId: params.id
           });
         }
       }, error => console.log(error), { enableHighAccuracy: true });
 
-      //when another user joins
-      newSocket.on('join', (user) => {
+      //receive join room event
+      //add to markers if the user that joined doesn't exist in this map, else just update the position
+      //show 'another user joined' notification
+      newSocket.on('join-room', newUser => {
+        //if (newUser.id === user._id) return; //remove comment on prod
+
         setMarkers(prevMarkers => {
           let hasMatch = false;
           prevMarkers.forEach(prevMarker => {
-            if (prevMarker.id === user.id) {
+            if (prevMarker.id === newUser.id) {
               hasMatch = true;
             }
           });
           if (hasMatch) return prevMarkers;
           else {
-            markersRef.current.push(user);
-            return [...prevMarkers, user];
+            markersRef.current.push(newUser);
+            return [...prevMarkers, newUser];
           }
         }); 
         
-        setName(user.name);
+        setName(newUser.name);
         setSuccessNotifOpen(true);
-      });
+      })
 
-      //when other users positions update
+      //receive update from other user's position
       newSocket.on('locationUpdate', update => {
         setMarkers(prevMarkers => {
           let hasMatch = false;
           prevMarkers.forEach(prevMarker => {
             if (prevMarker.id === update.id) {
-              prevMarker.position = update.position;
               hasMatch = true;
             }
           });
-          if (hasMatch) return [...prevMarkers];
-          else return [...prevMarkers, update];
-        });
+          if (hasMatch) return prevMarkers;
+          else {
+            markersRef.current.push(update);
+            return [...prevMarkers, update];
+          }
+        }); 
       });
-
     }
 
     return () => navigator.geolocation.clearWatch(myPosition);
-  }, [user]); */
-
-  useEffect(() => {
-    
-    if (Object.keys(user).length !== 0) {
-      const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); //create socket connection instance
-
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setPosition([pos.coords.latitude, pos.coords.longitude]);
-        positionRef.current = [pos.coords.latitude, pos.coords.longitude];
-        setInfoNotifOpen(true);
-
-        newSocket.emit('join-room', { 
-          id: user._id,
-          name: `${user.firstName} ${user.lastName}`,
-          position: positionRef.current
-        });
-      }, error => console.log(error), { enableHighAccuracy: true });
-
-      newSocket.on('join-room', message => {
-        console.log(message);
-      })
-    }
-
-
   }, [user]);
+
+  const handleYourLocationClick = () => {
+    setCurrentView(position);
+  }
+
+  const handleMeetingPlaceClick = () => {
+    setCurrentView([13.9966, 121.9180]);
+  }
+
+  const handleOtherPersonLocationClick = () => {
+    setCurrentView([13.8001, 122.3108]);
+  }
 
 
   return (
-    <>
-      {  }
+    <div className={classes.root}>
       <MapContainer
         center={position}
         zoom={15}
+        minZoom={10}
+        maxZoom={18}
         scrollWheelZoom={true}
       >
+        <ChangeMapView coords={currentView} />
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -160,8 +204,6 @@ const Map = () => {
             </Popup>
           </Marker>
         ))}
-        {/* <MapClick setMarkers={setMarkers} socket={socket} /> */}
-        <ChangeMapView coords={position} />
         <InfoNotification 
           infoNotifOpen={infoNotifOpen} 
           setInfoNotifOpen={setInfoNotifOpen}
@@ -173,18 +215,41 @@ const Map = () => {
           setName={setName}
         />
       </MapContainer>
-
-      <Container maxWidth="md">
-        <h5>People in this map:</h5>
-        <ul>
-          <li>You</li>
-          {markers.map(marker => (
-            <li key={marker.id}>{marker.name}</li>
-          ))}
-        </ul>
-      </Container>
-    </>
-
+          
+      
+        <div className={`${classes.buttons} ${collapseButtons ? '' : classes.buttonsOpen}`}>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{color: 'white'}}
+            onClick={handleYourLocationClick}
+          >
+            Your Location  
+          </Button>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{color: 'white'}}
+            onClick={handleMeetingPlaceClick}
+          >
+            Meeting Place
+          </Button>
+          <Button
+            variant='outlined'
+            color='primary'
+            style={{color: 'white'}}
+            onClick={handleOtherPersonLocationClick}
+          >
+            Other user's location
+          </Button>
+          <div className={classes.arrowIcon}>
+            <IconButton size='small' onClick={handleCollapseButtons}>
+              { collapseButtons ? <KeyboardArrowLeftIcon fontSize='large' style={{color:'#fff'}} /> : <KeyboardArrowRightIcon fontSize='large' style={{color:'#fff'}} />}
+            </IconButton>
+          </div>
+        </div>
+      
+    </div>
   );
 }
 
@@ -262,4 +327,4 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default Map;
+export default TestMap;

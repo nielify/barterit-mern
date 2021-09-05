@@ -42,18 +42,21 @@ const apiRoutes = require('./routes/api/apiRoutes');
 
 //socketio
 io.on("connection", socket => {
-  //when a user connects
-  socket.on('newUser', (user) => {
-    socket.broadcast.emit('newUser', { 
-      id: user._id,
-      name: user.firstName + ' ' + user.lastName,
-    });
+  
+  //when someone join the socket
+  //join him/her to a certain room
+  //broadcast to other clients in the room with user data
+  socket.on('join-room', (user) => {
+    socket.join(user.roomId);
+    socket.broadcast.to(user.roomId).emit('join-room', user);
   });
 
+  //when someone locationUpdates
+  //broadcast the update data to other users in the room where the sender belongs
   socket.on('locationUpdate', (update) => {
-    console.log(update)
-    socket.broadcast.emit('locationUpdate', update);
-  })
+    socket.broadcast.to(update.roomId).emit('locationUpdate', update);
+  });
+
 });
 
 //database and server connection
