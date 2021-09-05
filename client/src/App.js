@@ -63,9 +63,6 @@ function App() {
       { cover && <LoadingCover /> }
       { user._id ? <Header /> : <DefaultHeader />}
       <Switch>
-        <Route exact path="/map">
-          <Map />
-        </Route>
         <Route exact path="/">
           <Marketplace />
         </Route>
@@ -83,6 +80,9 @@ function App() {
         </Route>
         <Route exact path="/user/:id">
           <User />
+        </Route>
+        <Route exact path="/map/:id">
+          <Map />
         </Route>
         <Route exact path="/upload">
           <Upload />
