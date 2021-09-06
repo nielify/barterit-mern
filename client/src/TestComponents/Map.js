@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
@@ -16,10 +17,35 @@ import useRequireAuth from '../CustomHooks/useRequireAuth';
 
 import { io } from "socket.io-client";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     overflow: 'hidden'
+  },
+  people: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    position: 'absolute',
+    zIndex: 999,
+    padding: '12px 0',
+    paddingLeft: 32,
+    borderRadius: 5,
+    background: 'rgba(0,0,0,.75)',
+    bottom: 250,
+    right: 10,
+    width: 220,
+    height: 70,
+    transform: 'translateX(102%)',
+    transition: 'transform 0.3s ease-out',
+  },
+  arrowIconPeople: {
+    borderRadius: '50%',
+    background: '#009688',
+    position: 'absolute',
+    top: 'calc(50% - 20px)',
+    left: -30,
   },
   buttons: {
     display: 'flex',
@@ -28,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 16,
     borderRadius: 5,
     background: 'rgba(0,0,0,.75)',
+    width: 220,
     height: 120,
     position: 'absolute',
     zIndex: 999,
@@ -72,10 +99,15 @@ const TestMap = () => {
   const [name, setName] = useState(null);
 
   //collapse
-  const [ collapseButtons, setCollapseButtons ] = useState(true);
+  const [ collapseButtons, setCollapseButtons ] = useState(false);
+  const [ collapsePeople, setCollapsePeople ] = useState(false);
 
   const handleCollapseButtons = () => {
     setCollapseButtons(!collapseButtons);
+  }
+  
+  const handleCollapsePeople = () => {
+    setCollapsePeople(!collapsePeople);
   }
 
   useEffect(() => {
@@ -215,38 +247,50 @@ const TestMap = () => {
         />
       </MapContainer>
           
-          
-        <div className={`${classes.buttons} ${collapseButtons ? '' : classes.buttonsOpen}`}>
-          <Button
-            variant='outlined'
-            color='primary'
-            style={{color: 'white'}}
-            onClick={handleYourLocationClick}
-          >
-            Your Location  
-          </Button>
-          <Button
-            variant='outlined'
-            color='primary'
-            style={{color: 'white'}}
-            onClick={handleMeetingPlaceClick}
-          >
-            Meeting Place
-          </Button>
-          <Button
-            variant='outlined'
-            color='primary'
-            style={{color: 'white'}}
-            onClick={handleOtherPersonLocationClick}
-          >
-            Other user's location
-          </Button>
-          <div className={classes.arrowIcon}>
-            <IconButton size='small' onClick={handleCollapseButtons}>
-              { collapseButtons ? <KeyboardArrowLeftIcon fontSize='large' style={{color:'#fff'}} /> : <KeyboardArrowRightIcon fontSize='large' style={{color:'#fff'}} />}
-            </IconButton>
-          </div>
+      <div className={`${classes.people} ${collapsePeople ? '' : classes.buttonsOpen}`}> 
+        <Typography variant="h6" style={{color:'#fff', fontSize: '.9rem'}}>People in this map:</Typography>
+        <ul style={{margin:0,paddingLeft:12, listStyle: 'none'}}>
+          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>Niel Follero</Typography></li>
+          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>Jake Rebullo</Typography></li>
+        </ul>
+        <div className={classes.arrowIconPeople}>
+          <IconButton size='small' onClick={handleCollapsePeople}>
+            { collapsePeople ? <KeyboardArrowLeftIcon fontSize='large' style={{color:'#fff'}} /> : <KeyboardArrowRightIcon fontSize='large' style={{color:'#fff'}} />}
+          </IconButton>
         </div>
+      </div>
+          
+      <div className={`${classes.buttons} ${collapseButtons ? '' : classes.buttonsOpen}`}>
+        <Button
+          variant='outlined'
+          color='primary'
+          style={{color: 'white'}}
+          onClick={handleYourLocationClick}
+        >
+          Your Location  
+        </Button>
+        <Button
+          variant='outlined'
+          color='primary'
+          style={{color: 'white'}}
+          onClick={handleMeetingPlaceClick}
+        >
+          Meeting Place
+        </Button>
+        <Button
+          variant='outlined'
+          color='primary'
+          style={{color: 'white'}}
+          onClick={handleOtherPersonLocationClick}
+        >
+          Other user's location
+        </Button>
+        <div className={classes.arrowIcon}>
+          <IconButton size='small' onClick={handleCollapseButtons}>
+            { collapseButtons ? <KeyboardArrowLeftIcon fontSize='large' style={{color:'#fff'}} /> : <KeyboardArrowRightIcon fontSize='large' style={{color:'#fff'}} />}
+          </IconButton>
+        </div>
+      </div>
       
     </div>
   );
