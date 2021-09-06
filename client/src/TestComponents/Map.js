@@ -205,7 +205,7 @@ const TestMap = () => {
   }
 
   const handleOtherPersonLocationClick = () => {
-    setCurrentView([13.8001, 122.3108]);
+    setCurrentView(markers[0].position);
   }
 
 
