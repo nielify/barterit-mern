@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-import { UserContext } from '../Context/UserContext'
+import { UserContext } from '../Context/UserContext';
 import useRequireAuth from '../CustomHooks/useRequireAuth';
 
 import { io } from "socket.io-client";
@@ -197,7 +197,7 @@ const TestMap = () => {
   }, [user]);
 
   const handleYourLocationClick = () => {
-    setCurrentView(position);
+    setCurrentView([position[0], position[1]]);
   }
 
   const handleMeetingPlaceClick = () => {
@@ -235,6 +235,11 @@ const TestMap = () => {
             </Popup>
           </Marker>
         ))}
+        <Circle center={[13.9966, 121.9180]} radius={50} pathOptions={{color:'#009688'}}>
+          <Popup>
+            The Meeting Place
+          </Popup>
+        </Circle>
         <InfoNotification 
           infoNotifOpen={infoNotifOpen} 
           setInfoNotifOpen={setInfoNotifOpen}
