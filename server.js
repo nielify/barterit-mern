@@ -1,15 +1,18 @@
+//with socketio
+const express = require('express');
+const app = require('express')();
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer, { cors: { origin: '*' } });
+
 //basic server setups
 require('dotenv').config();
 require('isomorphic-fetch');
-const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 //const passport = require('passport');
 //const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-
-const app = express();
 
 //utils
 const upload = require('./utils/multer');
@@ -37,11 +40,30 @@ app.use(cors({
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/api/apiRoutes');
 
+//socketio
+io.on("connection", socket => {
+  
+  //when someone join the socket
+  //join him/her to a certain room
+  //broadcast to other clients in the room with user data
+  socket.on('join-room', (user) => {
+    socket.join(user.roomId);
+    socket.broadcast.to(user.roomId).emit('join-room', user);
+  });
+
+  //when someone locationUpdates
+  //broadcast the update data to other users in the room where the sender belongs
+  socket.on('locationUpdate', (update) => {
+    socket.broadcast.to(update.roomId).emit('locationUpdate', update);
+  });
+
+});
+
 //database and server connection
 const PORT = process.env.PORT || 3001;
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((res) => {
-    app.listen(PORT || 3001);
+    httpServer.listen(PORT || 3001);
     console.log('SERVER: now listening and connected to db');
   })
   .catch(err => {

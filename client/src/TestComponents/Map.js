@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   people: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flexDirection: 'column',
     position: 'absolute',
     zIndex: 999,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 250,
     right: 10,
     width: 220,
-    height: 70,
+    //height: 70,
     transform: 'translateX(102%)',
     transition: 'transform 0.3s ease-out',
   },
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 5,
     background: 'rgba(0,0,0,.75)',
     width: 220,
-    height: 120,
+    //height: 120,
     position: 'absolute',
     zIndex: 999,
     bottom: 80,
@@ -213,7 +213,7 @@ const TestMap = () => {
     <div className={classes.root}>
       <MapContainer
         center={position}
-        zoom={15}
+        zoom={18}
         minZoom={10}
         maxZoom={18}
         scrollWheelZoom={true}
@@ -255,8 +255,8 @@ const TestMap = () => {
       <div className={`${classes.people} ${collapsePeople ? '' : classes.buttonsOpen}`}> 
         <Typography variant="h6" style={{color:'#fff', fontSize: '.9rem'}}>People in this map:</Typography>
         <ul style={{margin:0,paddingLeft:12, listStyle: 'none'}}>
-          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>Niel Follero</Typography></li>
-          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>Jake Rebullo</Typography></li>
+          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>{user.firstName + ' ' + user.lastName}</Typography></li>
+          <li><Typography variant='body1' style={{color:'#fff', fontSize: '.95rem'}}>{Object.keys(markers).length !== 0 ? markers[0].name : null}</Typography></li>
         </ul>
         <div className={classes.arrowIconPeople}>
           <IconButton size='small' onClick={handleCollapsePeople}>
@@ -269,7 +269,7 @@ const TestMap = () => {
         <Button
           variant='outlined'
           color='primary'
-          style={{color: 'white'}}
+          style={{color: 'white', marginBottom: 5}}
           onClick={handleYourLocationClick}
         >
           Your Location  
@@ -277,7 +277,7 @@ const TestMap = () => {
         <Button
           variant='outlined'
           color='primary'
-          style={{color: 'white'}}
+          style={{color: 'white', marginBottom: 5}}
           onClick={handleMeetingPlaceClick}
         >
           Meeting Place
@@ -287,8 +287,9 @@ const TestMap = () => {
           color='primary'
           style={{color: 'white'}}
           onClick={handleOtherPersonLocationClick}
+          disabled={Object.keys(markers).length === 0}
         >
-          Other user's location
+          {Object.keys(markers).length !== 0 ? `${markers[0].name.split(' ')[0]}'s location'` : `Other user's location`}
         </Button>
         <div className={classes.arrowIcon}>
           <IconButton size='small' onClick={handleCollapseButtons}>
