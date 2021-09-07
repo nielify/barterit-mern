@@ -72,6 +72,15 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 'calc(50% - 20px)',
     left: -30,
+  }, 
+  zeroNotif: {
+    margin: 50
+  },
+  oneNotif: {
+
+  },
+  twoNotif: {
+
   }
 }));
 
@@ -96,6 +105,7 @@ const TestMap = () => {
   //notif
   const [infoNotifOpen, setInfoNotifOpen] = useState(false);
   const [successNotifOpen, setSuccessNotifOpen] = useState(false);
+  const [disconNotificationOpen, setDisconNotificationOpen] = useState(false);
   const [name, setName] = useState(null);
 
   //collapse
@@ -116,7 +126,7 @@ const TestMap = () => {
     if (Object.keys(user).length !== 0) {
       //create socket connection instance
       const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
-      
+
       //get self initial position
       //notificate self
       //emit join-room event
@@ -177,10 +187,12 @@ const TestMap = () => {
 
       //receive update from other user's position
       newSocket.on('locationUpdate', update => {
+        //if (update.id === user._id) return; //remove comment on prod
         setMarkers(prevMarkers => {
           let hasMatch = false;
           prevMarkers.forEach(prevMarker => {
             if (prevMarker.id === update.id) {
+              prevMarker.position = update.position;
               hasMatch = true;
             }
           });
@@ -190,6 +202,20 @@ const TestMap = () => {
             return [...prevMarkers, update];
           }
         }); 
+      });
+
+      newSocket.on('userDisconnect', (data) => {
+        setMarkers(prevMarkers => {
+          prevMarkers.forEach((prevMarker, i) => {
+            if (prevMarker.id === data.id) {
+              prevMarkers.splice(i, 1);
+              markersRef.current.splice(i, 1);
+            }
+          });
+          return prevMarkers;
+        });
+        setDisconNotificationOpen(true);
+        setName(data.name);
       });
     }
 
@@ -240,6 +266,7 @@ const TestMap = () => {
             The Meeting Place
           </Popup>
         </Circle>
+        
         <InfoNotification 
           infoNotifOpen={infoNotifOpen} 
           setInfoNotifOpen={setInfoNotifOpen}
@@ -250,6 +277,13 @@ const TestMap = () => {
           name={name}
           setName={setName}
         />
+        <DisconnectNotification
+          disconNotificationOpen={disconNotificationOpen} 
+          setDisconNotificationOpen={setDisconNotificationOpen} 
+          name={name}
+          setName={setName}
+        />   
+        
       </MapContainer>
           
       <div className={`${classes.people} ${collapsePeople ? '' : classes.buttonsOpen}`}> 
@@ -319,7 +353,31 @@ function ChangeMapView({ coords }) {
   return null;
 }
 
+function DisconnectNotification({ disconNotificationOpen, setDisconNotificationOpen, name, setName }) {
+  const classes = useStyles();
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setDisconNotificationOpen(false);
+    setName(null);
+  };
+
+  return (
+    <Snackbar
+      open={disconNotificationOpen}
+      autoHideDuration={3000}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      style={{ marginTop: 110 }}
+    >
+      <Alert severity="error">
+        {`${name} has disconnected`}
+      </Alert>
+    </Snackbar>
+  )
+}
 
 function InfoNotification({ infoNotifOpen, setInfoNotifOpen }) {
   const classes = useStyles();
@@ -346,7 +404,7 @@ function InfoNotification({ infoNotifOpen, setInfoNotifOpen }) {
   )
 }
 
-function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setName }) {
+function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setName, infoNotifOpen, disconNotificationOpen  }) {
   const classes = useStyles();
 
   const handleClose = (event, reason) => {
@@ -363,7 +421,8 @@ function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setN
       autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      style={{ marginTop: 50 }}
+      style={{ marginTop: 170 }}
+      
     >
       <Alert severity="success">
         {name} has joined this map!

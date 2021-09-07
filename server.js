@@ -42,12 +42,15 @@ const apiRoutes = require('./routes/api/apiRoutes');
 
 //socketio
 io.on("connection", socket => {
-  
+  //socketInstance data
+  let socketData = null;
+
   //when someone join the socket
   //join him/her to a certain room
   //broadcast to other clients in the room with user data
   socket.on('join-room', (user) => {
     socket.join(user.roomId);
+    socketData = user;
     socket.broadcast.to(user.roomId).emit('join-room', user);
   });
 
@@ -57,6 +60,9 @@ io.on("connection", socket => {
     socket.broadcast.to(update.roomId).emit('locationUpdate', update);
   });
 
+  socket.on('disconnect', () => {
+    socket.broadcast.to(socketData.roomId).emit('userDisconnect', socketData);
+  });
 });
 
 //database and server connection
