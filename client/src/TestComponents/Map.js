@@ -163,59 +163,70 @@ const TestMap = () => {
 
       //receive join room event
       //add to markers if the user that joined doesn't exist in this map, else just update the position
+      //join only if it's not another tab opened by the user
       //show 'another user joined' notification
       newSocket.on('join-room', newUser => {
-        //if (newUser.id === user._id) return; //remove comment on prod
-
-        setMarkers(prevMarkers => {
-          let hasMatch = false;
-          prevMarkers.forEach(prevMarker => {
-            if (prevMarker.id === newUser.id) {
-              hasMatch = true;
+        if (newUser.id !== user._id) {
+          setMarkers(prevMarkers => {
+            let hasMatch = false;
+            prevMarkers.forEach(prevMarker => {
+              if (prevMarker.id === newUser.id) {
+                hasMatch = true;
+              }
+            });
+            if (hasMatch) return prevMarkers;
+            else {
+              markersRef.current.push(newUser);
+              return [...prevMarkers, newUser];
             }
-          });
-          if (hasMatch) return prevMarkers;
-          else {
-            markersRef.current.push(newUser);
-            return [...prevMarkers, newUser];
-          }
-        }); 
-        
-        setName(newUser.name);
-        setSuccessNotifOpen(true);
+          }); 
+          
+          setName(newUser.name);
+          setSuccessNotifOpen(true);
+        }
       })
 
       //receive update from other user's position
+      //ignore if update from self on another tab
       newSocket.on('locationUpdate', update => {
-        //if (update.id === user._id) return; //remove comment on prod
-        setMarkers(prevMarkers => {
-          let hasMatch = false;
-          prevMarkers.forEach(prevMarker => {
-            if (prevMarker.id === update.id) {
-              prevMarker.position = update.position;
-              hasMatch = true;
+        if (update.id !== user._id) {
+          setMarkers(prevMarkers => {
+            let hasMatch = false;
+            prevMarkers.forEach(prevMarker => {
+              if (prevMarker.id === update.id) {
+                prevMarker.position = update.position;
+                hasMatch = true;
+              }
+            });
+            if (hasMatch) return prevMarkers;
+            else {
+              markersRef.current.push(update);
+              return [...prevMarkers, update];
             }
-          });
-          if (hasMatch) return prevMarkers;
-          else {
-            markersRef.current.push(update);
-            return [...prevMarkers, update];
-          }
-        }); 
+          }); 
+        }
+        else {
+          alert('self update');
+        }
+        
       });
 
+      //when another user disconnects
+      //show disconnect notification only if not from self on another tab
       newSocket.on('userDisconnect', (data) => {
-        setMarkers(prevMarkers => {
-          prevMarkers.forEach((prevMarker, i) => {
-            if (prevMarker.id === data.id) {
-              prevMarkers.splice(i, 1);
-              markersRef.current.splice(i, 1);
-            }
+        if (data.id !== user._id) {
+          setMarkers(prevMarkers => {
+            prevMarkers.forEach((prevMarker, i) => {
+              if (prevMarker.id === data.id) {
+                prevMarkers.splice(i, 1);
+                markersRef.current.splice(i, 1);
+              }
+            });
+            return prevMarkers;
           });
-          return prevMarkers;
-        });
-        setDisconNotificationOpen(true);
-        setName(data.name);
+          setDisconNotificationOpen(true);
+          setName(data.name);
+        }
       });
     }
 
@@ -361,7 +372,7 @@ function DisconnectNotification({ disconNotificationOpen, setDisconNotificationO
       return;
     }
     setDisconNotificationOpen(false);
-    setName(null);
+    //setName(null);
   };
 
   return (
@@ -412,7 +423,7 @@ function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setN
       return;
     }
     setSuccessNotifOpen(false);
-    setName(null);
+    //setName(null);
   };
 
   return (
