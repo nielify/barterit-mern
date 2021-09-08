@@ -61,7 +61,7 @@ io.on("connection", socket => {
   });
 
   socket.on('disconnect', () => {
-    socket.broadcast.to(socketData.roomId).emit('userDisconnect', socketData);
+    if (socketData) socket.broadcast.to(socketData.roomId).emit('userDisconnect', socketData);
   });
 });
 
