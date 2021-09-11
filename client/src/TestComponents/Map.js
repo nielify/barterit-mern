@@ -146,7 +146,7 @@ const TestMap = () => {
       myPosition = navigator.geolocation.watchPosition((pos) => {
         setPosition([pos.coords.latitude, pos.coords.longitude]);
         positionRef.current = [pos.coords.latitude, pos.coords.longitude];
-        setCurrentView([pos.coords.latitude, pos.coords.longitude]);
+        if (currentViewEnt === 'self') setCurrentView([pos.coords.latitude, pos.coords.longitude]);
 
         if (markersRef.current.length > 0) {
           newSocket.emit('locationUpdate', { 
@@ -341,7 +341,7 @@ const TestMap = () => {
           onClick={handleOtherPersonLocationClick}
           disabled={Object.keys(markers).length === 0}
         >
-          {Object.keys(markers).length !== 0 ? `${markers[0].name.split(' ')[0]}'s location'` : `Other user's location`}
+          {Object.keys(markers).length !== 0 ? `${markers[0].name.split(' ')[0]}'s location` : `Other user's location`}
         </Button>
         <div className={classes.arrowIcon}>
           <IconButton size='small' onClick={handleCollapseButtons}>
