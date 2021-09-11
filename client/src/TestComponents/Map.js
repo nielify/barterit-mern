@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, useMapEvents } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -73,19 +73,10 @@ const useStyles = makeStyles((theme) => ({
     top: 'calc(50% - 20px)',
     left: -30,
   }, 
-  zeroNotif: {
-    margin: 50
-  },
-  oneNotif: {
-
-  },
-  twoNotif: {
-
-  }
 }));
 
 const TestMap = () => {
-  useRequireAuth()
+  useRequireAuth();
   const classes = useStyles();
   const params = useParams();
 
@@ -98,9 +89,14 @@ const TestMap = () => {
   //positions
   const positionRef = useRef([0, 0]);
   const [position, setPosition] = useState([0, 0]);
-  const [currentView, setCurrentView] = useState([0,0]);
   const [markers, setMarkers] = useState([]);
   const markersRef = useRef([]);
+
+  //center map view
+  const [currentView, setCurrentView] = useState([0,0]);
+  const [currentViewEnt, setCurrentViewEnt] = useState('self');
+  const [showCurrentView, setShowCurrentView] = useState(true);
+  //const [currentViewIsOtherUser, setCurrentViewIsOtherUser] = useState(false);
 
   //notif
   const [infoNotifOpen, setInfoNotifOpen] = useState(false);
@@ -111,7 +107,7 @@ const TestMap = () => {
   //collapse
   const [ collapseButtons, setCollapseButtons ] = useState(false);
   const [ collapsePeople, setCollapsePeople ] = useState(false);
-
+  
   const handleCollapseButtons = () => {
     setCollapseButtons(!collapseButtons);
   }
@@ -196,6 +192,7 @@ const TestMap = () => {
             prevMarkers.forEach(prevMarker => {
               if (prevMarker.id === update.id) {
                 prevMarker.position = update.position;
+                if (currentViewEnt === 'other') setCurrentView(update.position);
                 hasMatch = true;
               }
             });
@@ -235,14 +232,20 @@ const TestMap = () => {
   }, [user]);
 
   const handleYourLocationClick = () => {
+    setCurrentViewEnt('self');
+    setShowCurrentView(true);
     setCurrentView([position[0], position[1]]);
   }
 
   const handleMeetingPlaceClick = () => {
+    setCurrentViewEnt('meeting');
+    setShowCurrentView(true);
     setCurrentView([13.9966, 121.9180]);
   }
 
   const handleOtherPersonLocationClick = () => {
+    setCurrentViewEnt('other');
+    setShowCurrentView(true);
     setCurrentView(markers[0].position);
   }
 
@@ -260,7 +263,8 @@ const TestMap = () => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ChangeMapView coords={currentView} />
+        { showCurrentView && <MapView coords={currentView} /> }
+        <MapDrag setShowCurrentView={setShowCurrentView} />
         <Marker position={position}>
           <Popup>
             You are here!
@@ -343,26 +347,32 @@ const TestMap = () => {
           </IconButton>
         </div>
       </div>
-      
     </div>
   );
 }
 
-/* const MapClick = ({ setMarkers, socket }) => {
-  const map = useMapEvents({
-    click(e) {
-      setMarkers(oldMarkers => [...oldMarkers, [e.latlng.lat, e.latlng.lng]]);
-      socket.emit('marker', [e.latlng.lat, e.latlng.lng]);
-    }
-  })
-  return null;
-} */
-
-function ChangeMapView({ coords }) {
+function MapView({ coords }) {
   const map = useMap();
   map.setView(coords, map.getZoom());
 
   return null;
+}
+
+function MapDrag({ setShowCurrentView }) {
+  const timer = useRef(null);
+  const map = useMapEvents({
+    dragstart: () => {
+      clearTimeout(timer.current);
+      setShowCurrentView(false);
+    },
+    dragend: () => {
+      timer.current = setTimeout(() => {
+        setShowCurrentView(true);
+      }, 20000);
+    },
+  })
+
+  return null
 }
 
 function DisconnectNotification({ disconNotificationOpen, setDisconNotificationOpen, name, setName }) {
