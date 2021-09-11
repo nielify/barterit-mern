@@ -180,6 +180,7 @@ const TestMap = () => {
           
           setName(newUser.name);
           setSuccessNotifOpen(true);
+          setDisconNotificationOpen(false);
         }
       })
 
@@ -222,6 +223,7 @@ const TestMap = () => {
             });
             return prevMarkers;
           });
+          setSuccessNotifOpen(false);
           setDisconNotificationOpen(true);
           setName(data.name);
         }
@@ -426,7 +428,7 @@ function InfoNotification({ infoNotifOpen, setInfoNotifOpen }) {
   )
 }
 
-function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setName, infoNotifOpen, disconNotificationOpen  }) {
+function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setName, disconNotificationOpen  }) {
   const classes = useStyles();
 
   const handleClose = (event, reason) => {
@@ -443,7 +445,7 @@ function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setN
       autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      style={{ marginTop: 170 }}
+      style={{ marginTop: 110 }}
       
     >
       <Alert severity="success">
