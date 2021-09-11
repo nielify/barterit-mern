@@ -150,6 +150,7 @@ const TestMap = () => {
       myPosition = navigator.geolocation.watchPosition((pos) => {
         setPosition([pos.coords.latitude, pos.coords.longitude]);
         positionRef.current = [pos.coords.latitude, pos.coords.longitude];
+        setCurrentView([pos.coords.latitude, pos.coords.longitude]);
 
         if (markersRef.current.length > 0) {
           newSocket.emit('locationUpdate', { 
@@ -255,11 +256,11 @@ const TestMap = () => {
         maxZoom={18}
         scrollWheelZoom={true}
       >
-        <ChangeMapView coords={currentView} />
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <ChangeMapView coords={currentView} />
         <Marker position={position}>
           <Popup>
             You are here!
