@@ -126,6 +126,7 @@ const TestMap = () => {
       //get self initial position
       //notificate self
       //emit join-room event
+      if ('geolocation' in navigator) console.log('goodshit');
       navigator.geolocation.getCurrentPosition((pos) => {
         
         setPosition([pos.coords.latitude, pos.coords.longitude]);
@@ -204,10 +205,6 @@ const TestMap = () => {
             }
           }); 
         }
-        else {
-          alert('self update');
-        }
-        
       });
 
       //when another user disconnects
