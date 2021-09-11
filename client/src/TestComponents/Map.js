@@ -94,7 +94,7 @@ const TestMap = () => {
 
   //center map view
   const [currentView, setCurrentView] = useState([0,0]);
-  const [currentViewEnt, setCurrentViewEnt] = useState('self');
+  const currentViewEntRef = useRef('self');
   const [showCurrentView, setShowCurrentView] = useState(true);
   //const [currentViewIsOtherUser, setCurrentViewIsOtherUser] = useState(false);
 
@@ -146,7 +146,7 @@ const TestMap = () => {
       myPosition = navigator.geolocation.watchPosition((pos) => {
         setPosition([pos.coords.latitude, pos.coords.longitude]);
         positionRef.current = [pos.coords.latitude, pos.coords.longitude];
-        if (currentViewEnt === 'self') setCurrentView([pos.coords.latitude, pos.coords.longitude]);
+        if (currentViewEntRef.current === 'self') setCurrentView([pos.coords.latitude, pos.coords.longitude]);
 
         if (markersRef.current.length > 0) {
           newSocket.emit('locationUpdate', { 
@@ -193,7 +193,7 @@ const TestMap = () => {
             prevMarkers.forEach(prevMarker => {
               if (prevMarker.id === update.id) {
                 prevMarker.position = update.position;
-                if (currentViewEnt === 'other') setCurrentView(update.position);
+                if (currentViewEntRef.current === 'other') setCurrentView(update.position);
                 hasMatch = true;
               }
             });
@@ -234,19 +234,19 @@ const TestMap = () => {
   }, [user]);
 
   const handleYourLocationClick = () => {
-    setCurrentViewEnt('self');
+    currentViewEntRef.current = 'self';
     setShowCurrentView(true);
     setCurrentView([position[0], position[1]]);
   }
 
   const handleMeetingPlaceClick = () => {
-    setCurrentViewEnt('meeting');
+    currentViewEntRef.current = 'meeting';
     setShowCurrentView(true);
     setCurrentView([13.9966, 121.9180]);
   }
 
   const handleOtherPersonLocationClick = () => {
-    setCurrentViewEnt('other');
+    currentViewEntRef.current = 'other';
     setShowCurrentView(true);
     setCurrentView(markers[0].position);
   }
