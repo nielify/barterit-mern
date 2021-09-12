@@ -80,6 +80,16 @@ const TestMap = (props) => {
   const classes = useStyles();
   const params = useParams();
 
+  //window height
+  const heightRef = useRef(window.innerHeight);
+  const [height, setHeight] = useState(heightRef.current);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setHeight(window.innerHeight)
+    });
+    return () => window.removeEventListener('resize');
+  },[]);
+
   //logged in user
   const [user, setUser] = useContext(UserContext);
 
@@ -249,7 +259,7 @@ const TestMap = (props) => {
 
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{height: `calc(${height}px - 64px)`}}>
       <MapContainer
         center={position}
         zoom={18}
