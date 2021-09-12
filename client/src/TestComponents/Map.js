@@ -19,7 +19,7 @@ import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 'calc(100vh - 64px)',
+    height: 'calc(100vh - 64px - 54px)',
     position: 'relative',
     overflow: 'hidden'
   },
