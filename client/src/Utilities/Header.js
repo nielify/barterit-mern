@@ -1,5 +1,5 @@
 import { useHistory, Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -28,10 +28,13 @@ import { UserContext } from '../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: 64
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 64,
   },
   barter: {
     fontSize: '1.5rem',
@@ -81,9 +84,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  
+ /*  //test
+  const appbarHeightRef = useRef();
+
+  useEffect(() => {
+    props.setAppbarHeight(appbarHeightRef.current.offsetHeight);
+    window.addEventListener('resize', () => {
+      props.setAppbarHeight(appbarHeightRef.current.offsetHeight);
+    });
+  }, [props.appbarHeight]); */
   
   const [ user, setUser ] = useContext(UserContext);
 
@@ -129,7 +142,7 @@ const Header = () => {
   } 
 
   return (   
-    <AppBar className={classes.root} position="sticky">     
+    <AppBar /* ref={appbarHeightRef} */ className={classes.root} position="sticky">     
       <Grid container>
         {/* <Grid item lg={1}></Grid> */}
         <Grid item xs={12} /* lg={10} */> 

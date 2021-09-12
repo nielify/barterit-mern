@@ -17,7 +17,6 @@ import useRequireAuth from '../CustomHooks/useRequireAuth';
 
 import { io } from "socket.io-client";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -75,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-const TestMap = () => {
+const TestMap = (props) => {
   useRequireAuth();
   const classes = useStyles();
   const params = useParams();
@@ -126,7 +125,6 @@ const TestMap = () => {
       //get self initial position
       //notificate self
       //emit join-room event
-      if ('geolocation' in navigator) console.log('goodshit');
       navigator.geolocation.getCurrentPosition((pos) => {
         
         setPosition([pos.coords.latitude, pos.coords.longitude]);
@@ -252,6 +250,7 @@ const TestMap = () => {
   return (
     <div className={classes.root}>
       <MapContainer
+        style={{height: `calc(100vh - ${props.appbarHeight})`}}
         center={position}
         zoom={18}
         minZoom={10}
