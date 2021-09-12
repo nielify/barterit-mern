@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, useMapEvents } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -21,6 +19,7 @@ import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: 'calc(100vh - 64px - 54px)',
     position: 'relative',
     overflow: 'hidden'
   },
@@ -80,9 +79,6 @@ const TestMap = (props) => {
   useRequireAuth();
   const classes = useStyles();
   const params = useParams();
-
-  const theme = useTheme();
-  const widthSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   //logged in user
   const [user, setUser] = useContext(UserContext);
@@ -253,7 +249,7 @@ const TestMap = (props) => {
 
 
   return (
-    <div className={classes.root} style={{height: widthSmUp ? 'calc(100vh - 64px)' : 'calc(100vh - 64px - 54px)'}}>
+    <div className={classes.root}>
       <MapContainer
         center={position}
         zoom={18}
