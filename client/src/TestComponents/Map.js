@@ -87,7 +87,7 @@ const TestMap = (props) => {
     window.addEventListener('resize', () => {
       setHeight(window.innerHeight)
     });
-    return () => window.removeEventListener('resize');
+    return () => window.removeEventListener('resize', () => {});
   },[]);
 
   //logged in user
@@ -236,7 +236,10 @@ const TestMap = (props) => {
       });
     }
 
-    return () => navigator.geolocation.clearWatch(myPosition);
+    return () => {
+      navigator.geolocation.clearWatch(myPosition);
+      console.log('cleanup ran');
+    }
   }, [user]);
 
   const handleYourLocationClick = () => {
