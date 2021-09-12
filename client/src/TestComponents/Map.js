@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 32,
     borderRadius: 5,
     background: 'rgba(0,0,0,.75)',
-    bottom: 250,
+    bottom: 190,
     right: 10,
     width: 220,
     //height: 70,
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     //height: 120,
     position: 'absolute',
     zIndex: 999,
-    bottom: 80,
+    bottom: 25,
     right: 10,
     transform: 'translateX(102%)',
     transition: 'transform 0.3s ease-out',
@@ -390,7 +390,7 @@ function DisconnectNotification({ disconNotificationOpen, setDisconNotificationO
       autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      style={{ marginTop: 110 }}
+      style={{ marginTop: 120 }}
     >
       <Alert severity="error">
         {`${name} has disconnected`}
@@ -415,7 +415,7 @@ function InfoNotification({ infoNotifOpen, setInfoNotifOpen }) {
       autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      style={{ marginTop: 50 }}
+      style={{ marginTop: 60 }}
     >
       <Alert severity="info">
         You have joined this map!
@@ -441,7 +441,7 @@ function SuccessNotification({ successNotifOpen, setSuccessNotifOpen, name, setN
       autoHideDuration={3000}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      style={{ marginTop: 110 }}
+      style={{ marginTop: 120 }}
       
     >
       <Alert severity="success">
