@@ -80,21 +80,26 @@ const TestMap = (props) => {
   const classes = useStyles();
   const params = useParams();
 
+  //socket
+  const socketRef = useRef();
+
   //window height
   const heightRef = useRef(window.innerHeight);
   const [height, setHeight] = useState(heightRef.current);
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       setHeight(window.innerHeight)
     });
-    return () => window.removeEventListener('resize', () => {});
+
+    return () => {
+      window.removeEventListener('resize', () => {});
+      if (socketRef.current) socketRef.current.disconnect();
+    }
   },[]);
 
   //logged in user
   const [user, setUser] = useContext(UserContext);
-
-  //socket
-  const [socket, setSocket] = useState(null);
 
   //positions
   const positionRef = useRef([0, 0]);
@@ -132,6 +137,7 @@ const TestMap = (props) => {
     if (Object.keys(user).length !== 0) {
       //create socket connection instance
       const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
+      socketRef.current = newSocket;
 
       //get self initial position
       //notificate self
@@ -236,10 +242,7 @@ const TestMap = (props) => {
       });
     }
 
-    return () => {
-      navigator.geolocation.clearWatch(myPosition);
-      console.log('cleanup ran');
-    }
+    return () => navigator.geolocation.clearWatch(myPosition);
   }, [user]);
 
   const handleYourLocationClick = () => {
