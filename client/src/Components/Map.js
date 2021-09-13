@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-const TestMap = (props) => {
+const Map = (props) => {
   useRequireAuth();
   const classes = useStyles();
   const params = useParams();
@@ -471,4 +471,4 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default TestMap;
+export default Map;

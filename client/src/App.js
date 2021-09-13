@@ -1,9 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { useState, useContext } from 'react';
 
-//test components
-import Map from './TestComponents/Map';
-
 //Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Utilities/DefaultHeader';
@@ -17,18 +14,21 @@ import Item from './Components/Item/Item';
 import MyProfile from './Components/MyProfile/MyProfile';
 import SavedItems from './Components/SavedItems/SavedItems';
 import User from './Components/User/User';
-import Upload from './TestComponents/Upload';
-import Cloudinary from './TestComponents/Cloudinary';
-import SMSForm from './TestComponents/SMSForm';
-import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
-import EmailSent from './Components/ForgotPassword/EmailSent';
-import Expired from './Components/ForgotPassword/Expired';
-import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
+import Map from './Components/Map';
 import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
 import Verify from './Components/SignUp/Verify'
 import Success from './Components/SignUp/Success';
 import ResetPassword from './Components/ResetPassword';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import EmailSent from './Components/ForgotPassword/EmailSent';
+import Expired from './Components/ForgotPassword/Expired';
+import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
+
+//test components
+import Upload from './TestComponents/Upload';
+import Cloudinary from './TestComponents/Cloudinary';
+import SMSForm from './TestComponents/SMSForm';
 
 //Contexts
 import { UserContext } from './Context/UserContext';
