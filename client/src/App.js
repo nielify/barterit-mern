@@ -17,10 +17,10 @@ import User from './Components/User/User';
 import Map from './Components/Map';
 import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
+import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
+import ResetPassword from './Components/ResetPassword';
 import Verify from './Components/SignUp/Verify'
 import Success from './Components/SignUp/Success';
-import ResetPassword from './Components/ResetPassword';
-import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 import EmailSent from './Components/ForgotPassword/EmailSent';
 import Expired from './Components/ForgotPassword/Expired';
 import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
