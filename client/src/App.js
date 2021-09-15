@@ -29,6 +29,7 @@ import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSucce
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
+import Negotiations from './TestComponents/Negotiation/Negotiations';
 
 //Contexts
 import { UserContext } from './Context/UserContext';
@@ -81,9 +82,12 @@ function App() {
         <Route exact path="/user/:id">
           <User />
         </Route>
-        <Route exact path="/map/:id">
+        <Route exact path="/negotiations">
           <Map />
         </Route>
+        {/* <Route exact path="/map/:id">
+          <Map />
+        </Route> */}
         <Route exact path="/upload">
           <Upload />
         </Route>
