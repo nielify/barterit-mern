@@ -212,7 +212,7 @@ const Header = (props) => {
                         <ListItem 
                           onClick={toggleAccountPopper}
                           component={Link}
-                          to="/negotiations"
+                          to="/map/123"
                           button 
                           className={classes.listItem}
                         >
