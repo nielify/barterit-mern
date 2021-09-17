@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import useStyles from './ChatListCSS';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -12,65 +12,19 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-import jakeImage from '../../Images/jake_rebullo.jpg';
-import araImage from '../../Images/ara_merillo.jpg';
-import mugImage from '../../Images/mug-image.jpg';
-import puppyImage from '../../Images/puppy-image.jpg';
-import shoesImage from '../../Images/shoes-image.jpg';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-    boxSizing: 'border-box',
-    minWidth: 350,
-    width: '25%',
-    border: 'solid 1px #bbb',
-    borderLeft: 0,
-    margin: 0,
-    padding: 0,
-    background: '#fff',
-    minHeight: 'calc(100vh - 64px)',
-    transition: 'transform 0.3s ease-out',
-    zIndex: 9,
-  },
-  mobile: {
-    transform: 'translateX(-97%)',
-  },
-  chatlistOpen: {
-    transform: 'translateX(0%)',
-  },
-  arrowIcon: {
-    borderRadius: '50%',
-    background: '#009688',
-    position: 'absolute',
-    top: 'calc(50% - 20px)',
-    right: '-25px',
-    zIndex: 10,
-  }, 
-
-  title: {
-    padding: theme.spacing(2,0,2,3),
-    //borderBottom: 'solid 2px #bbb'
-  },  
-  item: {
-    borderRadius: 10,
-  },
-  avatar: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-    marginRight: theme.spacing(2)
-  },
- 
-}));
+import jakeImage from '../../../Images/jake_rebullo.jpg';
+import araImage from '../../../Images/ara_merillo.jpg';
+import mugImage from '../../../Images/mug-image.jpg';
+import puppyImage from '../../../Images/puppy-image.jpg';
+import shoesImage from '../../../Images/shoes-image.jpg';
 
 const ChatList = ({ matches }) => {
   const classes = useStyles();
   
-
   const [activeChat, setActiveChat] = useState('');
 
   //button
-  const [ collapseButtons, setCollapseButtons ] = useState(true);
+  const [ collapseButtons, setCollapseButtons ] = useState(false);
   const handleCollapseButtons = () => {
     setCollapseButtons(!collapseButtons);
   }
@@ -82,8 +36,7 @@ const ChatList = ({ matches }) => {
   }
 
   useEffect(() => {
-    if (matches) setCollapseButtons(true);
-    else setCollapseButtons(false);
+    if (!matches) setCollapseButtons(false);
   }, [matches]);
 
   const mockNegotiations = [
@@ -113,11 +66,12 @@ const ChatList = ({ matches }) => {
       image: shoesImage
     },
     
+    
   ];
 
   return (
     <div 
-      className={`${classes.root} ${matches ? classes.mobile : ''} ${!collapseButtons ? classes.chatlistOpen : ''}`}
+      className={`${classes.root} ${!collapseButtons ? '' : classes.chatlistClose}`}
       style={{boxShadow: matches ? '-3px 5px 10px 0px #444' : '',}}
     >
       {matches && <div className={classes.arrowIcon}>
@@ -131,11 +85,10 @@ const ChatList = ({ matches }) => {
         color="primary"
         style={{ fontWeight: 'bold' }}
         className={classes.title}
-        gutterBottom
       >
         Negotiations
       </Typography>
-      <List component="nav" style={{padding: '0 8px 0 8px'}}>
+      <List component="nav" className={classes.list}>
         {mockNegotiations.map((mockNegotiation) => (
           <ListItem 
             button 

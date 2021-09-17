@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
-import ChatList from './ChatList';
-import ChatBox from './ChatBox';
+import ChatList from './ChatList/ChatList';
+import ChatBox from './ChatBox/ChatBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {

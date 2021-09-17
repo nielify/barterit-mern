@@ -284,7 +284,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
 
 function Category(icon, text, cssClass, onClickFunction, activeCategory) {
   return (
-    <ListItem button onClick={() => onClickFunction(text)} style={{background: activeCategory === text ? '#ccc' : '', borderRadius: 5, paddingLeft: 30}} >
+    <ListItem button onClick={() => onClickFunction(text)} style={{background: activeCategory === text ? 'rgba(0, 185, 167, .2)' : '', borderRadius: 5, paddingLeft: 30}} >
       <ListItemIcon className={cssClass} >
         <Icon className={icon} style={{color: activeCategory === text ? '#009688' : ''}} />
       </ListItemIcon>
