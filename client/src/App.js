@@ -82,9 +82,9 @@ function App() {
         <Route exact path="/user/:id">
           <User />
         </Route>
-        {/* <Route exact path="/negotiations">
-          <Map />
-        </Route> */}
+        <Route exact path="/negotiations">
+          <Negotiations />
+        </Route>
         <Route exact path="/map/:id">
           <Map />
         </Route>

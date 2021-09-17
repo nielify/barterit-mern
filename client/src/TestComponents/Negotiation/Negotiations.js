@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
-import Container from '@material-ui/core/Container';
-
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 import ChatList from './ChatList';
@@ -10,6 +8,7 @@ import ChatBox from './ChatBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: 'calc(100vh - 64px)',
     display: 'flex',
   }
 }));
@@ -17,26 +16,13 @@ const useStyles = makeStyles((theme) => ({
 const Negotiations = () => {
   useRequireAuth();
   const classes = useStyles();
-
-  //window height
-  const heightRef = useRef(window.innerHeight);
-  const [height, setHeight] = useState(heightRef.current);
-
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      setHeight(window.innerHeight)
-    });
-
-    return () => {
-      window.removeEventListener('resize', () => {});
-    }
-  },[]);
+  const matches = useMediaQuery('(max-width:960px)');
 
   return (  
-    <Container maxWidth="md" className={classes.root} style={{height: `calc(${height}px - 64px)`}}>
-      <ChatList />
-      <ChatBox />
-    </Container>
+    <div className={classes.root} /* style={{height: `calc(${height}px - 64px)`}} */>
+      <ChatList matches={matches} />
+      <ChatBox matches={matches} />
+    </div>
   );
 }
  
