@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { UserContext } from '../../Context/UserContext';
 
 import Button from '@material-ui/core/Button';
 
@@ -15,11 +17,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Buttons = ({ isSaved, setIsSaved }) => {
+const Buttons = ({ post, isSaved, setIsSaved }) => {
   const classes = useStyles();
   const params = useParams();
 
+  const [ user ] = useContext(UserContext);
   const [ isSubmitting, setIsSubmitting ] = useState(false);
+
+  const handleNegotiateClick = () => {
+    const negotiationData = {
+      name: '',
+      owner: {
+        _id: '',
+        name: '',
+      },
+      notOwner: {
+        _id: '',
+        name: '',
+      },
+      post: '',
+    };
+
+    negotiationData.name = `${post.title} • ${user.firstName} ${user.lastName}`;
+    negotiationData.owner._id = post.userId._id;
+    negotiationData.owner.name = post.userId.firstName + ' ' + post.userId.lastName;
+    negotiationData.notOwner._id = user._id;
+    negotiationData.notOwner.name = user.firstName + ' ' + user.lastName;
+    negotiationData.post = post._id;
+
+    console.log(negotiationData);
+
+  }
 
   const handleRemoveSaveClick = async () => { 
     if (isSubmitting) return console.log('already submitting');
@@ -67,6 +95,7 @@ const Buttons = ({ isSaved, setIsSaved }) => {
         fullWidth
         startIcon={<ForumIcon />}
         style={{marginRight: 16}}
+        onClick={handleNegotiateClick}
       >
         Negotiate with Owner
       </Button>

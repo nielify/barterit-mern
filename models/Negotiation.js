@@ -7,7 +7,8 @@ const negotiationSchema = mongoose.Schema({
   },
   owner: {
     owner_id: {  
-      type: String, 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'user', 
       required: true
     },
     name: {
@@ -17,7 +18,8 @@ const negotiationSchema = mongoose.Schema({
   },
   notOwner: {
     owner_id: {  
-      type: String, 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'user', 
       required: true
     },
     name: {
