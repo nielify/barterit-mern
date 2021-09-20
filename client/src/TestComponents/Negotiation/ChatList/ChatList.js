@@ -18,7 +18,7 @@ import mugImage from '../../../Images/mug-image.jpg';
 import puppyImage from '../../../Images/puppy-image.jpg';
 import shoesImage from '../../../Images/shoes-image.jpg';
 
-const ChatList = ({ matches }) => {
+const ChatList = ({ matches, negotiations }) => {
   const classes = useStyles();
   
   const [activeChat, setActiveChat] = useState('');
@@ -89,20 +89,23 @@ const ChatList = ({ matches }) => {
         Negotiations
       </Typography>
       <List component="nav" className={classes.list}>
-        {mockNegotiations.map((mockNegotiation) => (
+        {negotiations.map((negotiation) => (
           <ListItem 
             button 
-            key={mockNegotiation.id} 
-            onClick={() => handleActiveChat(mockNegotiation.id)}
+            key={negotiation._id} 
+            onClick={() => handleActiveChat(negotiation._id)}
             className={classes.item}
             style={{
-              background: activeChat === mockNegotiation.id ? 'rgba(0, 185, 167, .2)' : '',
+              background: activeChat === negotiation._id ? 'rgba(0, 185, 167, .2)' : '',
             }}
           >
             <ListItemIcon>
-              <Avatar alt={mockNegotiation.name} src={mockNegotiation.image} className={classes.avatar} />
+              <Avatar alt={negotiation.name} src={negotiation.post.images[0]} className={classes.avatar} />
             </ListItemIcon>
-            <ListItemText primary={mockNegotiation.name} /* style={{color: activeChat === mockNegotiation.id ? '#fff' : ''}} */ />
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <Typography variant="body1" style={{fontWeight: 'bold',fontSize: '.95rem'}}>{negotiation.name.length > 21 ? `${negotiation.name.substring(0,20)}...` : negotiation.name }</Typography>
+              <Typography variant="subtitle2" style={{fontWeight: 'normal',fontSize: '.8rem'}}>{`${negotiation.owner.firstName} ${negotiation.owner.lastName}`}</Typography>
+            </div>
           </ListItem>
         ))}
       </List>     

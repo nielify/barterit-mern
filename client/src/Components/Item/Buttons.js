@@ -35,7 +35,7 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
       notOwner: ''
     };
 
-    negotiationData.name = `${post.title} • ${user.firstName} ${user.lastName}`;
+    negotiationData.name = post.title;
     negotiationData.post = post._id;
     negotiationData.owner = post.userId._id;
     negotiationData.notOwner = user._id;
