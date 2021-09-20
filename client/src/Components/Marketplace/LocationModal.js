@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '80vh',
     minWidth: 250,
     overflowY: 'auto',
+    borderRadius: 15
   },
   formControl: {
     marginBottom: theme.spacing(2),

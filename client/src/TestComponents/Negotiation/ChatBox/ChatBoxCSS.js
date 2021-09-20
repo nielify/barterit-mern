@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     width: '75%',
     borderRight: 0,
+    borderLeft: 'solid 2px #bbb',
     display: 'flex',
     flexDirection: 'column',
     paddingRight: theme.spacing(1),

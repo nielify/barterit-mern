@@ -1,27 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useStyles from './ChatListCSS';
+
+import { UserContext } from '../../../Context/UserContext';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-import jakeImage from '../../../Images/jake_rebullo.jpg';
-import araImage from '../../../Images/ara_merillo.jpg';
-import mugImage from '../../../Images/mug-image.jpg';
-import puppyImage from '../../../Images/puppy-image.jpg';
-import shoesImage from '../../../Images/shoes-image.jpg';
-
 const ChatList = ({ matches, negotiations }) => {
   const classes = useStyles();
   
   const [activeChat, setActiveChat] = useState('');
+  const [ user ] = useContext(UserContext);
 
   //button
   const [ collapseButtons, setCollapseButtons ] = useState(false);
@@ -38,36 +34,6 @@ const ChatList = ({ matches, negotiations }) => {
   useEffect(() => {
     if (!matches) setCollapseButtons(false);
   }, [matches]);
-
-  const mockNegotiations = [
-    {
-      id: 'Jake Rebullo',
-      name: 'Jake Rebullo',
-      image: jakeImage
-    },
-    {
-      id: 'Ara Merilo',
-      name: 'Ara Merilo',
-      image: araImage
-    },
-    {
-      id: 'Some Mug',
-      name: 'Some Mug',
-      image: mugImage
-    },
-    {
-      id: 'Some Puppy',
-      name: 'Some Puppy',
-      image: puppyImage
-    },
-    {
-      id: 'Some Shoes',
-      name: 'Some Shoes',
-      image: shoesImage
-    },
-    
-    
-  ];
 
   return (
     <div 
@@ -103,8 +69,8 @@ const ChatList = ({ matches, negotiations }) => {
               <Avatar alt={negotiation.name} src={negotiation.post.images[0]} className={classes.avatar} />
             </ListItemIcon>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-              <Typography variant="body1" style={{fontWeight: 'bold',fontSize: '.95rem'}}>{negotiation.name.length > 21 ? `${negotiation.name.substring(0,20)}...` : negotiation.name }</Typography>
-              <Typography variant="subtitle2" style={{fontWeight: 'normal',fontSize: '.8rem'}}>{`${negotiation.owner.firstName} ${negotiation.owner.lastName}`}</Typography>
+              <Typography variant="body1" style={{fontWeight: '500',fontSize: '.9rem', color: negotiation.owner._id === user._id ? '#009688' : ''}}>{negotiation.name.length > 21 ? `${negotiation.name.substring(0,20)}...` : negotiation.name }</Typography>
+              <Typography variant="subtitle2" style={{fontWeight: 'normal',fontSize: '.8rem'}}>{ user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}` }</Typography>
             </div>
           </ListItem>
         ))}

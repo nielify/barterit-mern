@@ -23,13 +23,17 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
+    borderRadius: 10,
+    padding: theme.spacing(3, 0),
+  },
+  list: {
     padding: theme.spacing(2, 4, 3),
-    margin: theme.spacing(0, 2),
-    maxHeight: '80vh',
-    overflowY: 'auto',
+    margin: theme.spacing(0, 1),
+    maxHeight: '60vh',
+    overflow: 'auto',
     '&::-webkit-scrollbar': {
       width: '5px',
-      borderRadius: '150px',
+      borderRadius: '15px',
     },
     '&::-webkit-scrollbar-track': {
       background: 'inherit',
@@ -169,7 +173,11 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, cu
           >
             Select Category
           </Typography>
-          <Divider />
+
+          <div style={{padding: '0 44px 0 40px'}}>
+            <Divider /> 
+          </div>
+          
           <List component="nav" className={classes.list}>
             {Category(`fa fa-list-alt ${classes.icon}`, 'All Posts', classes.listItemIcon, handleClickAllPost, currentCategory)}
             {Category(`fas fa-object-group ${classes.icon}`, 'Antiques & Collections', classes.listItemIcon, handleCategoryClick, currentCategory)}

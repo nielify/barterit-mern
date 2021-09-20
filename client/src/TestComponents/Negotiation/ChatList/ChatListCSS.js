@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     minWidth: 320,
     width: '25%',
-    border: 'solid 1px #bbb',
     borderLeft: 0,
     margin: 0,
     padding: 0,
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2,0,2,1),
     margin: theme.spacing(0, 2),
     height: '4%',
-    borderBottom: 'solid 1px #bbb'
+    borderBottom: 'solid 2px #bbb'
   },  
   list: {
     maxHeight: '91%',
@@ -55,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10,
   },
   avatar: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
     marginRight: theme.spacing(2)
   },
  
