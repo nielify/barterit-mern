@@ -5,33 +5,29 @@ const negotiationSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  owner: {
-    owner_id: {  
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'user', 
-      required: true
-    },
-    name: {
-      type: String,
-      required: true,
-    }
-  },
-  notOwner: {
-    owner_id: {  
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'user', 
-      required: true
-    },
-    name: {
-      type: String,
-      required: true,
-    }
-  },
   post: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'post', 
     required: true,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'user', 
+    required: true 
+  },
+  notOwner: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'user', 
+    required: true
+  },
+  conversation: [{ 
+    sender_id: mongoose.Schema.Types.ObjectId, 
+    message: String,
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

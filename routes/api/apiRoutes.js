@@ -6,18 +6,14 @@ const router = Router();
 const cryptoRandomString = require('crypto-random-string');
 const sendMail = require('../../utils/nodemailer');
 
-//middlewares
-const requireAuth = require('../../middlewares/requireAuth');
-
 //routes
 const userRoutes = require('./user/userRoutes');
 const postRoutes = require('./post/postRoutes');
-
-//controllers
-const userControllers = require('../../controllers/userControllers');
+const negotiationRoutes = require('./negotiation/negotiationRoutes');
 
 router.use('/user', userRoutes);
 router.use('/post', postRoutes);
+router.use('/negotiation', negotiationRoutes);
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;
