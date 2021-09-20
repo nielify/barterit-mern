@@ -9,10 +9,12 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: 0,
     margin: 0,
     padding: 0,
+    paddingBottom: 8,
     background: '#fff',
     height: 'calc(100vh - 64px)',
     transition: 'transform 0.3s ease-out',
     zIndex: 9,
+    overflow: 'hidden'
   },
   chatlistClose: {
     transform: 'translateX(-95%)',
