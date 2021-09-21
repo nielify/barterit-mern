@@ -23,6 +23,7 @@ const Negotiations = () => {
   const [user, setUser] = useContext(UserContext);
   const [negotiations, setNegotiations] = useState([]);
   const [conversation, setConversation] = useState(null);
+  const [activeChat, setActiveChat] = useState('');
   const socketRef = useRef(null);
 
   useEffect(() => {
@@ -44,8 +45,23 @@ const Negotiations = () => {
 
   return (
     <div className={classes.root} /* style={{height: `calc(${height}px - 64px)`}} */>
-      <ChatList matches={matches} negotiations={negotiations} socketRef={socketRef} setConversation={setConversation} />
-      <ChatBox matches={matches} conversation={conversation} />
+      <ChatList 
+        matches={matches} 
+        negotiations={negotiations} 
+        socketRef={socketRef} 
+        setConversation={setConversation}
+        activeChat={activeChat}
+        setActiveChat={setActiveChat}
+      />
+      <ChatBox 
+        matches={matches} 
+        conversation={conversation} 
+        setConversation={setConversation}
+        socketRef={socketRef} 
+        user={user} 
+        negotiations={negotiations}
+        activeChat={activeChat}
+      />
     </div>
   );
 }

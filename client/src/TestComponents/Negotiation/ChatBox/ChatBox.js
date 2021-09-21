@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useStyles from './ChatBoxCSS';
 
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 
 import SendIcon from '@material-ui/icons/Send';
 
-const mockMessages = [
+/* const mockMessages = [
   { 
     _id: 1,
     transactionId: 'abc123',
@@ -40,9 +40,9 @@ const mockMessages = [
   },
 
 
-]
+] */
 
-const ChatBox = ({ matches, conversation }) => {
+const ChatBox = ({ matches, conversation, setConversation, socketRef, user, activeChat }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -54,30 +54,48 @@ const ChatBox = ({ matches, conversation }) => {
   const handleTextEnter = (e) => {
     if (e.keyCode === 13) {
       e.preventDefault();
+      sendMessage(text);
       setText('');
     }
   }
 
   const handleTextSend = (e) => {
+    sendMessage(text);
     setText('');
   }
 
-  const handleSendMessage = async () => {
-
+  const sendMessage = async (text) => {
+    socketRef.current.emit('chat', {
+      negotiation_id: activeChat, 
+      sender_id: user._id, 
+      message: text
+    });
   }
+
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.on('chat', conversation => {
+        setConversation(conversation);
+        
+      });
+    }
+  }, [socketRef.current]);
+
+/*   useEffect(() => {
+
+  }, [conversation]) */
 
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
       <div className={classes.messageBox}>
         {conversation && conversation.map(message => (
-          <div key={message._id} className={classes.messageContainer} style={{justifyContent: message.senderId === 'you' ? 'flex-end' : 'flex-start'}}>
-            <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${message.senderId === 'you' ? classes.ownMessage : classes.otherMessage}`}>
+          <div key={message._id} className={classes.messageContainer} style={{justifyContent: message.sender_id === user._id ? 'flex-end' : 'flex-start'}}>
+            <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${message.sender_id === user._id ? classes.ownMessage : classes.otherMessage}`}>
               { message.message }
             </Paper>
           </div>  
         ))}
-
-         
       </div>
       <div className={classes.inputBox}>
         <TextField

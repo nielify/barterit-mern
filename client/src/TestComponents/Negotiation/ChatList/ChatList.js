@@ -15,10 +15,10 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, activeChat, setActiveChat }) => {
   const classes = useStyles();
   
-  const [activeChat, setActiveChat] = useState('');
+
   const [ user ] = useContext(UserContext);
 
   //button

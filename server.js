@@ -76,6 +76,19 @@ io.on("connection", socket => {
     io.in(data.negotiation_id).emit('update-chat', negotiation.conversation);
   });
 
+  socket.on('chat', async (data) => {
+    const negotiation = await Negotiation.findOneAndUpdate({_id: data.negotiation_id}, 
+      {$push: { 
+        conversation: {
+          sender_id : data.sender_id,
+          message: data.message
+        }
+      }},
+      { new: true }
+    );
+    io.in(data.negotiation_id).emit('chat', negotiation.conversation);
+  });
+
   // *** FOR NEGOTIATIONS ENDS HERE ***
 
   
@@ -83,7 +96,7 @@ io.on("connection", socket => {
 
 //database and server connection
 const PORT = process.env.PORT || 3001;
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true, useFindAndModify: false })
   .then((res) => {
     httpServer.listen(PORT || 3001);
     console.log('SERVER: now listening and connected to db');
