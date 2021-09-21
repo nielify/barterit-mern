@@ -59,7 +59,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '65%',
   },
   inputBox: {
-    display: 'flex'
+    display: 'flex',
+  },
+  textField: {
+    [`& fieldset`]: {
+      borderRadius: 20,
+    },
   }
 }));
 

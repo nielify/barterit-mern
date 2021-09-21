@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useStyles from './ChatBoxCSS';
 
 import TextField from '@material-ui/core/TextField';
@@ -44,12 +45,18 @@ const mockMessages = [
 const ChatBox = ({ matches }) => {
   const classes = useStyles();
 
+  const [ value, setValue ] = useState('Controlled');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
       <div className={classes.messageBox}>
         {mockMessages.map(mockMessage => (
           <div key={mockMessage._id} className={classes.messageContainer} style={{justifyContent: mockMessage.senderId === 'you' ? 'flex-end' : 'flex-start'}}>
-            <Paper elevation={0} className={`${mockMessage.senderId === 'you' ? classes.ownMessage : classes.otherMessage}`}>
+            <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${mockMessage.senderId === 'you' ? classes.ownMessage : classes.otherMessage}`}>
               { mockMessage.message }
             </Paper>
           </div>  
@@ -58,7 +65,16 @@ const ChatBox = ({ matches }) => {
          
       </div>
       <div className={classes.inputBox}>
-        <TextField variant="outlined" size="small" label="Type your message..." fullWidth />
+        <TextField
+          id="standard-multiline-flexible"
+          multiline
+          rowsMax={4}
+          size="small"
+          variant="outlined"
+          placeholder="Aa"
+          fullWidth
+          className={classes.textField}
+        />
         <IconButton size="small" style={{marginLeft: 8}} >
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
