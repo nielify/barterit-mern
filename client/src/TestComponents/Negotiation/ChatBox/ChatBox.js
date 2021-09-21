@@ -45,11 +45,26 @@ const mockMessages = [
 const ChatBox = ({ matches }) => {
   const classes = useStyles();
 
-  const [ value, setValue ] = useState('Controlled');
+  const [text, setText] = useState('');
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  }
+
+  const handleTextEnter = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      setText('');
+    }
+  }
+
+  const handleTextSend = (e) => {
+    setText('');
+  }
+
+  const handleSendMessage = async () => {
+
+  }
 
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
@@ -66,7 +81,6 @@ const ChatBox = ({ matches }) => {
       </div>
       <div className={classes.inputBox}>
         <TextField
-          id="standard-multiline-flexible"
           multiline
           rowsMax={4}
           size="small"
@@ -74,8 +88,11 @@ const ChatBox = ({ matches }) => {
           placeholder="Aa"
           fullWidth
           className={classes.textField}
+          onChange={handleTextChange}
+          onKeyDown={handleTextEnter}
+          value={text}
         />
-        <IconButton size="small" style={{marginLeft: 8}} >
+        <IconButton size="small" style={{marginLeft: 8}} onClick={handleTextSend} >
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
       </div>
