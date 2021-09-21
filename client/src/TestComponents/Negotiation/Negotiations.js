@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
@@ -19,32 +19,35 @@ const Negotiations = () => {
   useRequireAuth();
   const classes = useStyles();
   const matches = useMediaQuery('(max-width:960px)');
-  const [ user, setUser ] = useContext(UserContext);
-  const [ negotiations, setNegotiations ] = useState([]);
+
+  const [user, setUser] = useContext(UserContext);
+  const [negotiations, setNegotiations] = useState([]);
+  const [conversation, setConversation] = useState(null);
+  const socketRef = useRef(null);
 
   useEffect(() => {
     if (user._id) {
-      fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/negotiations`, { 
-        headers: { 'Content-Type': 'application/json' }, 
-        credentials: 'include', 
+      fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/negotiations`, {
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       })
-      .then(res => res.json())
-      .then(data => {
-        setNegotiations(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(res => res.json())
+        .then(data => {
+          setNegotiations(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-    
+
   }, [user]);
 
-  return (  
+  return (
     <div className={classes.root} /* style={{height: `calc(${height}px - 64px)`}} */>
-      <ChatList matches={matches} negotiations={negotiations} />
-      <ChatBox matches={matches} />
+      <ChatList matches={matches} negotiations={negotiations} socketRef={socketRef} setConversation={setConversation} />
+      <ChatBox matches={matches} conversation={conversation} />
     </div>
   );
 }
- 
+
 export default Negotiations;

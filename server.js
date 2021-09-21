@@ -16,7 +16,7 @@ const path = require('path');
 
 //utils
 const upload = require('./utils/multer');
-//const passportStrategies = require('./utils/passportStrategies');
+const Negotiation = require('./models/Negotiation');
 
 //controllers
 const serverController = require('./controllers/serverController');
@@ -42,6 +42,8 @@ const apiRoutes = require('./routes/api/apiRoutes');
 
 //socketio
 io.on("connection", socket => {
+  // *** THIS IS FOR MAP *** 
+
   //socketInstance data
   let socketData = null;
 
@@ -63,6 +65,20 @@ io.on("connection", socket => {
   socket.on('disconnect', () => {
     if (socketData) socket.broadcast.to(socketData.roomId).emit('userDisconnect', socketData);
   });
+
+  // *** FOR MAP ENDS HERE ***
+
+  // *** THIS IS FOR NEGOTIATIONS ***
+
+  socket.on('join-chat', async (data) => {
+    socket.join(data.negotiation_id);
+    const negotiation = await Negotiation.findOne({ _id: data.negotiation_id });
+    io.in(data.negotiation_id).emit('update-chat', negotiation.conversation);
+  });
+
+  // *** FOR NEGOTIATIONS ENDS HERE ***
+
+  
 });
 
 //database and server connection

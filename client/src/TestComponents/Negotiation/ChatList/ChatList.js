@@ -3,6 +3,8 @@ import useStyles from './ChatListCSS';
 
 import { UserContext } from '../../../Context/UserContext';
 
+import { io } from "socket.io-client";
+
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation }) => {
   const classes = useStyles();
   
   const [activeChat, setActiveChat] = useState('');
@@ -26,8 +28,26 @@ const ChatList = ({ matches, negotiations }) => {
   }
 
   const handleActiveChat = (id) => {
+    //clear socket when selecting negotiations
+    if (socketRef.current) socketRef.current.disconnect();
+    socketRef.current = null;
+    
+    //create new socket and assign to socketRef
+    const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
+    socketRef.current = newSocket;
+
+    //send negotiation id and user id to backend when joining chat
+    socketRef.current.emit('join-chat', {negotiation_id: id, user_id: user._id});
+
+    //update the conversation messages based on the negotiation's conversation
+    let convoContainer;
+    socketRef.current.on('update-chat', (conversation) => {
+      convoContainer = conversation;
+    });
+
     setTimeout(() => {
       setActiveChat(id);
+      setConversation(convoContainer);
     }, 300);
   }
 

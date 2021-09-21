@@ -42,7 +42,7 @@ const mockMessages = [
 
 ]
 
-const ChatBox = ({ matches }) => {
+const ChatBox = ({ matches, conversation }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -69,10 +69,10 @@ const ChatBox = ({ matches }) => {
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
       <div className={classes.messageBox}>
-        {mockMessages.map(mockMessage => (
-          <div key={mockMessage._id} className={classes.messageContainer} style={{justifyContent: mockMessage.senderId === 'you' ? 'flex-end' : 'flex-start'}}>
-            <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${mockMessage.senderId === 'you' ? classes.ownMessage : classes.otherMessage}`}>
-              { mockMessage.message }
+        {conversation && conversation.map(message => (
+          <div key={message._id} className={classes.messageContainer} style={{justifyContent: message.senderId === 'you' ? 'flex-end' : 'flex-start'}}>
+            <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${message.senderId === 'you' ? classes.ownMessage : classes.otherMessage}`}>
+              { message.message }
             </Paper>
           </div>  
         ))}
