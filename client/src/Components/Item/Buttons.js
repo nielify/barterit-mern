@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import ForumIcon from '@material-ui/icons/Forum';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,9 +114,17 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
         variant="contained"
         startIcon={ isSaved ? <TurnedInIcon /> : <TurnedInNotIcon /> }
         onClick={ isSaved ? handleRemoveSaveClick : handleSaveClick }
-        style={{padding: '0 30px'}}
+        style={{padding: '0 30px', marginRight: 16}}
       >
         { isSaved ? 'Saved' : 'Save' }
+      </Button>
+      <Button
+        color="primary"
+        variant="contained"
+        startIcon={<ReportProblemIcon />}
+        style={{padding: '0 30px'}}
+      >
+        Report
       </Button>
     </div>
     
