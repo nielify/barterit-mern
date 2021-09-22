@@ -52,16 +52,19 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
   }
 
   const handleTextEnter = (e) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13) e.preventDefault();
+    if (e.keyCode === 13 && text.trim()) {
       e.preventDefault();
-      sendMessage(text);
+      sendMessage(text.trim());
       setText('');
     }
   }
 
   const handleTextSend = (e) => {
-    sendMessage(text);
-    setText('');
+    if (text.trim()) {
+      sendMessage(text.trim());
+      setText('');
+    }
   }
 
   const sendMessage = async (text) => {
@@ -77,18 +80,14 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
     if (socketRef.current) {
       socketRef.current.on('chat', conversation => {
         setConversation(conversation);
-        
       });
     }
   }, [socketRef.current]);
 
-/*   useEffect(() => {
-
-  }, [conversation]) */
-
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
       <div className={classes.messageBox}>
+        <div className={classes.dummydiv}></div>
         {conversation && conversation.map(message => (
           <div key={message._id} className={classes.messageContainer} style={{justifyContent: message.sender_id === user._id ? 'flex-end' : 'flex-start'}}>
             <Paper elevation={0} style={{fontSize: '.95rem'}} className={`${message.sender_id === user._id ? classes.ownMessage : classes.otherMessage}`}>

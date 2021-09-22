@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
   },
   messageBox: {
+    display: 'flex',
+    flexDirection: 'column',
     height: '95%',
     marginBottom: theme.spacing(1),
     overflowY: 'auto',
@@ -40,9 +42,12 @@ const useStyles = makeStyles((theme) => ({
       background: '#bbb',
     }, 
   },
+  dummydiv: {
+    flex: '1 1 auto'
+  },
   messageContainer: {
     display: 'flex',
-    margin: 8
+    margin: '2px 12px'
   },  
   ownMessage: {
     padding: theme.spacing(1, 1.8),
