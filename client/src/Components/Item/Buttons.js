@@ -3,21 +3,41 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 
-
 import { UserContext } from '../../Context/UserContext';
 
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import TextField from '@material-ui/core/TextField';
 
 import ForumIcon from '@material-ui/icons/Forum';
 import TurnedInNotIcon from '@material-ui/icons/TurnedInNot';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',  
+    display: 'flex', 
     marginTop: theme.spacing(3),
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing(2),
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 4,),
+    borderRadius: 10,
+    width: '50%',
+    minWidth: 300,
+  },
+  buttonsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
   }
 }));
 
@@ -97,6 +117,12 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
     setIsSubmitting(false);
   }
 
+
+  const [openReportModal, setOpenReportModal] = useState(false);
+  const handleOpenReportModal = () => {
+    setOpenReportModal(true)
+  }
+
   return (  
     <div className={classes.root}>
       <Button
@@ -123,12 +149,75 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
         variant="contained"
         startIcon={<ReportProblemIcon />}
         style={{padding: '0 30px'}}
+        onClick={handleOpenReportModal}
       >
         Report
       </Button>
+      <ReportModal openReportModal={openReportModal} setOpenReportModal={setOpenReportModal} /> 
     </div>
     
   );
+}
+
+function ReportModal(props) {
+  const classes = useStyles();
+
+  const handleClose = () => {
+    props.setOpenReportModal(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={props.openReportModal}
+      onClose={handleClose}
+      disableEnforceFocus 
+    >
+      <div className={classes.paper}>
+        <Typography 
+          variant="h6"
+          style={{textAlign: 'center'}}
+          gutterBottom
+        >
+          Report
+        </Typography>
+        <Divider /> 
+        <Typography 
+          variant="subtitle1"
+          style={{fontSize: '.85rem', marginTop: 16}}
+          gutterBottom
+        >
+          Tell us what's wrong with this post.
+        </Typography>
+        <TextField
+          multiline
+          rows={4}
+          variant="outlined"
+          fullWidth
+          size="small"
+          placeholder="Type here..."
+          style={{marginBottom: 16}}
+        />
+        <div className={classes.buttonsContainer}>
+          <Button
+            color="primary"
+            variant="outlined"
+            style={{marginRight: 16}}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+          >
+            Submit
+          </Button>
+          
+        </div>
+      </div>
+    </Modal>
+  )
 }
  
 export default Buttons;

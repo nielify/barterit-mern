@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4, 4,),
+    borderRadius: 10
   },
   question: {
     marginBottom: theme.spacing(2),
