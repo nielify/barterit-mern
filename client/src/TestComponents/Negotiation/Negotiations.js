@@ -25,6 +25,11 @@ const Negotiations = () => {
   const [conversation, setConversation] = useState(null);
   const [activeChat, setActiveChat] = useState('');
   const socketRef = useRef(null);
+  const bottomRef = useRef();
+
+  const scrollToBottom = (behavior) => {
+    bottomRef.current.scrollIntoView({ behavior });
+  }
 
   useEffect(() => {
     if (user._id) {
@@ -52,6 +57,7 @@ const Negotiations = () => {
         setConversation={setConversation}
         activeChat={activeChat}
         setActiveChat={setActiveChat}
+        scrollToBottom={scrollToBottom}
       />
       <ChatBox 
         matches={matches} 
@@ -61,6 +67,8 @@ const Negotiations = () => {
         user={user} 
         negotiations={negotiations}
         activeChat={activeChat}
+        bottomRef={bottomRef}
+        scrollToBottom={scrollToBottom}
       />
     </div>
   );

@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       background: '#bbb',
     }, 
   },
-  dummydiv: {
+  dummydivTop: {
     flex: '1 1 auto'
   },
   messageContainer: {
