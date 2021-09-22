@@ -40,14 +40,12 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, activeCha
     socketRef.current.emit('join-chat', {negotiation_id: id, user_id: user._id});
 
     //update the conversation messages based on the negotiation's conversation
-    let convoContainer;
     socketRef.current.on('update-chat', (conversation) => {
-      convoContainer = conversation;
+      setConversation(conversation);
     });
 
-    setTimeout(() => {
+    setTimeout((convoContainer) => {
       setActiveChat(id);
-      setConversation(convoContainer);
     }, 300);
   }
 
