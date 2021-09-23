@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Buttons = ({ post, isSaved, setIsSaved }) => {
+const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
   const classes = useStyles();
   const params = useParams();
   const history = useHistory();
@@ -108,7 +108,7 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
         headers: { 'Content-Type': 'application/json' }, 
         credentials: 'include', 
       })
-      const data = await res.json()
+      const data = await res.json();
       setIsSaved(true);
     } catch (err) {
       console.log(err);
@@ -128,19 +128,18 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
       <Button
         color="primary"
         variant="contained"
-        fullWidth
         startIcon={<ForumIcon />}
-        style={{marginRight: 16}}
+        style={{marginRight: 8, width: '66%', minWidth: 130}}
         onClick={handleNegotiateClick}
       >
-        Negotiate with Owner
+        Negotiate
       </Button>
       <Button
         color={ isSaved ? 'primary' : 'secondary'}
         variant="contained"
         startIcon={ isSaved ? <TurnedInIcon /> : <TurnedInNotIcon /> }
         onClick={ isSaved ? handleRemoveSaveClick : handleSaveClick }
-        style={{padding: '0 30px', marginRight: 16}}
+        style={{padding: '0 30px', marginRight: 8, width: '17%', minWidth: 100}}
       >
         { isSaved ? 'Saved' : 'Save' }
       </Button>
@@ -148,12 +147,12 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
         color="primary"
         variant="contained"
         startIcon={<ReportProblemIcon />}
-        style={{padding: '0 30px'}}
+        style={{padding: '0 30px', width: '17%', minWidth: 100}}
         onClick={handleOpenReportModal}
       >
         Report
       </Button>
-      <ReportModal openReportModal={openReportModal} setOpenReportModal={setOpenReportModal} /> 
+      <ReportModal openReportModal={openReportModal} setOpenReportModal={setOpenReportModal} user_id={user_id} post_id={post._id} /> 
     </div>
     
   );
@@ -162,9 +161,31 @@ const Buttons = ({ post, isSaved, setIsSaved }) => {
 function ReportModal(props) {
   const classes = useStyles();
 
+  const [body, setBody] = useState('');
+
   const handleClose = () => {
     props.setOpenReportModal(false);
   };
+
+  const handleSubmitReport = async () => {
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/report`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }, 
+        credentials: 'include', 
+        body: JSON.stringify({
+          sender: props.user_id,
+          post: post_id,
+          body: body
+        })
+      })
+      const data = await res.json()
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Modal
@@ -197,6 +218,7 @@ function ReportModal(props) {
           size="small"
           placeholder="Type here..."
           style={{marginBottom: 16}}
+          onChange={(e) => setBody(e.target.value)}
         />
         <div className={classes.buttonsContainer}>
           <Button
@@ -210,10 +232,10 @@ function ReportModal(props) {
           <Button
             color="primary"
             variant="contained"
+            onClick={handleSubmitReport}
           >
             Submit
           </Button>
-          
         </div>
       </div>
     </Modal>
