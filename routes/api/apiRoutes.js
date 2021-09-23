@@ -10,10 +10,12 @@ const sendMail = require('../../utils/nodemailer');
 const userRoutes = require('./user/userRoutes');
 const postRoutes = require('./post/postRoutes');
 const negotiationRoutes = require('./negotiation/negotiationRoutes');
+const reportRoutes = require('./report/reportRoutes');
 
 router.use('/user', userRoutes);
 router.use('/post', postRoutes);
 router.use('/negotiation', negotiationRoutes);
+router.use('/report', reportRoutes);
 
 router.post('/recaptcha', async (req, res) => {
   const token = req.body.token;

@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'flex-end'
-  }
+  },
 }));
 
 const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
@@ -162,26 +162,38 @@ function ReportModal(props) {
   const classes = useStyles();
 
   const [body, setBody] = useState('');
+  const [showSubmission, setShowSubmission] = useState(false);
 
   const handleClose = () => {
+    setBody('');
     props.setOpenReportModal(false);
+    setShowSubmission(false);
   };
 
+  const [isSending, setIsSending] = useState(false);
   const handleSubmitReport = async () => {
-
+    if (isSending) return;
+    if (body.trim() === '') {
+      setBody('');
+      return;
+    }
     try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/report`, { 
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/report/`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }, 
         credentials: 'include', 
         body: JSON.stringify({
           sender: props.user_id,
-          post: post_id,
+          post: props.post_id,
           body: body
         })
-      })
+      });
       const data = await res.json()
-      console.log(data);
+      if (data.message === 'report sent') {
+        setBody('');
+        setShowSubmission(true);
+        setIsSending(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -195,48 +207,79 @@ function ReportModal(props) {
       disableEnforceFocus 
     >
       <div className={classes.paper}>
-        <Typography 
-          variant="h6"
-          style={{textAlign: 'center'}}
-          gutterBottom
-        >
-          Report
-        </Typography>
-        <Divider /> 
-        <Typography 
-          variant="subtitle1"
-          style={{fontSize: '.85rem', marginTop: 16}}
-          gutterBottom
-        >
-          Tell us what's wrong with this post.
-        </Typography>
-        <TextField
-          multiline
-          rows={4}
-          variant="outlined"
-          fullWidth
-          size="small"
-          placeholder="Type here..."
-          style={{marginBottom: 16}}
-          onChange={(e) => setBody(e.target.value)}
-        />
-        <div className={classes.buttonsContainer}>
-          <Button
-            color="primary"
+        { !showSubmission && <div>
+          <Typography 
+            variant="h6"
+            style={{textAlign: 'center'}}
+            gutterBottom
+          >
+            Report
+          </Typography>
+          <Divider /> 
+          <Typography 
+            variant="subtitle1"
+            style={{fontSize: '.85rem', marginTop: 16}}
+            gutterBottom
+          >
+            Tell us what's wrong with this post.
+          </Typography>
+          <TextField
+            multiline
+            rows={4}
             variant="outlined"
-            style={{marginRight: 16}}
-            onClick={handleClose}
+            fullWidth
+            size="small"
+            placeholder="Type here..."
+            style={{marginBottom: 16}}
+            onChange={(e) => setBody(e.target.value)}
+            value={body}
+          />
+          <div className={classes.buttonsContainer}>
+            <Button
+              color="primary"
+              variant="outlined"
+              style={{marginRight: 16}}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={handleSubmitReport}
+            >
+              Submit
+            </Button>
+          </div>
+        </div> }
+        { showSubmission && <div className={classes.paper2}>
+          <Typography 
+            variant="h6"
+            style={{textAlign: 'center'}}
+            gutterBottom
           >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleSubmitReport}
-          >
-            Submit
-          </Button>
-        </div>
+            Report Sent
+          </Typography>
+          <Divider /> 
+          <Typography
+            variant="subtitle1"
+            style={{marginTop: 16, marginBottom: 16}}
+          > 
+            Thank you for providing us your feedback.
+          </Typography>
+          <div className={classes.buttonsContainer}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                handleClose();
+                setShowSubmission(false);
+              }}
+            >
+              Done
+            </Button>
+          </div>
+        </div> }
       </div>
     </Modal>
   )
