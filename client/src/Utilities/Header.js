@@ -19,10 +19,11 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonIcon from '@material-ui/icons/Person';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import Divider from '@material-ui/core/Divider';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import MessageIcon from '@material-ui/icons/Message';
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
+import StorefrontIcon from '@material-ui/icons/Storefront';
 
 import { UserContext } from '../Context/UserContext';
 
@@ -205,9 +206,21 @@ const Header = (props) => {
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
-                            <PersonIcon />
+                            <PersonOutlinedIcon />
                           </ListItemIcon>
                           <ListItemText primary="My Profile" />
+                        </ListItem>
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <StorefrontIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Marketplace" />
                         </ListItem>
                         <ListItem 
                           onClick={toggleAccountPopper}
@@ -217,7 +230,7 @@ const Header = (props) => {
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
-                            <MessageIcon />
+                            <MessageOutlinedIcon />
                           </ListItemIcon>
                           <ListItemText primary="Negotiations" />
                         </ListItem>
@@ -229,7 +242,7 @@ const Header = (props) => {
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
-                            <BookmarkIcon />
+                            <BookmarkBorderOutlinedIcon />
                           </ListItemIcon>
                           <ListItemText primary="Saved Items" />
                         </ListItem>
