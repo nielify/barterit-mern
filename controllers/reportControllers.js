@@ -6,6 +6,6 @@ module.exports.report_post = async (req, res) => {
 }
 
 module.exports.allReports_get = async (req, res) => {
-  const allReports = await Report.find();
-  console.log(allReports);
+  const allReports = await Report.find().populate('post').populate('sender').exec();
+  res.send({ allReports });
 }
