@@ -27,8 +27,8 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
   }
 
   const handleActiveChat = (id) => {
-    //close negotiation list
-    handleCollapseButtons();
+    //close negotiation list if in mobile size
+    if (matches) handleCollapseButtons();
 
     //onLoader
     setMessageLoader(true);
