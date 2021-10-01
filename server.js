@@ -72,8 +72,8 @@ io.on("connection", socket => {
 
   socket.on('join-chat', async (data) => {
     socket.join(data.negotiation_id);
-    const negotiation = await Negotiation.findOne({ _id: data.negotiation_id });
-    io.in(data.negotiation_id).emit('update-chat', negotiation.conversation);
+    const negotiation = await Negotiation.findOne({ _id: data.negotiation_id }).populate('post').populate('owner').populate('notOwner').exec();
+    io.in(data.negotiation_id).emit('update-chat', negotiation);
   });
 
   socket.on('chat', async (data) => {
