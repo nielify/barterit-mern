@@ -10,7 +10,7 @@ import ChatBox from './ChatBox/ChatBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 'calc(100vh - 64px)',
+    height: 'calc(100vh - 64px - 54px)',
     display: 'flex',
   }
 }));
