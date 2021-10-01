@@ -10,8 +10,6 @@ import Typography from '@material-ui/core/Typography';
 
 import SendIcon from '@material-ui/icons/Send';
 
-import image from '../../../Images/ara_merillo.jpg'
-
 const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom }) => {
   const classes = useStyles();
 
@@ -90,6 +88,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           placeholder="Aa"
           fullWidth
           className={classes.textField}
+          onClick={() => scrollToBottom('smooth')}
           onChange={handleTextChange}
           onKeyDown={handleTextEnter}
           value={text}
