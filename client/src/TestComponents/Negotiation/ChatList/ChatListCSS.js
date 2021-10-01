@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2,0,2,1),
     margin: theme.spacing(0, 2),
     height: '4%',
-    borderBottom: 'solid 2px #bbb'
+    borderBottom: 'solid 2px #eee'
   },  
   list: {
     maxHeight: '91%',

@@ -8,8 +8,8 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: 'solid 2px #bbb',
     display: 'flex',
     flexDirection: 'column',
-    paddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(0),
+    paddingLeft: theme.spacing(0),
     paddingBottom: theme.spacing(1),
     overflow: 'hidden',
     height: 'calc(100vh - 64px)',
@@ -20,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
     width: '98.5%',
     border: 0,
     paddingLeft: theme.spacing(2),
+  },
+  infoBox: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(1.5),
+    borderBottom: 'solid 2px #eee'
+  },
+  title: {
+    display: 'flex',
+    flexFlow: 'column',
+    
   },
   messageBox: {
     display: 'flex',
@@ -65,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputBox: {
     display: 'flex',
+    padding: theme.spacing(0, 1.5),
   },
   textField: {
     [`& fieldset`]: {

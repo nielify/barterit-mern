@@ -4,8 +4,13 @@ import useStyles from './ChatBoxCSS';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 import SendIcon from '@material-ui/icons/Send';
+
+import image from '../../../Images/ara_merillo.jpg'
 
 const ChatBox = ({ matches, conversation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom }) => {
   const classes = useStyles();
@@ -51,6 +56,22 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
 
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
+      
+      <div className={classes.infoBox}>
+        <AvatarGroup max={2} style={{marginRight: 8}}>
+          <Avatar src={image}></Avatar>
+          <Avatar>J</Avatar>
+        </AvatarGroup>
+        <div className={classes.title}>
+          <Typography variant="body1" style={{fontWeight: 'bold', fontSize: '.95rem'}}>
+            Jordan 1 "Pollen"
+          </Typography>
+          <Typography variant="subtitle2" style={{fontWeight: 'normal', fontSize: '.8rem', lineHeight: '1rem'}}>
+            Raven Klisser Orillaza
+          </Typography>
+        </div>
+        
+      </div>
       <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (
