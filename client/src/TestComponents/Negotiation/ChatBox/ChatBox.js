@@ -59,15 +59,15 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
     >
       {negotiation && <div className={classes.infoBox}>
         <AvatarGroup max={2} style={{marginRight: 8}}>
-        <Avatar src={negotiation.post.images[0] ? negotiation.post.images[0] : '' } />
-        <Avatar src={user._id !== negotiation.owner._id ? negotiation.owner.profilePicture : negotiation.notOwner.profilePicture} />
+          <Avatar src={user._id !== negotiation.owner._id ? negotiation.owner.profilePicture : negotiation.notOwner.profilePicture} />
+          <Avatar src={negotiation.post.images[0] ? negotiation.post.images[0] : '' } />
         </AvatarGroup>
         <div className={classes.title}>
           <Typography variant="body1" style={{fontWeight: 'bold', fontSize: '.95rem'}}>
-            { negotiation.name }
+          { user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}`}
           </Typography>
           <Typography variant="subtitle2" style={{fontWeight: 'normal', fontSize: '.8rem', lineHeight: '1rem'}}>
-            { user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}`}
+            { negotiation.name }
           </Typography>
         </div>
       </div>}
