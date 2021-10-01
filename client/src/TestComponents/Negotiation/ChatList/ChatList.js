@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader }) => {
   const classes = useStyles();
   
   const [ user ] = useContext(UserContext);
@@ -27,6 +27,9 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
   }
 
   const handleActiveChat = (id) => {
+    //onLoader
+    setMessageLoader(true);
+
     //clear chatbox
     setNegotiation(null);
     setConversation(null);
@@ -44,10 +47,10 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
 
     //update the conversation messages based on the negotiation's conversation
     socketRef.current.on('update-chat', (negotiation) => {
-      console.log(negotiation);
       setNegotiation(negotiation);
       setConversation(negotiation.conversation);
       scrollToBottom('auto');
+      setMessageLoader(false);
     });
 
     setTimeout(() => {

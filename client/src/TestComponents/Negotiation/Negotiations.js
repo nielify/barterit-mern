@@ -28,6 +28,8 @@ const Negotiations = () => {
   const socketRef = useRef(null);
   const bottomRef = useRef();
 
+  const [messageLoader, setMessageLoader] = useState(false);
+
   const scrollToBottom = (behavior) => {
     bottomRef.current.scrollIntoView({ behavior });
   }
@@ -60,6 +62,7 @@ const Negotiations = () => {
         activeChat={activeChat}
         setActiveChat={setActiveChat}
         scrollToBottom={scrollToBottom}
+        setMessageLoader={setMessageLoader}
       />
       <ChatBox 
         matches={matches} 
@@ -72,6 +75,7 @@ const Negotiations = () => {
         activeChat={activeChat}
         bottomRef={bottomRef}
         scrollToBottom={scrollToBottom}
+        messageLoader={messageLoader}
       />
     </div>
   );

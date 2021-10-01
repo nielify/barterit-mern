@@ -7,10 +7,11 @@ import Paper from '@material-ui/core/Paper';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import SendIcon from '@material-ui/icons/Send';
 
-const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom }) => {
+const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -97,16 +98,37 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
       </div>}
-      {!negotiation && <div className={classes.systemMessage}>
-        <Typography
-          variant="body2"
-          style={{fontSize: '1rem'}}
-        >
-          Select a Conversation
-        </Typography>
-      </div>}
+      {!negotiation && !messageLoader && <SelectConversationMessage />}
+      {messageLoader && <Loader />}
     </div>
   );
+}
+
+function SelectConversationMessage() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.systemMessage}>
+      <Typography
+        variant="body2"
+        style={{fontSize: '1rem'}}
+      >
+        Select a Conversation
+      </Typography>
+    </div>
+  )
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
 }
  
 export default ChatBox;
