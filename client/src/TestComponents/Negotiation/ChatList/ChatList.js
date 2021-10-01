@@ -15,7 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader, height }) => {
   const classes = useStyles();
   
   const [ user ] = useContext(UserContext);
@@ -68,7 +68,10 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
   return (
     <div 
       className={`${classes.root} ${!collapseButtons ? '' : classes.chatlistClose}`}
-      style={{boxShadow: matches ? '-3px 5px 10px 0px #444' : '',}}
+      style={{
+        boxShadow: matches ? '-3px 5px 10px 0px #444' : '',
+        height: `calc(${height}px - 64px)`
+      }}
     >
       {matches && <div className={classes.arrowIcon}>
         <IconButton size='small' onClick={handleCollapseButtons}>

@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden',
-    height: 'calc(100vh - 64px)',
   },
   mobile: {
     position: 'absolute',

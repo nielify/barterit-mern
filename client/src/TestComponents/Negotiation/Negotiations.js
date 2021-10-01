@@ -20,6 +20,21 @@ const Negotiations = () => {
   const classes = useStyles();
   const matches = useMediaQuery('(max-width:960px)');
 
+  //for window height
+  const heightRef = useRef(window.innerHeight);
+  const [height, setHeight] = useState(heightRef.current);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setHeight(window.innerHeight)
+    });
+
+    return () => {
+      window.removeEventListener('resize', () => {});
+      if (socketRef.current) socketRef.current.disconnect();
+    }
+  },[]);
+
   const [user, setUser] = useContext(UserContext);
   const [negotiations, setNegotiations] = useState([]);
   const [conversation, setConversation] = useState(null);
@@ -52,7 +67,7 @@ const Negotiations = () => {
   }, [user]);
 
   return (
-    <div className={classes.root} /* style={{height: `calc(${height}px - 64px)`}} */>
+    <div className={classes.root} style={{height: `calc(${height}px - 64px)`}}>
       <ChatList 
         matches={matches} 
         negotiations={negotiations} 
@@ -63,6 +78,7 @@ const Negotiations = () => {
         setActiveChat={setActiveChat}
         scrollToBottom={scrollToBottom}
         setMessageLoader={setMessageLoader}
+        height={height}
       />
       <ChatBox 
         matches={matches} 
@@ -76,6 +92,7 @@ const Negotiations = () => {
         bottomRef={bottomRef}
         scrollToBottom={scrollToBottom}
         messageLoader={messageLoader}
+        height={height}
       />
     </div>
   );

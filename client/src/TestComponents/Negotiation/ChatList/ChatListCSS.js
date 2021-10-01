@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     padding: 0,
     background: '#fff',
-    height: 'calc(100vh - 64px)',
     transition: 'transform 0.3s ease-out',
     zIndex: 9,
   },

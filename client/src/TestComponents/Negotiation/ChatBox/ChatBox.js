@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import SendIcon from '@material-ui/icons/Send';
 
-const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader }) => {
+const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader, height }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -54,7 +54,9 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
   }, [socketRef.current]);
 
   return (  
-    <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
+    <div className={`${classes.root} ${matches ? classes.mobile : ''}`} 
+      style={{height: `calc(${height}px - 64px)`}}
+    >
       {negotiation && <div className={classes.infoBox}>
         <AvatarGroup max={2} style={{marginRight: 8}}>
         <Avatar src={negotiation.post.images[0] ? negotiation.post.images[0] : '' } />
