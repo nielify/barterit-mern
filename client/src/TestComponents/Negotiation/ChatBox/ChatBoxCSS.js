@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: 'solid 2px #bbb',
     display: 'flex',
     flexDirection: 'column',
-    paddingRight: theme.spacing(0),
-    paddingLeft: theme.spacing(0),
-    paddingBottom: theme.spacing(1),
     overflow: 'hidden',
     height: 'calc(100vh - 64px)',
   },
@@ -30,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     display: 'flex',
     flexFlow: 'column',
-    
   },
   messageBox: {
     display: 'flex',
@@ -77,11 +73,18 @@ const useStyles = makeStyles((theme) => ({
   inputBox: {
     display: 'flex',
     padding: theme.spacing(0, 1.5),
+    marginBottom: theme.spacing(1),
   },
   textField: {
     [`& fieldset`]: {
       borderRadius: 20,
     },
+  },
+  systemMessage: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%'
   }
 }));
 

@@ -24,6 +24,7 @@ const Negotiations = () => {
   const [negotiations, setNegotiations] = useState([]);
   const [conversation, setConversation] = useState(null);
   const [activeChat, setActiveChat] = useState('');
+  const [negotiation, setNegotiation] = useState(null);
   const socketRef = useRef(null);
   const bottomRef = useRef();
 
@@ -55,6 +56,7 @@ const Negotiations = () => {
         negotiations={negotiations} 
         socketRef={socketRef} 
         setConversation={setConversation}
+        setNegotiation={setNegotiation}
         activeChat={activeChat}
         setActiveChat={setActiveChat}
         scrollToBottom={scrollToBottom}
@@ -62,6 +64,7 @@ const Negotiations = () => {
       <ChatBox 
         matches={matches} 
         conversation={conversation} 
+        negotiation={negotiation}
         setConversation={setConversation}
         socketRef={socketRef} 
         user={user} 

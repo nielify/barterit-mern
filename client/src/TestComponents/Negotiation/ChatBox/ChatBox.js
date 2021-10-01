@@ -12,7 +12,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 import image from '../../../Images/ara_merillo.jpg'
 
-const ChatBox = ({ matches, conversation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom }) => {
+const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -56,23 +56,21 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
 
   return (  
     <div className={`${classes.root} ${matches ? classes.mobile : ''}`} >
-      
-      <div className={classes.infoBox}>
+      {negotiation && <div className={classes.infoBox}>
         <AvatarGroup max={2} style={{marginRight: 8}}>
-          <Avatar src={image}></Avatar>
-          <Avatar>J</Avatar>
+        <Avatar src={negotiation.post.images[0] ? negotiation.post.images[0] : '' } />
+        <Avatar src={user._id !== negotiation.owner._id ? negotiation.owner.profilePicture : negotiation.notOwner.profilePicture} />
         </AvatarGroup>
         <div className={classes.title}>
           <Typography variant="body1" style={{fontWeight: 'bold', fontSize: '.95rem'}}>
-            Jordan 1 "Pollen"
+            { negotiation.name }
           </Typography>
           <Typography variant="subtitle2" style={{fontWeight: 'normal', fontSize: '.8rem', lineHeight: '1rem'}}>
-            Raven Klisser Orillaza
+            { user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}`}
           </Typography>
         </div>
-        
-      </div>
-      <div className={classes.messageBox}>
+      </div>}
+      {negotiation && <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (
           <div key={message._id} className={classes.messageContainer} style={{justifyContent: message.sender_id === user._id ? 'flex-end' : 'flex-start'}}>
@@ -82,8 +80,8 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
           </div>  
         ))}
         <div className={classes.dummydivBottom} ref={bottomRef}></div>
-      </div>
-      <div className={classes.inputBox}>
+      </div>}
+      {negotiation && <div className={classes.inputBox}>
         <TextField
           multiline
           rowsMax={4}
@@ -99,7 +97,15 @@ const ChatBox = ({ matches, conversation, setConversation, socketRef, user, acti
         <IconButton size="small" style={{marginLeft: 8}} onClick={handleTextSend} >
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
-      </div>
+      </div>}
+      {!negotiation && <div className={classes.systemMessage}>
+        <Typography
+          variant="body2"
+          style={{fontSize: '1rem'}}
+        >
+          Select a Conversation
+        </Typography>
+      </div>}
     </div>
   );
 }

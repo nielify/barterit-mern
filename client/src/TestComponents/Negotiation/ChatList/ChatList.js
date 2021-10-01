@@ -15,10 +15,9 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation, activeChat, setActiveChat, scrollToBottom }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom }) => {
   const classes = useStyles();
   
-
   const [ user ] = useContext(UserContext);
 
   //button
@@ -28,6 +27,10 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, activeCha
   }
 
   const handleActiveChat = (id) => {
+    //clear chatbox
+    setNegotiation(null);
+    setConversation(null);
+
     //clear socket when selecting negotiations
     if (socketRef.current) socketRef.current.disconnect();
     socketRef.current = null;
@@ -40,8 +43,10 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, activeCha
     socketRef.current.emit('join-chat', {negotiation_id: id, user_id: user._id});
 
     //update the conversation messages based on the negotiation's conversation
-    socketRef.current.on('update-chat', (conversation) => {
-      setConversation(conversation);
+    socketRef.current.on('update-chat', (negotiation) => {
+      console.log(negotiation);
+      setNegotiation(negotiation);
+      setConversation(negotiation.conversation);
       scrollToBottom('auto');
     });
 
