@@ -70,8 +70,7 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
     })
     .then(res => res.json())
     .then(data => {
-      //history.push(`/negotiation/${data.negotiation_id}`);
-      console.log(data);
+      history.push(`/negotiations`);
     })
     .catch(err => {
       console.log(err);
