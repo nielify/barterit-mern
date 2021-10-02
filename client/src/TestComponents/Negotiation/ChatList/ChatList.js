@@ -11,11 +11,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader, height }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader, height, loading }) => {
   const classes = useStyles();
   
   const [ user ] = useContext(UserContext);
@@ -87,7 +88,7 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
       >
         Negotiations
       </Typography>
-      <List component="nav" className={classes.list}>
+      {!loading && <List component="nav" className={classes.list}>
         {negotiations.map((negotiation) => (
           <ListItem 
             button 
@@ -102,14 +103,27 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
               <Avatar alt={negotiation.name} src={negotiation.post.images[0]} className={classes.avatar} />
             </ListItemIcon>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-              <Typography variant="body1" style={{fontWeight: '500',fontSize: '.9rem', color: negotiation.owner._id === user._id ? '#009688' : ''}}>{negotiation.name.length > 21 ? `${negotiation.name.substring(0,20)}...` : negotiation.name }</Typography>
-              <Typography variant="subtitle2" style={{fontWeight: 'normal',fontSize: '.8rem'}}>{ user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}` }</Typography>
+              <Typography variant="body1" style={{fontWeight: '500',fontSize: '.9rem'}}>{ user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}` }</Typography>
+              <Typography variant="subtitle2" style={{fontWeight: 'normal',fontSize: '.8rem',  color: negotiation.owner._id === user._id ? '#009688' : ''}}>{negotiation.name.length > 21 ? `${negotiation.name.substring(0,20)}...` : negotiation.name }</Typography>
             </div>
           </ListItem>
         ))}
-      </List>     
+      </List>}
+      {loading && <Loader />}
     </div>
   );
+}
+
+function Loader() {
+  const classes = useStyles();
+
+  return(
+    <div style={{height: '91%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <CircularProgress 
+        style={{color: '#999'}}
+      />
+    </div>
+  )
 }
 
 export default ChatList;

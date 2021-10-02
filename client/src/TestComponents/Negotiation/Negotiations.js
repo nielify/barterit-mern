@@ -35,6 +35,9 @@ const Negotiations = () => {
     }
   },[]);
 
+  //negotiations loading
+  const [loading, setLoading] = useState(true);
+
   const [user, setUser] = useContext(UserContext);
   const [negotiations, setNegotiations] = useState([]);
   const [conversation, setConversation] = useState(null);
@@ -58,6 +61,7 @@ const Negotiations = () => {
         .then(res => res.json())
         .then(data => {
           setNegotiations(data);
+          setLoading(false);
         })
         .catch(err => {
           console.log(err);
@@ -79,6 +83,7 @@ const Negotiations = () => {
         scrollToBottom={scrollToBottom}
         setMessageLoader={setMessageLoader}
         height={height}
+        loading={loading}
       />
       <ChatBox 
         matches={matches} 
