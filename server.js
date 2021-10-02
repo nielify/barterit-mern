@@ -78,12 +78,17 @@ io.on("connection", socket => {
 
   socket.on('chat', async (data) => {
     const negotiation = await Negotiation.findOneAndUpdate({_id: data.negotiation_id}, 
-      {$push: { 
-        conversation: {
-          sender_id : data.sender_id,
-          message: data.message
+      {
+        $push: { 
+          conversation: {
+            sender_id : data.sender_id,
+            message: data.message
+          }
+        },
+        $set: {
+          createdAt: Date.now()
         }
-      }},
+    },
       { new: true }
     );
     io.in(data.negotiation_id).emit('chat', negotiation.conversation);

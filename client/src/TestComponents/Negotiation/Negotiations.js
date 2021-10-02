@@ -60,8 +60,10 @@ const Negotiations = () => {
       })
         .then(res => res.json())
         .then(data => {
-          let reverseData = data.reverse();
-          setNegotiations(reverseData);
+          let sortedByDateData = data.sort(function(a,b){
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+          setNegotiations(sortedByDateData);
           setLoading(false);
         })
         .catch(err => {
