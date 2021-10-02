@@ -60,7 +60,8 @@ const Negotiations = () => {
       })
         .then(res => res.json())
         .then(data => {
-          setNegotiations(data);
+          let reverseData = data.reverse();
+          setNegotiations(reverseData);
           setLoading(false);
         })
         .catch(err => {
