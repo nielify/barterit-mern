@@ -31,6 +31,7 @@ import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
 import Report from './Components/Admin/Report/Report';
+import UserVerification from './Components/UserVerification/IDSelection/IDSelection'
 
 //Contexts
 import { UserContext } from './Context/UserContext';
@@ -88,6 +89,9 @@ function App() {
         </Route>
         <Route exact path="/map/:id">
           <Map />
+        </Route>
+        <Route exact path="/user-verification/id-selection">
+          <UserVerification />
         </Route>
         <Route exact path="/upload">
           <Upload />
