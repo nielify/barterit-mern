@@ -15,6 +15,8 @@ import MyProfile from './Components/MyProfile/MyProfile';
 import SavedItems from './Components/SavedItems/SavedItems';
 import User from './Components/User/User';
 import Map from './Components/Map';
+import UserVerification from './Components/UserVerification/IDSelection/IDSelection'
+import IDScan from './Components/UserVerification/IDScan/IDScan';
 import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
@@ -25,13 +27,13 @@ import EmailSent from './Components/ForgotPassword/EmailSent';
 import Expired from './Components/ForgotPassword/Expired';
 import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
 
+
 //test components
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
 import Report from './Components/Admin/Report/Report';
-import UserVerification from './Components/UserVerification/IDSelection/IDSelection'
 
 //Contexts
 import { UserContext } from './Context/UserContext';
@@ -39,6 +41,7 @@ import { CoverContext } from './Context/CoverContext';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -92,6 +95,9 @@ function App() {
         </Route>
         <Route exact path="/user-verification/id-selection">
           <UserVerification />
+        </Route>
+        <Route exact path="/user-verification/id-scan">
+          <IDScan />
         </Route>
         <Route exact path="/upload">
           <Upload />
