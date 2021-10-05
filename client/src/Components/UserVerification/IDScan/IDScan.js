@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import useStyles from './IDScanCSS';
 import Webcam from "react-webcam";
 import useRequireAuth from "../../../CustomHooks/useRequireAuth";
@@ -25,6 +25,21 @@ const IDScan = () => {
     },
     [webcamRef]
   );
+
+  useEffect(() => {
+    navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia
+    );
+
+    navigator.getMedia({video: true}, 
+      () => alert(`There's camera in this device`) , 
+      () => alert(`There's no camera in this device`)
+    );  
+
+
+  }, []);
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
