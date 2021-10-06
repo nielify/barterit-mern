@@ -71,7 +71,7 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
-      <Webcam
+      {facingMode !== 'environment' && <Webcam
         audio={false}
         height={500}
         ref={webcamRef}
@@ -81,9 +81,8 @@ const IDScan = () => {
           ...videoConstraints,
           facingMode
         }}
-        style={{border: 'solid 1px red'}}
-      />
-      <h1>test title</h1>
+      />}
+      {facingMode !== 'environment' && <div style={{height: 500, width: 500, border: 'solid 1px red'}}>Loading camera..</div>}
       <button onClick={capture}>Capture photo</button>
       <button onClick={switchCamera}>Switch Camera</button>
       <NoCameraModal open={noCameraModalOpen} setOpen={setNoCameraModalOpen} />

@@ -5,7 +5,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    border: 'solid 2px blue'
   },
   modal: {
     display: 'flex',
