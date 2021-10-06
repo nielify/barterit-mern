@@ -56,11 +56,7 @@ const IDScan = () => {
     );
 
     navigator.getMedia({video: true}, 
-      () => {
-        setTimeout(() => {
-          switchCamera();
-        }, 500)
-      } , 
+      () => console.log('Camera Detected') , 
       () => {
         setTimeout(() => {
           setNoCameraModalOpen(true);
