@@ -10,6 +10,9 @@ import Modal from '@material-ui/core/Modal';
 import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import IconButton from "@material-ui/core/IconButton";
+
+import CameraIcon from '@material-ui/icons/Camera';
 
 const WebcamComponent = () => <Webcam />;
 
@@ -76,15 +79,23 @@ const IDScan = () => {
         height={500}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={500}
+        width={400}
         videoConstraints={{
           ...videoConstraints,
           facingMode
         }}
+        
       />}
-      {facingMode !== 'environment' && <div style={{height: 500, width: 500, border: 'solid 1px red'}}>Loading camera..</div>}
-      <button onClick={capture}>Capture photo</button>
-      <button onClick={switchCamera}>Switch Camera</button>
+      {facingMode !== 'environment' && <div style={{height: 500, width: 500, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Typography
+          variant="subtitle2"
+        >
+          Preparing camera...
+        </Typography>  
+      </div>}
+      <IconButton /* onClick={capture} */ style={{background: 'rgb(0, 0, 0, .15)'}}> 
+        <CameraIcon fontSize="large" style={{color: '#009688'}} />      
+      </IconButton>
       <NoCameraModal open={noCameraModalOpen} setOpen={setNoCameraModalOpen} />
     </Container>
   );
