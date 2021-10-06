@@ -16,11 +16,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Popper from '@material-ui/core/Popper';
 import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Divider from '@material-ui/core/Divider';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
-import Divider from '@material-ui/core/Divider';
+import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import StorefrontIcon from '@material-ui/icons/Storefront';
@@ -209,6 +210,18 @@ const Header = (props) => {
                             <PersonOutlinedIcon />
                           </ListItemIcon>
                           <ListItemText primary="My Profile" />
+                        </ListItem>
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/user-verification/id-selection"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <VerifiedUserOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Verify Account" />
                         </ListItem>
                         <ListItem 
                           onClick={toggleAccountPopper}
