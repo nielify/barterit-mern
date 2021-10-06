@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import useStyles from './IDSelectionCSS';
 import useRequireAuth from '../../../CustomHooks/useRequireAuth';
 
@@ -26,27 +27,45 @@ const IDSelection = () => {
       </Typography>
 
       <List component="nav" aria-label="secondary mailbox folders">
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="UMID" />
           <KeyboardArrowRightIcon />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="Driver's License" />
           <KeyboardArrowRightIcon />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="Philhealth Card" />
           <KeyboardArrowRightIcon />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="SSS ID" />
           <KeyboardArrowRightIcon />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="Passport" />
           <KeyboardArrowRightIcon />
         </ListItem>
-        <ListItem button>
+        <ListItem button
+          component={Link}
+          to="/user-verification/id-scan"
+        >
           <ListItemText primary="Voter's ID" />
           <KeyboardArrowRightIcon />
         </ListItem>
