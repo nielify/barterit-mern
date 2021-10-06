@@ -13,10 +13,13 @@ import Button from '@material-ui/core/Button';
 
 const WebcamComponent = () => <Webcam />;
 
+const FACING_MODE_USER = "user";
+const FACING_MODE_ENVIRONMENT = "environment";
+
 const videoConstraints = {
   width: 220,
   height: 200,
-  facingMode: { exact: "environment" }
+  facingMode: FACING_MODE_USER
 };
 
 const IDScan = () => {
@@ -26,6 +29,7 @@ const IDScan = () => {
   const webcamRef = useRef(null);
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
 
   const capture = useCallback(
     () => {
@@ -33,6 +37,15 @@ const IDScan = () => {
     },
     [webcamRef]
   );
+
+  const switchCamera = () => {
+    setFacingMode(
+      prevState =>
+        prevState === FACING_MODE_USER
+          ? FACING_MODE_ENVIRONMENT
+          : FACING_MODE_USER
+    );
+  }
 
   //detect if there's a camera
   useEffect(() => {
@@ -62,11 +75,15 @@ const IDScan = () => {
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         width={500}
-        videoConstraints={videoConstraints}
+        videoConstraints={{
+          ...videoConstraints,
+          facingMode
+        }}
         style={{border: 'solid 1px red'}}
       />
       <h1>test title</h1>
       <button onClick={capture}>Capture photo</button>
+      <button onClick={switchCamera}>Switch Camera</button>
       <NoCameraModal open={noCameraModalOpen} setOpen={setNoCameraModalOpen} />
     </Container>
   );
