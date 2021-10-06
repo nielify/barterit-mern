@@ -19,7 +19,7 @@ const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
   width: 220,
   height: 200,
-  facingMode: FACING_MODE_ENVIRONMENT
+  facingMode: FACING_MODE_USER
 };
 
 const IDScan = () => {
@@ -29,7 +29,7 @@ const IDScan = () => {
   const webcamRef = useRef(null);
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
 
   const capture = useCallback(
     () => {
@@ -56,7 +56,9 @@ const IDScan = () => {
     );
 
     navigator.getMedia({video: true}, 
-      () => console.log('Camera Detected') , 
+      () => {
+        switchCamera();
+      } , 
       () => {
         setTimeout(() => {
           setNoCameraModalOpen(true);
