@@ -29,7 +29,7 @@ const IDScan = () => {
   const webcamRef = useRef(null);
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
 
   const capture = useCallback(
     () => {
