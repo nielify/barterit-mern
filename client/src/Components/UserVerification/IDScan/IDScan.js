@@ -16,7 +16,7 @@ const WebcamComponent = () => <Webcam />;
 const videoConstraints = {
   width: 220,
   height: 200,
-  facingMode: { exact: "environment" }
+  facingMode: "environment"
 };
 
 const IDScan = () => {
