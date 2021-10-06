@@ -57,7 +57,9 @@ const IDScan = () => {
 
     navigator.getMedia({video: true}, 
       () => {
-        switchCamera();
+        setTimeout(() => {
+          switchCamera();
+        }, 500)
       } , 
       () => {
         setTimeout(() => {
@@ -65,8 +67,6 @@ const IDScan = () => {
         }, 500);
       }
     );  
-
-
   }, []);
 
   return (  
