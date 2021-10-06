@@ -71,7 +71,7 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
-      {facingMode !== 'environment' && <Webcam
+      {facingMode === 'environment' && <Webcam
         audio={false}
         height={500}
         ref={webcamRef}
