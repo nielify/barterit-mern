@@ -20,8 +20,8 @@ const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 
 const videoConstraints = {
-  width: 1280,
-  height: 720,
+  width: { ideal: 4096 },
+  height: { ideal: 2160 },
   facingMode: FACING_MODE_USER
 };
 
@@ -62,7 +62,7 @@ const IDScan = () => {
       () => {
         setTimeout(() => {
           switchCamera();
-        }, 3000)
+        }, 500)
       } , 
       () => {
         setTimeout(() => {
@@ -76,10 +76,10 @@ const IDScan = () => {
     <Container maxWidth="lg" className={classes.root}>  
       {facingMode === 'environment' && <Webcam
         audio={false}
-        height={500}
+        height={'80%'}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={400}
+        width={'100%'}
         videoConstraints={{
           ...videoConstraints,
           facingMode
