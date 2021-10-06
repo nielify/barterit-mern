@@ -19,7 +19,7 @@ const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
   width: 220,
   height: 200,
-  facingMode: FACING_MODE_USER
+  facingMode: FACING_MODE_ENVIRONMENT
 };
 
 const IDScan = () => {
