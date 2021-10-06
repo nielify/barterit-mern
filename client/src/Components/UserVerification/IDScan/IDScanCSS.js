@@ -7,6 +7,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     border: 'solid 2px blue'
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing(2),
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3, 4,),
+    borderRadius: 10,
+    width: '30%',
+    minWidth: 250,
+  }
 }));
 
 export default useStyles;
