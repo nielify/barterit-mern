@@ -74,7 +74,7 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
-      {facingMode !== 'environment' && 
+      {facingMode === 'environment' && 
         <Webcam
           forceScreenshotSourceSize={true}
           audio={false}
@@ -90,7 +90,7 @@ const IDScan = () => {
         />
       }
 
-      {facingMode === 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
+      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
         <Typography
           variant="subtitle2"
         >
