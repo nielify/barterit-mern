@@ -5,6 +5,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    height: 'calc(100vh - 64px - 54px)',
+    marginTop: 32,
   },
   modal: {
     display: 'flex',

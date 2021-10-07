@@ -20,8 +20,8 @@ const FACING_MODE_USER = "user";
 const FACING_MODE_ENVIRONMENT = "environment";
 
 const videoConstraints = {
-  width: { ideal: 4096 },
-  height: { ideal: 2160 },
+  width: { ideal: 1280 },
+  height: { ideal: 720 },
   facingMode: FACING_MODE_USER
 };
 
@@ -36,7 +36,7 @@ const IDScan = () => {
 
   const capture = useCallback(
     () => {
-      const imageSrc = webcamRef.current.getScreenshot();
+      const imageSrc = webcamRef.current.getScreenshot({width: 1920, height: 1080});
     },
     [webcamRef]
   );
@@ -74,19 +74,23 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
-      {facingMode === 'environment' && <Webcam
-        audio={false}
-        height={'80%'}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={'100%'}
-        videoConstraints={{
-          ...videoConstraints,
-          facingMode
-        }}
-        
-      />}
-      {facingMode !== 'environment' && <div style={{height: 500, width: 500, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      {facingMode !== 'environment' && 
+        <Webcam
+          forceScreenshotSourceSize={true}
+          audio={false}
+          height={'80%'}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width={'100%'}
+          videoConstraints={{
+            ...videoConstraints,
+            facingMode
+          }}
+          style={{border: 'solid 1px #33ab9f', marginBottom: 32}}
+        />
+      }
+
+      {facingMode === 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
         <Typography
           variant="subtitle2"
         >
