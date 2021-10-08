@@ -73,7 +73,7 @@ const IDScan = () => {
   }, []);
 
   return (  
-    <Container maxWidth="sm" className={classes.root}>  
+    <Container maxWidth="md" className={classes.root}>  
       {facingMode === 'environment' && 
           <Webcam
             forceScreenshotSourceSize={true}
@@ -87,7 +87,7 @@ const IDScan = () => {
               facingMode
             }}
             style={{
-              height: '80%',
+              height: '75%',
               marginBottom: 32,
               marginTop: -7
             }}
