@@ -66,7 +66,7 @@ const IDScan = () => {
       } , 
       () => {
         setTimeout(() => {
-          setNoCameraModalOpen(true);
+          //setNoCameraModalOpen(true);
         }, 500);
       }
     );  
@@ -74,11 +74,11 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="lg" className={classes.root}>  
-      {facingMode === 'environment' && 
+      {facingMode !== 'environment' && 
         <Webcam
           forceScreenshotSourceSize={true}
           audio={false}
-          height={'80%'}
+          height={'85%'}
           ref={webcamRef}
           screenshotFormat="image/jpeg"
           width={'100%'}
@@ -90,7 +90,7 @@ const IDScan = () => {
         />
       }
 
-      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
+      {facingMode === 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34, border: 'solid 1px blue'}}>
         <Typography
           variant="subtitle2"
         >

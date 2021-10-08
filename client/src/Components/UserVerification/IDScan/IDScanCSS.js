@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     height: 'calc(100vh - 64px - 54px)',
-    marginTop: 32,
+    padding: 0,
   },
   modal: {
     display: 'flex',
