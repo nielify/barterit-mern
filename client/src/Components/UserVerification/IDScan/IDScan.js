@@ -73,24 +73,29 @@ const IDScan = () => {
   }, []);
 
   return (  
-    <Container maxWidth="lg" className={classes.root}>  
-      {facingMode !== 'environment' && 
-        <Webcam
-          forceScreenshotSourceSize={true}
-          audio={false}
-          height={'85%'}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={'100%'}
-          videoConstraints={{
-            ...videoConstraints,
-            facingMode
-          }}
-          style={{border: 'solid 1px #33ab9f', marginBottom: 32}}
-        />
+    <Container maxWidth="sm" className={classes.root}>  
+      {facingMode === 'environment' && 
+          <Webcam
+            forceScreenshotSourceSize={true}
+            audio={false}
+            height={1280}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width={720}
+            videoConstraints={{
+              ...videoConstraints,
+              facingMode
+            }}
+            style={{
+              height: '80%',
+              marginBottom: 32,
+              marginTop: -7
+            }}
+          />
+        
       }
 
-      {facingMode === 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34, border: 'solid 1px blue'}}>
+      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34, border: 'solid 1px red'}}>
         <Typography
           variant="subtitle2"
         >
