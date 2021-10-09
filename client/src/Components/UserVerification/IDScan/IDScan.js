@@ -37,7 +37,7 @@ const IDScan = () => {
 
   const capture = useCallback(
     () => {
-      const imageSrc = webcamRef.current.getScreenshot({width: 1920, height: 1080});
+      const imageSrc = webcamRef.current.getScreenshot({width: 1280, height: 720});
       setImage(imageSrc);
     },
     [webcamRef]
@@ -94,10 +94,19 @@ const IDScan = () => {
               marginBottom: 32,
               marginTop: -7
             }}
-          /> : <img src={image} /> 
+          /> : 
+          <img 
+            src={image} 
+            style={{
+              width: '72%',
+              height: '75%',
+              marginBottom: 32,
+              marginTop: -7
+            }} 
+          /> 
       }
 
-      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34, border: 'solid 1px red'}}>
+      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
         <Typography
           variant="subtitle2"
         >
