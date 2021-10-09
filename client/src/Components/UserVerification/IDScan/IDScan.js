@@ -30,6 +30,7 @@ const IDScan = () => {
   const classes = useStyles();
 
   const webcamRef = useRef(null);
+  const [image, setImage] = useState('');
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
@@ -37,6 +38,7 @@ const IDScan = () => {
   const capture = useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot({width: 1920, height: 1080});
+      setImage(imageSrc);
     },
     [webcamRef]
   );
@@ -74,7 +76,7 @@ const IDScan = () => {
 
   return (  
     <Container maxWidth="md" className={classes.root}>  
-      {facingMode === 'environment' && 
+      {facingMode === 'environment' && image == '' ?
           <Webcam
             forceScreenshotSourceSize={true}
             audio={false}
@@ -87,12 +89,12 @@ const IDScan = () => {
               facingMode
             }}
             style={{
+              width: '100%',
               height: '75%',
               marginBottom: 32,
               marginTop: -7
             }}
-          />
-        
+          /> : <img src={image} /> 
       }
 
       {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34, border: 'solid 1px red'}}>
@@ -102,7 +104,7 @@ const IDScan = () => {
           Preparing camera...
         </Typography>  
       </div>}
-      <IconButton /* onClick={capture} */ style={{background: 'rgb(0, 0, 0, .15)'}}> 
+      <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
         <CameraIcon fontSize="large" style={{color: '#009688'}} />      
       </IconButton>
       <NoCameraModal open={noCameraModalOpen} setOpen={setNoCameraModalOpen} />
