@@ -100,7 +100,7 @@ const IDScan = () => {
       } , 
       () => {
         setTimeout(() => {
-          //setNoCameraModalOpen(true);
+          setNoCameraModalOpen(true);
         }, 500);
       }
     );  
@@ -118,7 +118,7 @@ const IDScan = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'green'
+            backgroundColor: '#33ab9f'
         }}
         >
           <Webcam
@@ -143,7 +143,7 @@ const IDScan = () => {
       }
 
       {image != '' && facingMode === 'environment' &&
-        <div style={{width: '100%', height: '75%', marginBottom: 32, backgroundColor: 'red'}}>
+        <div style={{width: '100%', height: '75%', marginBottom: 32, backgroundColor: '#00695f'}}>
           <img 
             src={image} 
             style={{
@@ -156,7 +156,7 @@ const IDScan = () => {
         
       }
 
-      {facingMode !== 'environment' && <div style={{height: '80%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 34}}>
+      {facingMode !== 'environment' && <div style={{height: '75%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 32}}>
         <Typography
           variant="subtitle2"
         >
