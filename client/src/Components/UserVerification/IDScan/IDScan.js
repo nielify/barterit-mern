@@ -52,8 +52,40 @@ const IDScan = () => {
     );
   }
 
-  //detect if there's a camera
+  const focusCamera = () => {
+    //for focusmode
+    navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then(gotMedia)
+    .catch(err => console.error("getUserMedia() failed: ", err));
+  
+    function gotMedia(mediastream) {
+      const video = document.querySelector("video");
+      webcamRef.current.srcObject = mediastream;
+
+      const track = mediastream.getVideoTracks()[0];
+      const capabilities = track.getCapabilities();
+
+      // Check whether focus distance is supported or not.
+      if (!capabilities.focusDistance) {
+        console.log('not focused');
+        return;
+      }
+
+      // Map focus distance to a slider element.
+      track.applyConstraints({
+        advanced: [{
+          focusMode: "manual",
+          focusDistance: 5
+        }]
+      });
+      console.log('focused');
+    };
+    
+  }
+
   useEffect(() => {
+    //for initializing and detecting camera
     navigator.getMedia = ( navigator.getUserMedia || 
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
@@ -90,6 +122,7 @@ const IDScan = () => {
         }}
         >
           <Webcam
+            onClick={focusCamera}
             forceScreenshotSourceSize={true}
             audio={false}
             height={1280}
