@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 'calc(100vh - 64px)',
     padding: 0,
-    overflow: 'hidden',
+    overflow: 'hidden'
+    
   },
   modal: {
     display: 'flex',
