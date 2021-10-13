@@ -125,7 +125,7 @@ const IDScan = () => {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#33ab9f'
-        }}
+          }}
         >
           <Webcam
             onClick={focusCamera}
@@ -185,7 +185,7 @@ const IDScan = () => {
         <Button
           variant="outlined"
           color="primary"
-          style={{marginRight:32}}
+          style={{marginRight:32, width:'30%',}}
           onClick={handleRetake}
         >
           Retake
@@ -194,7 +194,10 @@ const IDScan = () => {
           variant="contained"
           color="primary"
           component={Link}
-          to='/'
+          to='/user-verification/face-scan'
+          style={{
+            width:'30%',
+          }}
         >
           Proceed
         </Button>

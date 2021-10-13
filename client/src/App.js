@@ -17,6 +17,7 @@ import User from './Components/User/User';
 import Map from './Components/Map';
 import UserVerification from './Components/UserVerification/IDSelection/IDSelection'
 import IDScan from './Components/UserVerification/IDScan/IDScan';
+import FaceScan from './Components/UserVerification/FaceScan/FaceScan';
 import Signin from './Components/Signin';
 import Signup from './Components/SignUp/SignUp';
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
@@ -98,6 +99,9 @@ function App() {
         </Route>
         <Route exact path="/user-verification/id-scan">
           <IDScan />
+        </Route>
+        <Route exact path="/user-verification/face-scan">
+          <FaceScan />
         </Route>
         <Route exact path="/upload">
           <Upload />
