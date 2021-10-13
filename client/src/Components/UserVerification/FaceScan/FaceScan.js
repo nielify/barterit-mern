@@ -44,14 +44,14 @@ const FaceScan = () => {
     setImage('');
   }
 
-  const switchCamera = () => {
+  /* const switchCamera = () => {
     setFacingMode(
       prevState =>
         prevState === FACING_MODE_USER
           ? FACING_MODE_ENVIRONMENT
           : FACING_MODE_USER
     );
-  }
+  } */
 
   useEffect(() => {
     //for initializing and detecting camera
@@ -63,9 +63,9 @@ const FaceScan = () => {
 
     navigator.getMedia({video: true}, 
       () => {
-        setTimeout(() => {
+        /* setTimeout(() => {
           switchCamera();
-        }, 500)
+        }, 500) */
       } , 
       () => {
         setTimeout(() => {
@@ -77,7 +77,7 @@ const FaceScan = () => {
 
   return (  
     <Container maxWidth="md" className={classes.root}> 
-      {facingMode === 'environment' && image == '' &&
+      { facingMode === 'user' && image == '' &&
         <div
           style={{
             width: '360px',
@@ -114,15 +114,15 @@ const FaceScan = () => {
         </div>
       }
 
-      {facingMode !== 'environment' && <div style={{height: '360px', width: '360px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 160, marginTop: 32,}}>
+      {/* {facingMode !== 'environment' && <div style={{height: '360px', width: '360px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 160, marginTop: 32,}}>
         <Typography
           variant="subtitle2"
         >
           Preparing camera...
         </Typography>  
-      </div>}
+      </div>} */}
 
-      {image != '' && facingMode === 'environment' &&
+      {image != '' && /* facingMode === 'environment' && */
         <div style={{width: '360px', height: '360px', marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
           <img 
             src={image} 
