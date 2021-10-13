@@ -56,38 +56,6 @@ const IDScan = () => {
     );
   }
 
-  const focusCamera = () => {
-    //for focusmode
-    navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then(gotMedia)
-    .catch(err => console.error("getUserMedia() failed: ", err));
-  
-    function gotMedia(mediastream) {
-      const video = document.querySelector("video");
-      webcamRef.current.srcObject = mediastream;
-
-      const track = mediastream.getVideoTracks()[0];
-      const capabilities = track.getCapabilities();
-
-      // Check whether focus distance is supported or not.
-      if (!capabilities.focusDistance) {
-        console.log('not focused');
-        return;
-      }
-
-      // Map focus distance to a slider element.
-      track.applyConstraints({
-        advanced: [{
-          focusMode: "manual",
-          focusDistance: 5
-        }]
-      });
-      console.log('focused');
-    };
-    
-  }
-
   useEffect(() => {
     //for initializing and detecting camera
     navigator.getMedia = ( navigator.getUserMedia || 
@@ -128,7 +96,6 @@ const IDScan = () => {
           }}
         >
           <Webcam
-            onClick={focusCamera}
             forceScreenshotSourceSize={true}
             audio={false}
             height={1280}
@@ -141,7 +108,8 @@ const IDScan = () => {
             }}
             style={{
               width: '100%',
-              height: '100%'
+              height: '100%',
+              objectFit: 'cover',
             }}
           />
         </div>
@@ -155,11 +123,10 @@ const IDScan = () => {
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'contain'
+              objectFit: 'cover'
             }} 
           /> 
         </div>
-        
       }
 
       {facingMode !== 'environment' && <div style={{height: '75%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 32}}>
