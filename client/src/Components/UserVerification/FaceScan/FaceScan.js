@@ -108,7 +108,7 @@ const FaceScan = () => {
               objectFit: 'cover',
               width: '360px',
               height: '360px',
-              transform: 'scaleX(-1)';
+              transform: 'scaleX(-1)',
             }}
           />
         </div>
