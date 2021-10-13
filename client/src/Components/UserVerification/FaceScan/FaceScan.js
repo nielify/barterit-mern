@@ -90,7 +90,6 @@ const FaceScan = () => {
             alignItems: 'center',
             border: 'solid 5px #009688',
             borderRadius: '50%',
-            
           }}
         >
           <Webcam
@@ -109,6 +108,7 @@ const FaceScan = () => {
               objectFit: 'cover',
               width: '360px',
               height: '360px',
+              transform: 'scaleX(-1)';
             }}
           />
         </div>
