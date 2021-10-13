@@ -43,6 +43,10 @@ const IDScan = () => {
     [webcamRef]
   );
 
+  const handleRetake = () => {
+    setImage('');
+  }
+
   const switchCamera = () => {
     setFacingMode(
       prevState =>
@@ -106,6 +110,8 @@ const IDScan = () => {
     );  
   }, []);
 
+
+
   return (  
     <Container maxWidth="md" className={classes.root}>  
       {facingMode === 'environment' && image == '' &&
@@ -163,9 +169,37 @@ const IDScan = () => {
           Preparing camera...
         </Typography>  
       </div>}
-      <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
+
+      {image == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
         <CameraIcon fontSize="large" style={{color: '#009688'}} />      
-      </IconButton>
+      </IconButton>}
+      
+      {image != '' && <div
+        style={{
+          width:'100%', 
+          display:'flex',
+          justifyContent:'center',
+          marginTop:16
+        }}
+      >
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{marginRight:32}}
+          onClick={handleRetake}
+        >
+          Retake
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          component={Link}
+          to='/'
+        >
+          Proceed
+        </Button>
+      </div>}
+
       <NoCameraModal open={noCameraModalOpen} setOpen={setNoCameraModalOpen} />
     </Container>
   );
