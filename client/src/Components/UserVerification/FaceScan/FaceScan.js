@@ -19,7 +19,7 @@ const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
   width: { ideal: 1280 },
   height: { ideal: 720 },
-  facingMode: FACING_MODE_ENVIRONMENT
+  facingMode: FACING_MODE_USER
 };
 
 const FaceScan = () => {
@@ -44,7 +44,7 @@ const FaceScan = () => {
   const [image, setImage] = useState('');
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
 
   const capture = useCallback(
     () => {
@@ -77,9 +77,9 @@ const FaceScan = () => {
 
     navigator.getMedia({video: true}, 
       () => {
-        setTimeout(() => {
+        /* setTimeout(() => {
           switchCamera();
-        }, 500)
+        }, 500) */
       } , 
       () => {
         setTimeout(() => {
@@ -103,9 +103,6 @@ const FaceScan = () => {
             overflow: 'hidden',
             border: 'solid 5px #009688',
             borderRadius: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
           }}
         >
           <Webcam
@@ -129,13 +126,13 @@ const FaceScan = () => {
         </div>
       }
 
-      {facingMode !== 'user' && <div style={{height: '360px', width: '360px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 160, marginTop: 32,}}>
+      {/* {facingMode !== 'user' && <div style={{width: width * .8, height: width * .8, maxWidth: 420, maxHeight: 420, display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 160, marginTop: 32,}}>
         <Typography
           variant="subtitle2"
         >
           Preparing camera...
         </Typography>  
-      </div>}
+      </div>} */}
 
       {image != '' && /* facingMode === 'environment' && */
         <div style={{width: width * .8, height: width * .8, maxWidth: 420, maxHeight: 420, marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
