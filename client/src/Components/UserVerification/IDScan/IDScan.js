@@ -146,7 +146,7 @@ const IDScan = () => {
           width:'100%', 
           display:'flex',
           justifyContent:'center',
-          marginTop:16
+          marginTop:8
         }}
       >
         <Button
