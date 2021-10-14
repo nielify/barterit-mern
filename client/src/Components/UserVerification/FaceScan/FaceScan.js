@@ -96,11 +96,16 @@ const FaceScan = () => {
           style={{
             width: width * .8,
             height: width * .8,
+            maxWidth: 420,
+            maxHeight: 420,
             marginTop: 32,
             marginBottom: 150,
             overflow: 'hidden',
             border: 'solid 5px #009688',
             borderRadius: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Webcam
@@ -133,7 +138,7 @@ const FaceScan = () => {
       </div>}
 
       {image != '' && /* facingMode === 'environment' && */
-        <div style={{width: width * .8, height: width * .8, marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
+        <div style={{width: width * .8, height: width * .8, maxWidth: 420, maxHeight: 420, marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
           <img 
             src={image} 
             style={{
