@@ -26,6 +26,20 @@ const FaceScan = () => {
   useRequireAuth();
   const classes = useStyles();
 
+  //window height
+  const widthRef = useRef(window.innerWidth);
+  const [width, setWidth] = useState(widthRef.current);
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWidth(window.innerWidth);
+    });
+    
+    return () => {
+      window.removeEventListener('resize', () => {});
+    }
+  },[width]);
+
   const webcamRef = useRef(null);
   const [image, setImage] = useState('');
 
@@ -80,14 +94,11 @@ const FaceScan = () => {
       { facingMode == 'user' && image == '' &&
         <div
           style={{
-            width: '360px',
-            height: '360px',
+            width: width * .8,
+            height: width * .8,
             marginTop: 32,
             marginBottom: 150,
             overflow: 'hidden',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
             border: 'solid 5px #009688',
             borderRadius: '50%',
           }}
@@ -104,10 +115,9 @@ const FaceScan = () => {
               facingMode
             }}
             style={{
-              borderRadius: '50%',
+              width: '100%',
+              height: '100%',
               objectFit: 'cover',
-              width: '360px',
-              height: '360px',
               transform: 'scaleX(-1)',
             }}
           />
@@ -123,12 +133,12 @@ const FaceScan = () => {
       </div>}
 
       {image != '' && /* facingMode === 'environment' && */
-        <div style={{width: '360px', height: '360px', marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
+        <div style={{width: width * .8, height: width * .8, marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
           <img 
             src={image} 
             style={{
-              width: '360px',
-              height: '360px',
+              width: '100%',
+              height: '100%',
               objectFit: 'cover',
               transform: 'scaleX(-1)',
             }} 
