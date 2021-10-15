@@ -135,7 +135,7 @@ const FaceScan = () => {
       </div>} */}
 
       {image != '' && /* facingMode === 'environment' && */
-        <div style={{width: width * .8, height: width * .8, maxWidth: 420, maxHeight: 420, marginBottom: 160, marginTop:32, border: 'solid 5px #009688', borderRadius: '50%', overflow: 'hidden',}}>
+        <div className={classes.capturedImageContainer}>
           <img 
             src={image} 
             style={{
