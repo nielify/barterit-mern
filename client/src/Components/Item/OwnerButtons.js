@@ -43,7 +43,7 @@ const OwnerButtons = () => {
 
   return (  
     <div className={classes.root}>
-      <Button
+      {/* <Button
         color="primary"
         variant="contained"
         fullWidth
@@ -51,14 +51,14 @@ const OwnerButtons = () => {
         style={{marginRight: 16}}
       >
         Edit Post
-      </Button>
+      </Button> */}
       <Button
         color="primary"
         variant="contained"
         fullWidth
         startIcon={ <DeleteIcon /> }
         onClick={handleDeleteConfirmationOpen}
-        style={{padding: '0 30px'}}
+        //style={{padding: '0 30px'}}
       >
         Delete
       </Button>
