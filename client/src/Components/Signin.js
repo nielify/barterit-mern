@@ -17,6 +17,8 @@ import { UserContext } from '../Context/UserContext';
 
 import useRemoveCover from '../CustomHooks/useRemoveCover';
 
+import signinLogo from '../Images/signin-logo.png'
+
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(5),
@@ -104,8 +106,7 @@ const Signin = ({ setShowProgress }) => {
 
   return (
     <Container className={classes.container} maxWidth="xs">
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
+      <Avatar className={classes.avatar} src={signinLogo}>
       </Avatar>
       <Typography className={classes.typography}
         component="h1" 
