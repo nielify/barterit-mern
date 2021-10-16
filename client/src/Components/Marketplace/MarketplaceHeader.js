@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   icons: {
     minWidth: 141,
+    display: 'flex', 
+    justifyContent: 'flex-end'
   },
   icon: {
     color: '#009688'
@@ -101,13 +103,13 @@ const MarketplaceHeader = ({ setOpenCategoryModal, setOpenLocationModal, searchT
             >
               <FontAwesomeIcon icon={faPlus} />
             </IconButton>
-            <IconButton 
+            {/* <IconButton 
               className={classes.icon} 
               onClick={handleOpenLocationModal} 
               //size="small"
             >
               <Icon className="fa fa-map-marker" />
-            </IconButton> 
+            </IconButton>  */}
             <IconButton 
               className={classes.icon} 
               onClick={handleOpenCategoryModal} 

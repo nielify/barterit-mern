@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   typographyCategories: {
-    marginTop: theme.spacing(2.5),
+    //marginTop: theme.spacing(2.5),
   },
   categories: {
     padding: theme.spacing(0, 0),
@@ -223,7 +223,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
         <Grid item xs={12}> 
           <div className={classes.scrollable}>
             <Grid container>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Typography variant="h6" className={classes.typographyFilters}>Filters</Typography>
                 <FormControl fullWidth>
                   <InputLabel>Location</InputLabel>
@@ -246,7 +246,7 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
                     ))}
                   </Select>
                 </FormControl>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>	
                 <Typography variant="h6" className={classes.typographyCategories}>Categories</Typography>
                 <List component="nav" className={classes.categories}>
