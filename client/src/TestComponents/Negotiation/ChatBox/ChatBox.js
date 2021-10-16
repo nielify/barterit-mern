@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useStyles from './ChatBoxCSS';
 
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import SendIcon from '@material-ui/icons/Send';
+import StreetviewIcon from '@material-ui/icons/Streetview';
 
 const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader, height }) => {
   const classes = useStyles();
@@ -83,6 +85,14 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
         <div className={classes.dummydivBottom} ref={bottomRef}></div>
       </div>}
       {negotiation && <div className={classes.inputBox}>
+        <IconButton 
+          size="small" 
+          style={{marginRight: 8}} 
+          component={Link}
+          to={`/map/${negotiation._id}`}
+        >
+          <StreetviewIcon color="primary" fontSize="large" />
+        </IconButton>
         <TextField
           multiline
           rowsMax={4}
