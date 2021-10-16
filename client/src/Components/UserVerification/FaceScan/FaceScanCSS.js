@@ -10,8 +10,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden'
   },
   capturedImageContainer: {
-    width: width * .8, 
-    height: width * .8, 
     maxWidth: 420, 
     maxHeight: 420, 
     marginBottom: 160, 
