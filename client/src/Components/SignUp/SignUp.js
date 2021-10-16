@@ -583,7 +583,7 @@ const Signup = ({ setShowProgress }) => {
                 }
                 label={
                   <Typography variant="subtitle1" className={classes.checkboxLabel}>
-                    I have read and accept the Terms and Conditions and Privacy Policy
+                    I have read and accept the <Link to="/terms-and-conditions" style={{textDecoration:'none',color: '#009688'}}>Terms and Conditions</Link> and Privacy Policy
                   </Typography>
                 }
               /> 

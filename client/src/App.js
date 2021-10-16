@@ -35,6 +35,7 @@ import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
 import Report from './Components/Admin/Report/Report';
+import TermsAndConditions from './Components/TermsAndConditions';
 
 //Contexts
 import { UserContext } from './Context/UserContext';
@@ -141,6 +142,9 @@ function App() {
         </Route>
         <Route exact path="/admin/27092021/reports">
           <Report />
+        </Route>
+        <Route exact path="/terms-and-conditions">
+          <TermsAndConditions />
         </Route>
         <Route path="/*">
           <h2>Error 404: Page Not Found</h2>
