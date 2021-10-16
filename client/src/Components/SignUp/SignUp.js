@@ -462,9 +462,11 @@ const Signup = ({ setShowProgress }) => {
                 //size="small"
                 required
                 fullWidth
-                label="Specific Address"
+                //label="Specific Address"
+                label="Street"
                 type="text"
-                helperText="eg: House number, Street, etc."
+                //helperText="eg: House number, Street, etc."
+                helperText="eg: Purok, Sitio"
                 error={specificAddressError}
                 onChange={(e) => setSpecificAddress(e.target.value)}
               />
