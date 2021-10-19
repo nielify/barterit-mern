@@ -22,7 +22,7 @@ const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
   width: { ideal: 1280 },
   height: { ideal: 720 },
-  facingMode: FACING_MODE_USER
+  facingMode: FACING_MODE_ENVIRONMENT
 };
 
 const FaceScan = () => {
@@ -61,7 +61,7 @@ const FaceScan = () => {
   const [image, setImage] = useState('');
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
 
   const capture = useCallback(
     () => {
@@ -94,9 +94,9 @@ const FaceScan = () => {
 
     navigator.getMedia({video: true}, 
       () => {
-        /* setTimeout(() => {
+        setTimeout(() => {
           switchCamera();
-        }, 500) */
+        }, 500)
       } , 
       () => {
         setTimeout(() => {
