@@ -22,12 +22,15 @@ const FACING_MODE_ENVIRONMENT = "environment";
 const videoConstraints = {
   width: { ideal: 1280 },
   height: { ideal: 720 },
-  facingMode: FACING_MODE_ENVIRONMENT
+  facingMode: FACING_MODE_USER
 };
 
 const FaceScan = () => {
   useRequireAuth();
   const classes = useStyles();
+
+  //refresh
+  const [refresh, setRefresh] = useState(false);
 
   //loader
   const [loader, setLoader] = useState(false);
@@ -61,7 +64,7 @@ const FaceScan = () => {
   const [image, setImage] = useState('');
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState(FACING_MODE_ENVIRONMENT);
+  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
 
   const capture = useCallback(
     () => {
@@ -95,7 +98,7 @@ const FaceScan = () => {
     navigator.getMedia({video: true}, 
       () => {
         setTimeout(() => {
-          switchCamera();
+          setRefresh(!refresh);
         }, 500)
       } , 
       () => {
@@ -104,7 +107,7 @@ const FaceScan = () => {
         }, 500);
       }
     );  
-  }, []);
+  }, [refresh]);
 
   return (  
     <Container maxWidth="md" className={classes.root}> 
