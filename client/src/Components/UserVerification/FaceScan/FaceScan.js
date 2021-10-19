@@ -7,7 +7,7 @@ import useRequireAuth from '../../../CustomHooks/useRequireAuth';
 import Container from "@material-ui/core/Container";
 import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import CameraIcon from '@material-ui/icons/Camera';
 
@@ -25,6 +25,13 @@ const videoConstraints = {
 const FaceScan = () => {
   useRequireAuth();
   const classes = useStyles();
+
+  //loader
+  const [loader, setLoader] = useState(false);
+
+  const handleProceed = () => {
+    setLoader(true);
+  }
 
   //window height
   const widthRef = useRef(window.innerWidth);
@@ -174,8 +181,9 @@ const FaceScan = () => {
         <Button
           variant="contained"
           color="primary"
-          component={Link}
-          to='/user-verification/face-scan'
+          /* component={Link}
+          to='/user-verification/face-scan' */
+          onClick={handleProceed}
           style={{
             width:'30%',
           }}
@@ -184,8 +192,33 @@ const FaceScan = () => {
         </Button>
       </div>}
 
+      {loader && <Loader />}
     </Container>
   );
 }
  
+function Loader() {
+  const classes = useStyles();
+
+  return (
+    <div style={{
+      width: '100vw',
+      height: '100vh',
+      background: 'black',
+      position: 'absolute',
+      opacity: .7,
+      top: 0,
+      left: 0,
+      zIndex: '9999',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      <CircularProgress 
+         style={{color: '#999', marginTop: '-5%'}}
+      />
+    </div>
+  );
+}
+
 export default FaceScan;
