@@ -8,6 +8,9 @@ import Container from "@material-ui/core/Container";
 import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import CameraIcon from '@material-ui/icons/Camera';
 
@@ -31,7 +34,14 @@ const FaceScan = () => {
 
   const handleProceed = () => {
     setLoader(true);
+    setTimeout(() => {
+      setLoader(false);
+      setSuccessModal(true);
+    }, 2000)
   }
+
+  //modal
+  const [successModal, setSuccessModal] = useState(false);
 
   //window height
   const widthRef = useRef(window.innerWidth);
@@ -193,6 +203,7 @@ const FaceScan = () => {
       </div>}
 
       {loader && <Loader />}
+      {successModal && <SuccessModal open={successModal} setOpen={setSuccessModal} />}
     </Container>
   );
 }
@@ -219,6 +230,53 @@ function Loader() {
       />
     </div>
   );
+}
+
+function SuccessModal({ open, setOpen }) {
+  const classes = useStyles();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      disableEnforceFocus 
+    >
+      <div className={classes.paper}>
+          <Typography 
+            variant="h6"
+            style={{textAlign: 'center'}}
+            gutterBottom
+          >
+            Verification request sent
+          </Typography>
+          <Divider /> 
+          <Typography
+            variant="subtitle1"
+            style={{marginTop: 16, marginBottom: 16}}
+          > 
+            You have sent a request for your the validation of your account. BarterIT admin is now reviewing your request.
+          </Typography>
+          <div className={classes.buttonsContainer}>
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              to='/profile'
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Done
+            </Button>
+          </div>
+        </div>
+    </Modal>
+  )
 }
 
 export default FaceScan;
