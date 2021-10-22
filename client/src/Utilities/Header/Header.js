@@ -1,6 +1,8 @@
 import { useHistory, Link } from 'react-router-dom';
 import { useState, useContext, useRef, useEffect } from 'react';
 
+import MessageBadge from './MessageBadge';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,15 +20,15 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
 
+
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
-import { UserContext } from '../Context/UserContext';
+import { UserContext } from '../../Context/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,16 +92,9 @@ const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
   
- /*  //test
-  const appbarHeightRef = useRef();
+  //messageNotification
+  const [messageNotifContent, setMessageNotifContent] = useState(0);
 
-  useEffect(() => {
-    props.setAppbarHeight(appbarHeightRef.current.offsetHeight);
-    window.addEventListener('resize', () => {
-      props.setAppbarHeight(appbarHeightRef.current.offsetHeight);
-    });
-  }, [props.appbarHeight]); */
-  
   const [ user, setUser ] = useContext(UserContext);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
@@ -111,27 +106,6 @@ const Header = (props) => {
   const handleClickAway = () => {
     setAccountAnchorEl(null);
   };
-
-  /* useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/marketplace`, { credentials: 'include' })
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
-        if (data.redirect) {
-          history.push(data.url);
-        }
-        else {
-          //setFirstName(data.firstName);
-          //setProfilePicture(data.profilePicture); 
-        }
-      })
-      .catch(err => {
-        console.log(err.message);
-        history.push('/signin');
-      });
-  }, [history]) */
 
   const handleLogout = async () => { 
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/logout`, { credentials: 'include' }); 
@@ -243,7 +217,7 @@ const Header = (props) => {
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
-                            <MessageOutlinedIcon />
+                            <MessageBadge notifContent={messageNotifContent} />
                           </ListItemIcon>
                           <ListItemText primary="Negotiations" />
                         </ListItem>

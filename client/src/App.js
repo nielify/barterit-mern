@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 //Utilities Components
 import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Utilities/DefaultHeader';
-import Header from './Utilities/Header';
+import Header from './Utilities/Header/Header';
 import LoadingCover from './Utilities/LoadingCover';
 
 //Page Components
