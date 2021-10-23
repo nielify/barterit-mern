@@ -103,8 +103,8 @@ io.on("connection", socket => {
 
     //add notification to receiver from sender
     const user = await User.findOne({ _id: userToNotif });
-    let newNotifications = user.notifications.filter((notif) => notif.sender != data.sender_id);
-    newNotifications.push({ sender: data.sender_id });
+    let newNotifications = user.notifications.filter((notif) => notif.negotiation != data.negotiation && notif.sender != data.sender_id);
+    newNotifications.push({ negotiation: data.negotiation_id, sender: data.sender_id });
     user.notifications = newNotifications;
     const newUser = await user.save();
 

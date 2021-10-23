@@ -67,6 +67,10 @@ const userSchema = mongoose.Schema({
     ref: 'post'
   }],
   notifications: [{
+    negotiation: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'negotiation'
+    },
     sender: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'user'

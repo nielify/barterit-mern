@@ -92,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
+
+  //user
+  const [ user, setUser ] = useContext(UserContext);
   
   //messageNotification
   const [messageNotifContent, setMessageNotifContent] = useState(0);
@@ -112,9 +115,9 @@ const Header = (props) => {
     socketRef.current.on('notif-message', (data) => {
       //alert('new message');
     });
-  }, []);
 
-  const [ user, setUser ] = useContext(UserContext);
+    setMessageNotifContent(user.notifications.length);
+  }, []);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -207,18 +210,6 @@ const Header = (props) => {
                         <ListItem 
                           onClick={toggleAccountPopper}
                           component={Link}
-                          to="/user-verification/id-selection"
-                          button 
-                          className={classes.listItem}
-                        >
-                          <ListItemIcon className={classes.listItemIcon}>
-                            <VerifiedUserOutlinedIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="Verify Account" />
-                        </ListItem>
-                        <ListItem 
-                          onClick={toggleAccountPopper}
-                          component={Link}
                           to="/"
                           button 
                           className={classes.listItem}
@@ -255,6 +246,18 @@ const Header = (props) => {
                       </List>
                       <Divider />
                       <List component="nav">
+                        <ListItem 
+                          onClick={toggleAccountPopper}
+                          component={Link}
+                          to="/user-verification/id-selection"
+                          button 
+                          className={classes.listItem}
+                        >
+                          <ListItemIcon className={classes.listItemIcon}>
+                            <VerifiedUserOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText primary="Verify Account" />
+                        </ListItem>
                         <ListItem 
                           button 
                           className={classes.listItem} 
