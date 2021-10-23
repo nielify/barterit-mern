@@ -20,7 +20,6 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Divider from '@material-ui/core/Divider';
 
-
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
@@ -29,6 +28,8 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
 import { UserContext } from '../../Context/UserContext';
+
+import { io } from "socket.io-client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,6 +95,24 @@ const Header = (props) => {
   
   //messageNotification
   const [messageNotifContent, setMessageNotifContent] = useState(0);
+  const socketRef = useRef(null);
+
+  //onFirstRender
+  useEffect(() => {
+    //create new socket and assign to socketRef
+    const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
+    socketRef.current = newSocket;
+    
+    //join personal room
+    socketRef.current.emit('join-self-room', {
+      user_id: user._id
+    });
+
+    //notif when someone sends a message
+    socketRef.current.on('notif-message', (data) => {
+      alert('new message');
+    });
+  }, []);
 
   const [ user, setUser ] = useContext(UserContext);
 

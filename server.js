@@ -92,10 +92,21 @@ io.on("connection", socket => {
       { new: true }
     );
     io.in(data.negotiation_id).emit('chat', negotiation.conversation);
+
+    console.log(negotiation);
+
+    io.in(data.sender_id).emit('notif-message', { negotiation_id: data.negotiation_id });
   });
 
   // *** FOR NEGOTIATIONS ENDS HERE ***
 
+
+  // *** THIS IS FOR NOTIFICATIONS ***
+  socket.on('join-self-room', (data) => {
+    socket.join(data.user_id);
+  })
+
+  // *** FOR NOTIFICATIONS ENDS HERE ***
   
 });
 
