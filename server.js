@@ -14,9 +14,12 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const path = require('path');
 
+//models
+const Negotiation = require('./models/Negotiation');
+const { User } = require('./models/User');
+
 //utils
 const upload = require('./utils/multer');
-const Negotiation = require('./models/Negotiation');
 
 //controllers
 const serverController = require('./controllers/serverController');
@@ -93,9 +96,19 @@ io.on("connection", socket => {
     );
     io.in(data.negotiation_id).emit('chat', negotiation.conversation);
 
-    //console.log(negotiation);
+    //get the user to send notification
+    let userToNotif = '';
+    if (data.sender_id != negotiation.owner) userToNotif = negotiation.owner;
+    else if (data.sender_id != negotiation.notOwner) userToNotif = negotiation.notOwner;
 
-    io.in(data.sender_id).emit('notif-message', { negotiation_id: data.negotiation_id });
+    //add notification to receiver from sender
+    const user = await User.findOne({ _id: userToNotif });
+    let newNotifications = user.notifications.filter((notif) => notif.sender != data.sender_id);
+    newNotifications.push({ sender: data.sender_id });
+    user.notifications = newNotifications;
+    const newUser = await user.save();
+
+    //io.in(userToNotif).emit('notif-message', { negotiation_id: data.negotiation_id });
   });
 
   // *** FOR NEGOTIATIONS ENDS HERE ***

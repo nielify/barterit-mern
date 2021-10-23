@@ -66,6 +66,16 @@ const userSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'post'
   }],
+  notifications: [{
+    sender: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'user'
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   isVerified: {
     type:Boolean,
     default: false
