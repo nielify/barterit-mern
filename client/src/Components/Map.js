@@ -142,20 +142,23 @@ const Map = (props) => {
       //get self initial position
       //notificate self
       //emit join-room event
-      navigator.geolocation.getCurrentPosition((pos) => {
-        
-        setPosition([pos.coords.latitude, pos.coords.longitude]);
-        positionRef.current = [pos.coords.latitude, pos.coords.longitude];
-        setCurrentView([pos.coords.latitude, pos.coords.longitude]);
-        setInfoNotifOpen(true);
+      if('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((pos) => {      
+          setPosition([pos.coords.latitude, pos.coords.longitude]);
+          positionRef.current = [pos.coords.latitude, pos.coords.longitude];
+          setCurrentView([pos.coords.latitude, pos.coords.longitude]);
+          setInfoNotifOpen(true);
 
-        newSocket.emit('join-room', { 
-          id: user._id,
-          name: `${user.firstName} ${user.lastName}`,
-          position: positionRef.current,
-          roomId: params.id
-        });
-      }, error => console.log(error), { enableHighAccuracy: true });
+          newSocket.emit('join-room', { 
+            id: user._id,
+            name: `${user.firstName} ${user.lastName}`,
+            position: positionRef.current,
+            roomId: params.id
+          });
+        }, error => console.log(error), { enableHighAccuracy: true });
+      } else {
+        alert('This feature is not supported on your device');
+      }
 
       //watch and update self position
       //emit locationUpdate event if there are other users in map
