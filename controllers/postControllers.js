@@ -1,4 +1,5 @@
 const { Post } = require('../models/Post');
+const Negotiation = require('../models/Negotiation');
 
 const jwt = require('jsonwebtoken');
 const cloudinary = require('../utils/cloudinary');
@@ -22,6 +23,8 @@ module.exports.post_delete = async (req, res) => {
 
   try { 
     const post = await Post.findByIdAndDelete(postId);
+    const negotiations = await Negotiation.deleteMany({post: post._id});
+    console.log(negotiations);
     res.send({ message: 'Success' });
   } catch (err) {
     console.log(err);

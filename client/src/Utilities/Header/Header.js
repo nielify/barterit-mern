@@ -110,7 +110,7 @@ const Header = (props) => {
 
     //notif when someone sends a message
     socketRef.current.on('notif-message', (data) => {
-      alert('new message');
+      //alert('new message');
     });
   }, []);
 

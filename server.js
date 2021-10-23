@@ -93,7 +93,7 @@ io.on("connection", socket => {
     );
     io.in(data.negotiation_id).emit('chat', negotiation.conversation);
 
-    console.log(negotiation);
+    //console.log(negotiation);
 
     io.in(data.sender_id).emit('notif-message', { negotiation_id: data.negotiation_id });
   });
