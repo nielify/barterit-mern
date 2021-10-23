@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
@@ -27,6 +27,7 @@ const Item = () => {
 
   const classes = useStyles();
   const params = useParams();
+  const history = useHistory();
 
   const [ user, setUser ] = useContext(UserContext);
   const [ post, setPost ] = useState({});
@@ -40,7 +41,12 @@ const Item = () => {
     })
     .then(res => res.json())
     .then(data => {
-      setPost(data.post);
+      console.log(data);
+      if (data.message === 'post does not exist') {
+        history.push('/');
+      } else {
+        setPost(data.post);
+      }
     })
     .catch(err => {
       console.log(err);

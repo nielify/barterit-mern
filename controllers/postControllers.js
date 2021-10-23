@@ -12,9 +12,20 @@ module.exports.allPost_get = async (req, res) => {
 
 //get single post 
 module.exports.post_get = async (req, res) => {
-  const postId = req.params.id;
-  const post = await Post.findOne({ _id: postId }).populate('userId').exec();
-  res.send({ post });
+  try {
+    const postId = req.params.id;
+    const post = await Post.findOne({ _id: postId }).populate('userId').exec();
+    if (post) {
+      res.send({ post });
+    }
+    else {
+      res.send({ message: 'post does not exist' })
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({ message: 'error' });
+  }
+  
 }
 
 //delete single post
