@@ -231,3 +231,16 @@ module.exports.changeBackground_post = async (req, res) => {
     }
   });
 }
+
+module.exports.notification_delete = async (req, res) => {
+  const user_id = req.params.user_id;
+  const negotiation_id = req.params.negotiation_id;
+
+  try {
+    const user = await User.findOneAndUpdate({ _id: user_id }, {$pull: { notifications: { negotiation: negotiation_id } }})
+    res.send({ message: 'success' });
+  } catch (err) {
+    res.send({ err });
+  }
+  
+}

@@ -57,6 +57,25 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
       setMessageLoader(false);
     });
 
+    //pop notification
+    user.notifications.forEach((notif) => {
+      if (notif.negotiation === id) {
+        fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/${user._id}/${id}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        })
+          .then(res => res.json())
+          .then(data => {
+            
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    
+
     setTimeout(() => {
       setActiveChat(id);
     }, 300);

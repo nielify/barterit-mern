@@ -119,6 +119,8 @@ io.on("connection", socket => {
     socket.join(data.user_id);
   })
 
+  //popping notification
+
   // *** FOR NOTIFICATIONS ENDS HERE ***
   
 });
