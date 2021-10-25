@@ -27,7 +27,7 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
     setCollapseButtons(!collapseButtons);
   }
 
-  const handleActiveChat = (id) => {
+  const handleActiveChat = async (id) => {
     //close negotiation list if in mobile size
     if (matches) handleCollapseButtons();
 
@@ -57,24 +57,24 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
       setMessageLoader(false);
     });
 
-    //pop notification
+    //pop notification 
     user.notifications.forEach((notif) => {
       if (notif.negotiation === id) {
+        //remove notif on user context
+        user.notifications = user.notifications.filter((notif) => notif.negotiation !== id);
+        //remove notif on user db
         fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/${user._id}/${id}`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
         })
-          .then(res => res.json())
           .then(data => {
-            
           })
           .catch(err => {
             console.log(err);
           });
       }
     });
-    
 
     setTimeout(() => {
       setActiveChat(id);

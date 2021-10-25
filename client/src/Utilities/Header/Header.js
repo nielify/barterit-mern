@@ -97,7 +97,6 @@ const Header = (props) => {
   const [ user, setUser ] = useContext(UserContext);
   
   //messageNotification
-  const [messageNotifContent, setMessageNotifContent] = useState(0);
   const socketRef = useRef(null);
 
   //onFirstRender
@@ -115,8 +114,6 @@ const Header = (props) => {
     socketRef.current.on('notif-message', (data) => {
       //alert('new message');
     });
-
-    setMessageNotifContent(user.notifications.length);
   }, []);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
@@ -227,7 +224,7 @@ const Header = (props) => {
                           className={classes.listItem}
                         >
                           <ListItemIcon className={classes.listItemIcon}>
-                            <MessageBadge notifContent={messageNotifContent} />
+                            <MessageBadge notifContent={user.notifications.length} />
                           </ListItemIcon>
                           <ListItemText primary="Negotiations" />
                         </ListItem>
