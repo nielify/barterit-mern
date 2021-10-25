@@ -112,8 +112,12 @@ const Header = (props) => {
 
     //notif when someone sends a message
     socketRef.current.on('notif-message', (data) => {
-      //alert('new message');
+      console.log(data);
     });
+
+    return () => {
+      if (socketRef.current) socketRef.current.disconnect(); 
+    }
   }, []);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);

@@ -108,7 +108,7 @@ io.on("connection", socket => {
     user.notifications = newNotifications;
     const newUser = await user.save();
 
-    //io.in(userToNotif).emit('notif-message', { negotiation_id: data.negotiation_id });
+    io.in(userToNotif).emit('notif-message', { negotiation_id: data.negotiation_id });
   });
 
   // *** FOR NEGOTIATIONS ENDS HERE ***
