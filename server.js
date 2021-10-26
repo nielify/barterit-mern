@@ -76,9 +76,6 @@ io.on("connection", socket => {
   socket.on('join-chat', async (data) => {
     socket.join(data.negotiation_id, (err) => console.log(err));
     const negotiation = await Negotiation.findOne({ _id: data.negotiation_id }).populate('post').populate('owner').populate('notOwner').exec();
-    //const room = negotiation.owner._id != data.user_id ? negotiation.owner._id : negotiation.notOwner._id;
-    //socket.join(room, (err) => console.log(err));
-
     io.in(data.negotiation_id).emit('update-chat', negotiation);
   });
 
@@ -103,16 +100,7 @@ io.on("connection", socket => {
     let userToNotif = null;
     if (data.sender_id != negotiation.owner) userToNotif = negotiation.owner;
     else if (data.sender_id != negotiation.notOwner) userToNotif = negotiation.notOwner;
-    //console.log(userToNotif);
     
-    socket.to('fuckingroom123').emit('notif-message', { negotiation_id: data.negotiation_id });
-    
-
-    //io.in(userToNotif).emit('notif-message', { negotiation_id: data.negotiation_id });
-    //socket.broadcast.emit('notif-message', { negotiation_id: data.negotiation_id });
-    //socket.join(userToNotif);
-    
-
     //add notification to receiver from sender
     try {
       const user = await User.findOne({ _id: userToNotif });
@@ -120,9 +108,15 @@ io.on("connection", socket => {
       newNotifications.push({ negotiation: data.negotiation_id, sender: data.sender_id });
       user.notifications = newNotifications;
       const newUser = await user.save();
+      //const newNotification = newUser.notifications[newUser.notifications.length - 1];
+
+      //send notification event
+      io.in(userToNotif.toString()).emit('notify', newUser);
     } catch (err) {
       console.log(err);
     }
+    
+    
     
   });
 
@@ -130,10 +124,8 @@ io.on("connection", socket => {
 
 
   // *** THIS IS FOR NOTIFICATIONS ***
-  socket.on('join-self-room', (data) => {
-    socket.join('fuckingroom123');
-    //socket.join(data.user_id, (err) => console.log(err));
-    //io.in(data.user_id).emit('join-self-room-success', { message: 'joined self room!' });
+  socket.on('join-self', (data) => {
+    socket.join(data.user_id.toString());
   })
 
   //popping notification

@@ -106,17 +106,14 @@ const Header = (props) => {
     socketRef.current = newSocket; 
     
     //join personal room
-    socketRef.current.emit('join-self-room', {
+    socketRef.current.emit('join-self', {
       user_id: user._id
     });
 
     //notif when someone sends a message
-    socketRef.current.on('notif-message', (data) => {
-      alert('received event');
+    socketRef.current.on('notify', (data) => {
+      setUser(data);
     });
-
-    //test event
-    socketRef.current.on('join-self-room-success', data => console.log(data));
 
     return () => {
       if (socketRef.current) socketRef.current.disconnect(); 
