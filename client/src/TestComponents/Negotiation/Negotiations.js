@@ -4,6 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useRequireAuth from '../../CustomHooks/useRequireAuth';
 
 import { UserContext } from '../../Context/UserContext';
+import { ActiveChatContext } from '../../Context/ActiveChatContext';
 
 import ChatList from './ChatList/ChatList';
 import ChatBox from './ChatBox/ChatBox';
@@ -41,7 +42,7 @@ const Negotiations = () => {
   const [user, setUser] = useContext(UserContext);
   const [negotiations, setNegotiations] = useState([]);
   const [conversation, setConversation] = useState(null);
-  const [activeChat, setActiveChat] = useState('');
+  const [activeChat, setActiveChat] = useContext(ActiveChatContext);
   const [negotiation, setNegotiation] = useState(null);
   const socketRef = useRef(null);
   const bottomRef = useRef();

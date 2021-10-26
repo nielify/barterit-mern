@@ -4,10 +4,12 @@ import './index.css';
 import App from './App';
 import { UserProvider } from './Context/UserContext';
 import { CoverProvider } from './Context/CoverContext';
+import { ActiveChatProvider } from './Context/ActiveChatContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
+    <ActiveChatProvider>
     <CoverProvider>
     <UserProvider>
       <Router>
@@ -15,6 +17,7 @@ ReactDOM.render(
       </Router>
     </UserProvider>
     </CoverProvider>
+    </ActiveChatProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
