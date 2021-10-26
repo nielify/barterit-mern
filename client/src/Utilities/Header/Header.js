@@ -103,7 +103,7 @@ const Header = (props) => {
   useEffect(() => {
     //create new socket and assign to socketRef
     const newSocket = io(`${process.env.REACT_APP_SERVER_DOMAIN}`); 
-    socketRef.current = newSocket;
+    socketRef.current = newSocket; 
     
     //join personal room
     socketRef.current.emit('join-self-room', {
@@ -112,13 +112,16 @@ const Header = (props) => {
 
     //notif when someone sends a message
     socketRef.current.on('notif-message', (data) => {
-      console.log(data);
+      console.log('received event');
     });
+
+    //test event
+    socketRef.current.on('join-self-room-success', data => console.log(data));
 
     return () => {
       if (socketRef.current) socketRef.current.disconnect(); 
     }
-  }, []);
+  }, [user]);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
