@@ -129,8 +129,16 @@ io.on("connection", socket => {
   })
 
   //popping notification that does not show on front end
-  socket.on('pop-notif', (notif) => {
-    console.log(notif);
+  socket.on('pop-notif', async (data) => {
+    try {
+      const user = await User.findOne({_id: data.user});
+      const newNotif = user.notifications.filter((notif) => notif.negotiation != data.newNotif.negotiation);
+      user.notifications = newNotif
+      const newUser = await user.save();
+    } catch (err) {
+      console.log(err);
+    }
+    
   })
   
 

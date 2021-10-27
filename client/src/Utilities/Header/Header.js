@@ -118,16 +118,15 @@ const Header = (props) => {
     socketRef.current.on('notify', (data) => { 
       // get the last notification from the array
       const negotiationNotif = data.notifications[data.notifications.length - 1].negotiation; 
+      const newNotif = data.notifications[data.notifications.length - 1]
       
       // update the cached user data(notif data) if the negotiation is not active
       if (negotiationNotif !== activeChat) {
-        console.log(negotiationNotif)
-        console.log(activeChat);
         setUser(data); 
       } 
       else {
         //emit pop event to delete the current notif for active chat
-        socketRef.current.emit('pop-notif', (negotiationNotif)); 
+        socketRef.current.emit('pop-notif', ({user: user._id, newNotif})); 
       }   
     });
 
