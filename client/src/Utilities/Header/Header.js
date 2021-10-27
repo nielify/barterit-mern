@@ -28,6 +28,7 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import StorefrontIcon from '@material-ui/icons/Storefront';
 
 import { UserContext } from '../../Context/UserContext';
+import { ActiveChatContext } from '../../Context/ActiveChatContext';
 
 import { io } from "socket.io-client";
 
@@ -95,6 +96,9 @@ const Header = (props) => {
 
   //user
   const [ user, setUser ] = useContext(UserContext);
+
+  //active chat
+  const [activeChat, setActiveChat] = useContext(ActiveChatContext);
   
   //messageNotification
   const socketRef = useRef(null);
@@ -111,14 +115,26 @@ const Header = (props) => {
     });
 
     //notif when someone sends a message
-    socketRef.current.on('notify', (data) => {
-      setUser(data);
+    socketRef.current.on('notify', (data) => { 
+      // get the last notification from the array
+      const negotiationNotif = data.notifications[data.notifications.length - 1].negotiation; 
+      
+      // update the cached user data(notif data) if the negotiation is not active
+      if (negotiationNotif !== activeChat) {
+        console.log(negotiationNotif)
+        console.log(activeChat);
+        setUser(data); 
+      } 
+      else {
+        //emit pop event to delete the current notif for active chat
+        socketRef.current.emit('pop-notif', (negotiationNotif)); 
+      }   
     });
 
     return () => {
       if (socketRef.current) socketRef.current.disconnect(); 
     }
-  }, [user]);
+  }, [user, activeChat]);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 

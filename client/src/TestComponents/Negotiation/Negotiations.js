@@ -74,6 +74,12 @@ const Negotiations = () => {
 
   }, [user]);
 
+  useEffect(() => {
+    return () => {
+      setActiveChat('');
+    }
+  }, [])
+
   return (
     <div className={classes.root} style={{height: `calc(${height}px - 64px)`}}>
       <ChatList 

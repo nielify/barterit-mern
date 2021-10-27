@@ -128,7 +128,11 @@ io.on("connection", socket => {
     socket.join(data.user_id.toString());
   })
 
-  //popping notification
+  //popping notification that does not show on front end
+  socket.on('pop-notif', (notif) => {
+    console.log(notif);
+  })
+  
 
   // *** FOR NOTIFICATIONS ENDS HERE ***
   
