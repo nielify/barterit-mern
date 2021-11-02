@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useStyles from './ChatBoxCSS';
 
-import SellerOptions from './SellerOption';
+import SellerOption from './SellerOption';
+import BuyerOption from './BuyerOption';
 
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -75,7 +76,8 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           </Typography>
         </div>
       </div>}
-      <SellerOptions />
+      {negotiation && negotiation.owner._id === user._id ? <SellerOption negotiation={negotiation} /> : null}
+      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption /> : null}
       {negotiation && <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (
