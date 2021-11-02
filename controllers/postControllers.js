@@ -5,10 +5,16 @@ const jwt = require('jsonwebtoken');
 const cloudinary = require('../utils/cloudinary');
 const { async } = require('crypto-random-string');
 
-//all post (marketplace)
+//all posts (marketplace)
 module.exports.allPost_get = async (req, res) => {
   const allPosts = await Post.find();
   res.send({ allPosts });
+}
+
+//all available posts
+module.exports.availablePost_get = async (req, res) => {
+  const availablePosts = await Post.find({ "status": { "$ne": 'bartered' } });
+  res.send({ availablePosts });
 }
 
 //get single post 

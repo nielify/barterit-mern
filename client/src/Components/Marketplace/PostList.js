@@ -34,14 +34,14 @@ const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setSho
   const classes = useStyles();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/availablePosts`, { 
       headers: { 'Content-Type': 'application/json' }, 
       credentials: 'include', 
     })
     .then(res => res.json())
     .then(data => {
-      if (!data.allPosts[0]) setShowNote(true);
-      setPosts(data.allPosts);
+      if (!data.availablePosts[0]) setShowNote(true);
+      setPosts(data.availablePosts);
       setShowLoader(false);
     })
     .catch(err => {
