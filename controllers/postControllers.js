@@ -3,6 +3,7 @@ const Negotiation = require('../models/Negotiation');
 
 const jwt = require('jsonwebtoken');
 const cloudinary = require('../utils/cloudinary');
+const { async } = require('crypto-random-string');
 
 //all post (marketplace)
 module.exports.allPost_get = async (req, res) => {
@@ -126,4 +127,16 @@ module.exports.userPosts_get = async (req, res) => {
   const userId = req.params.userId;
   const posts = await Post.find({ userId });
   res.send({posts});
+}
+
+//barter specific item
+module.exports.barterPost_get = async (req, res) => {
+  const post_id = req.params.post_id;
+  const user_id = req.params.user_id;
+  
+  const post = await Post.findById(post_id);
+  post.status = 'bartered';
+  post.barteredTo = user_id;
+  const newPost = await post.save();
+  console.log(newPost);
 }

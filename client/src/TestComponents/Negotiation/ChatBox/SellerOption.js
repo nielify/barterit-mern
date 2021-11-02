@@ -46,9 +46,16 @@ const SellerOptions = (props) => {
     setConfirmModal(true);
   }
 
-  useEffect(() => {
-    console.log(props.negotiation);
-  }, []);
+  //barter item request
+  const handleBarterItem = async () => {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/barter/${props.negotiation.post._id}/${props.negotiation.notOwner._id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    })
+    const data = await res.json();
+    console.log(data);
+
+  }
 
   return (  
     <div className={classes.sellerOptionContainer}>
@@ -72,12 +79,13 @@ const SellerOptions = (props) => {
         setOpen={setConfirmModal} 
         itemName={props.negotiation.name} 
         buyerName={props.negotiation.notOwner.firstName + ' ' + props.negotiation.notOwner.lastName}
+        handleBarterItem={handleBarterItem}
       />
     </div>
   );
 }
  
-function ConfirmBarteritModal({ open, setOpen, itemName, buyerName }) {
+function ConfirmBarteritModal({ open, setOpen, itemName, buyerName, handleBarterItem }) {
   const classes = useStyles();
 
   const [disabled, setDisabled] = useState(false);
@@ -91,6 +99,7 @@ function ConfirmBarteritModal({ open, setOpen, itemName, buyerName }) {
     if (e.target.value === 'Barter IT') {
       setDisabled(true);
       setShowLoader(true);
+      handleBarterItem();
     }
   }
 

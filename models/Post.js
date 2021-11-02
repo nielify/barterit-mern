@@ -27,6 +27,18 @@ const postSchema = mongoose.Schema({
     type: [String],
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+    enum: ['bartered', 'available'],
+    default: 'available',
+  },
+  barteredTo: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'user', 
+    required: true,
+    default: 'none', 
+  },
   createdAt: {
     type: Date,
     default: Date.now,
