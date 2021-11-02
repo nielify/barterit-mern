@@ -53,7 +53,7 @@ const Marketplace = () => {
       setShowLoader(true);
       
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/availablePosts`, { 
           headers: { 'Content-Type': 'application/json' }, 
           credentials: 'include', 
         })
@@ -65,7 +65,7 @@ const Marketplace = () => {
           useExtendedSearch: true,
           keys: [ 'title' ],
         }
-        const fuse = new Fuse(data.allPosts, options);
+        const fuse = new Fuse(data.availablePosts, options);
         const results = fuse.search(`'${searchText}`);
         const searchResult = results.map((result) => result.item);
 

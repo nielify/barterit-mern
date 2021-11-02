@@ -150,17 +150,17 @@ const MarketplaceSidebar = ({ setPosts, setShowLoader, setShowNote, currentCateg
     setShowNote(false);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/`, { 
+      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/post/availablePosts`, { 
         headers: { 'Content-Type': 'application/json' }, 
         credentials: 'include', 
       });
 
       const data = await res.json();
       console.log(data);
-      if (!data.allPosts[0]) setShowNote(true);
+      if (!data.availablePosts[0]) setShowNote(true);
       else setShowNote(false);
   
-      setPosts(data.allPosts); 
+      setPosts(data.availablePosts); 
       setShowLoader(false);
 
     } catch (err) {

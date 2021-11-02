@@ -123,7 +123,7 @@ module.exports.category_get = async (req, res) => {
   if (category === 'toys-and-games') category = 'Toys & Games';
   if (category === 'video-games-and-consoles') category = 'Video Games & Consoles';
 
-  const posts = await Post.find({ category });
+  const posts = await Post.find({ category, "status": { "$ne": 'bartered' }});
 
   res.send({ posts });
 }
