@@ -16,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 
-const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader, height, loading }) => {
+const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegotiation, activeChat, setActiveChat, scrollToBottom, setMessageLoader, height, loading, isNegoEmpty }) => {
   const classes = useStyles();
   
   const [ user ] = useContext(UserContext);
@@ -129,8 +129,25 @@ const ChatList = ({ matches, negotiations, socketRef, setConversation, setNegoti
         ))}
       </List>}
       {loading && <Loader />}
+      {isNegoEmpty && <EmptyMessage />}
     </div>
   );
+}
+
+function EmptyMessage() {
+  const classes = useStyles();
+
+  return(
+    <div className={classes.systemMessage}>
+      <Typography
+        variant="body2"
+        style={{fontSize: '.85rem'}}
+      >
+        Negotiation is empty <br/>
+        Select a post from Marketplace to start a negotiation
+      </Typography>
+    </div>
+  )
 }
 
 function Loader() {

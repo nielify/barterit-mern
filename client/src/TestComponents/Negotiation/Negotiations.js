@@ -41,6 +41,7 @@ const Negotiations = () => {
 
   const [user, setUser] = useContext(UserContext);
   const [negotiations, setNegotiations] = useState([]);
+  const [isNegoEmpty, setIsNegoEmpty] = useState(false);
   const [conversation, setConversation] = useState(null);
   const [activeChat, setActiveChat] = useContext(ActiveChatContext);
   const [negotiation, setNegotiation] = useState(null);
@@ -64,6 +65,7 @@ const Negotiations = () => {
           let sortedByDateData = data.sort(function(a,b){
             return new Date(b.createdAt) - new Date(a.createdAt);
           });
+          if (!Boolean(data[0])) setIsNegoEmpty(true);
           setNegotiations(sortedByDateData);
           setLoading(false);
         })
@@ -76,6 +78,7 @@ const Negotiations = () => {
 
   useEffect(() => {
     return () => {
+      setIsNegoEmpty(false);
       setActiveChat('');
     }
   }, [])
@@ -94,6 +97,7 @@ const Negotiations = () => {
         setMessageLoader={setMessageLoader}
         height={height}
         loading={loading}
+        isNegoEmpty={isNegoEmpty}
       />
       <ChatBox 
         matches={matches} 

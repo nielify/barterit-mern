@@ -57,7 +57,13 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
     marginRight: theme.spacing(2)
   },
- 
+  systemMessage: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: theme.spacing(5),
+    textAlign: 'center'
+  }
 }));
 
 export default useStyles;

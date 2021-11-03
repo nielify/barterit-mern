@@ -21,7 +21,8 @@ module.exports.negotiations_get = async (req, res) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
       const negotiations = await Negotiation.find({$or:[{owner: verifiedToken.id}, {notOwner: verifiedToken.id}]}).populate('post').populate('owner').populate('notOwner').exec();
-      res.send(negotiations);
+      const availableNegotiations = negotiations.filter((negotiation) => negotiation.post.status !== 'bartered');
+      res.send(availableNegotiations);
     });
   }
 }

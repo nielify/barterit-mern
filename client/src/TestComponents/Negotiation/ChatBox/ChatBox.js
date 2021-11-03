@@ -128,9 +128,9 @@ function SelectConversationMessage() {
     <div className={classes.systemMessage}>
       <Typography
         variant="body2"
-        style={{fontSize: '1rem'}}
+        style={{fontSize: '.85rem'}}
       >
-        Select a Conversation
+        Select a negotiation
       </Typography>
     </div>
   )
