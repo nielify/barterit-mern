@@ -50,19 +50,28 @@ const BuyerOptions = (props) => {
         color="primary"
         variant="contained"
         style={{width: '45%', marginRight: 24}}
-        disabled={rated}
+        disabled={props.negotiation.isRated}
         onClick={() => setModalOpen(true)}
       >
-        {rated ? 'Rated' : 'Rate User'}
+        {props.negotiation.isRated ? 'Rated' : 'Rate User'}
       </Button>
-      {!props.isBartered && <Button
+      {!props.negotiation.post.status === 'bartered' && <Button
         color="primary"
         variant="outlined"
         style={{width: '45%'}}
       >
         See Post
       </Button>}
-      {modalOpen && <RateModal open={modalOpen} setOpen={setModalOpen} setSubmittedModalOpen={setSubmittedModalOpen} setRated={setRated} owner_id={props.owner_id} />}
+
+      {modalOpen && 
+        <RateModal 
+          open={modalOpen} 
+          setOpen={setModalOpen} 
+          setSubmittedModalOpen={setSubmittedModalOpen} 
+          negotiation={props.negotiation}
+          setNegotiation={props.setNegotiation}
+        />}
+
       {submittedModalOpen && <SubmittedModal open={submittedModalOpen} setOpen={setSubmittedModalOpen} />}
     </div>
   );
@@ -76,7 +85,7 @@ const labels = {
   5: 'Excellent',
 };
 
-function RateModal({ open, setOpen, setSubmittedModalOpen, setRated, owner_id }) {
+function RateModal({ open, setOpen, setSubmittedModalOpen, negotiation, setNegotiation }) {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
@@ -85,21 +94,19 @@ function RateModal({ open, setOpen, setSubmittedModalOpen, setRated, owner_id })
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = async () => {
     setSubmitting(true);
-
-    //api request mimic
-    setTimeout(() => {
-      setOpen(false);
-      setSubmittedModalOpen(true);
-      setRated(true);
-    }, 500);
-
-    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/rate/${owner_id}`, {
+    console.log(negotiation);
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/rate/${negotiation.owner._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
+      body: JSON.stringify({ negotiation_id: negotiation._id, stars: value})
     });
     const data = await res.json();
     console.log(data);
+
+    setOpen(false);
+    setSubmittedModalOpen(true);
+    setNegotiation(data);
   }
 
   const handleClose = () => {

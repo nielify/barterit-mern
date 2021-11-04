@@ -20,6 +20,11 @@ const negotiationSchema = mongoose.Schema({
     ref: 'user', 
     required: true
   },
+  isRated: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   conversation: [{ 
     sender_id: mongoose.Schema.Types.ObjectId, 
     message: String,

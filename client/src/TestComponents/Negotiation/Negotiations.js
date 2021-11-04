@@ -112,6 +112,7 @@ const Negotiations = () => {
         scrollToBottom={scrollToBottom}
         messageLoader={messageLoader}
         height={height}
+        setNegotiation={setNegotiation}
       />
     </div>
   );

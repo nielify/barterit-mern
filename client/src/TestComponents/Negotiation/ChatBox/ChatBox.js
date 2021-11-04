@@ -16,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import SendIcon from '@material-ui/icons/Send';
 import StreetviewIcon from '@material-ui/icons/Streetview';
 
-const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader, height }) => {
+const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRef, user, activeChat, bottomRef, scrollToBottom, messageLoader, height, setNegotiation }) => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
@@ -77,7 +77,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
         </div>
       </div>}
       {negotiation && negotiation.owner._id === user._id ? <SellerOption negotiation={negotiation} isBartered={negotiation.post.status === 'bartered'} /> : null}
-      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption isBartered={negotiation.post.status === 'bartered'} owner_id={negotiation.owner._id} /> : null}
+      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption negotiation={negotiation} setNegotiation={setNegotiation} /> : null}
       {negotiation && <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (

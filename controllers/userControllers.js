@@ -8,6 +8,7 @@ const PasswordResetToken = require('../models/PasswordResetToken');
 const cloudinary = require('../utils/cloudinary');
 
 const { sendPasswordResetMail } = require('../utils/nodemailer');
+const Negotiation = require('../models/Negotiation');
 //const { async } = require('crypto-random-string');
 
 module.exports.user_get = async (req, res) => {   
@@ -246,6 +247,24 @@ module.exports.notification_delete = async (req, res) => {
 }
 
 module.exports.rateUser_post = async (req, res) => {
-  console.log(req.params.owner_id);
-  //remodel rating field to array of rating object that contains user ref and rating number
+  const owner_id = req.params.owner_id;
+  const token = req.cookies.jwt;
+  const negotiation_id = req.body.negotiation_id;
+  const stars = req.body.stars;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, verifiedToken) => {
+      //add rating to owner
+      const user = await User.findOne({ _id: owner_id });
+      user.ratings.push({ from: owner_id, stars });
+      await user.save();
+
+      //change negotiation field rated to true
+      const negotiation = await Negotiation.findById(negotiation_id).populate('post').populate('owner').populate('notOwner').exec();;
+      negotiation.isRated = true;
+      await negotiation.save();
+      
+      res.send(negotiation);
+    });
+  }
 }

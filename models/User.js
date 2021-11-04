@@ -3,7 +3,7 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
-  rating: [{
+  ratings: [{
     from: {
       type: mongoose.Schema.Types.ObjectId, 
       ref: 'user'
@@ -18,10 +18,6 @@ const userSchema = mongoose.Schema({
       default: Date.now
     }
   }],
-  numberOfRating: {
-    type: Number,
-    default: 0,
-  },
   profilePicture: {
     type: String,
     default: '',
