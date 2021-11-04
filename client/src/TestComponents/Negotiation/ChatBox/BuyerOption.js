@@ -50,12 +50,12 @@ const BuyerOptions = (props) => {
         color="primary"
         variant="contained"
         style={{width: '45%', marginRight: 24}}
-        disabled={props.negotiation.isRated}
+        disabled={props.negotiation.isRated === true && props.negotiation.post.status === 'bartered' || props.negotiation.post.status !== 'bartered'}
         onClick={() => setModalOpen(true)}
       >
         {props.negotiation.isRated ? 'Rated' : 'Rate User'}
       </Button>
-      {!props.negotiation.post.status === 'bartered' && <Button
+      {props.negotiation.post.status !== 'bartered' && <Button
         color="primary"
         variant="outlined"
         style={{width: '45%'}}
