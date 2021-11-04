@@ -244,3 +244,7 @@ module.exports.notification_delete = async (req, res) => {
   }
   
 }
+
+module.exports.rateUser_post = async (req, res) => {
+  console.log(req.params.owner_id);
+}

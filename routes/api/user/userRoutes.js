@@ -17,6 +17,7 @@ router.get('/:userId/reset-password/:token', userControllers.resetPassword_get);
 router.post('/:userId/reset-password/:token', userControllers.resetPassword_post);
 router.get('/:userId', userControllers.viewUser_get);
 router.delete('/:user_id/:negotiation_id', requireAuth, userControllers.notification_delete);
+router.post('/rate/:owner_id', requireAuth, userControllers.rateUser_post);
 
 //profile
 router.post('/change-picture', requireAuth, userControllers.changePicture_post);

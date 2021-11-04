@@ -77,7 +77,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
         </div>
       </div>}
       {negotiation && negotiation.owner._id === user._id ? <SellerOption negotiation={negotiation} isBartered={negotiation.post.status === 'bartered'} /> : null}
-      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption isBartered={negotiation.post.status === 'bartered'} /> : null}
+      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption isBartered={negotiation.post.status === 'bartered'} owner_id={negotiation.owner._id} /> : null}
       {negotiation && <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (

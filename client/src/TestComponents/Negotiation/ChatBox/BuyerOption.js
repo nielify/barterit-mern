@@ -62,7 +62,7 @@ const BuyerOptions = (props) => {
       >
         See Post
       </Button>}
-      {modalOpen && <RateModal open={modalOpen} setOpen={setModalOpen} setSubmittedModalOpen={setSubmittedModalOpen} setRated={setRated} />}
+      {modalOpen && <RateModal open={modalOpen} setOpen={setModalOpen} setSubmittedModalOpen={setSubmittedModalOpen} setRated={setRated} owner_id={props.owner_id} />}
       {submittedModalOpen && <SubmittedModal open={submittedModalOpen} setOpen={setSubmittedModalOpen} />}
     </div>
   );
@@ -76,14 +76,14 @@ const labels = {
   5: 'Excellent',
 };
 
-function RateModal({ open, setOpen, setSubmittedModalOpen, setRated }) {
+function RateModal({ open, setOpen, setSubmittedModalOpen, setRated, owner_id }) {
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
   const [hover, setHover] = useState(-1);
 
   const [submitting, setSubmitting] = useState(false);
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSubmitting(true);
 
     //api request mimic
@@ -91,7 +91,15 @@ function RateModal({ open, setOpen, setSubmittedModalOpen, setRated }) {
       setOpen(false);
       setSubmittedModalOpen(true);
       setRated(true);
-    }, 500)
+    }, 500);
+
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/rate/${owner_id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    const data = await res.json();
+    console.log(data);
   }
 
   const handleClose = () => {
