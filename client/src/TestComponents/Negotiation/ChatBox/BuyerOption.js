@@ -94,7 +94,7 @@ function RateModal({ open, setOpen, setSubmittedModalOpen, negotiation, setNegot
   const [submitting, setSubmitting] = useState(false);
   const handleSubmit = async () => {
     setSubmitting(true);
-    console.log(negotiation);
+
     const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/rate/${negotiation.owner._id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

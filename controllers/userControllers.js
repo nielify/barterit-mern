@@ -260,7 +260,7 @@ module.exports.rateUser_post = async (req, res) => {
       await user.save();
 
       //change negotiation field rated to true
-      const negotiation = await Negotiation.findById(negotiation_id).populate('post').populate('owner').populate('notOwner').exec();;
+      const negotiation = await Negotiation.findOne({ _id: negotiation_id }).populate('post').populate('owner').populate('notOwner').exec();;
       negotiation.isRated = true;
       await negotiation.save();
       
