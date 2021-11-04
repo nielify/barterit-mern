@@ -3,12 +3,21 @@ const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5,
-    default: 0,
-  },
+  rating: [{
+    from: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'user'
+    },
+    stars: {
+      type: Number,
+      min: 1,
+      max: 5
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   numberOfRating: {
     type: Number,
     default: 0,

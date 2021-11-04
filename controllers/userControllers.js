@@ -247,4 +247,5 @@ module.exports.notification_delete = async (req, res) => {
 
 module.exports.rateUser_post = async (req, res) => {
   console.log(req.params.owner_id);
+  //remodel rating field to array of rating object that contains user ref and rating number
 }
