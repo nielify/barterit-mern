@@ -76,8 +76,8 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           </Typography>
         </div>
       </div>}
-      {negotiation && negotiation.owner._id === user._id ? <SellerOption negotiation={negotiation} /> : null}
-      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption /> : null}
+      {negotiation && negotiation.owner._id === user._id ? <SellerOption negotiation={negotiation} isBartered={negotiation.post.status === 'bartered'} /> : null}
+      {negotiation && negotiation.notOwner._id === user._id ? <BuyerOption isBartered={negotiation.post.status === 'bartered'} /> : null}
       {negotiation && <div className={classes.messageBox}>
         <div className={classes.dummydivTop}></div>
         {conversation && conversation.map(message => (
@@ -89,7 +89,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
         ))}
         <div className={classes.dummydivBottom} ref={bottomRef}></div>
       </div>}
-      {negotiation && <div className={classes.inputBox}>
+      {negotiation && negotiation.post.status !== 'bartered' && <div className={classes.inputBox}>
         <IconButton 
           size="small" 
           style={{marginRight: 8}} 

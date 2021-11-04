@@ -53,8 +53,6 @@ const SellerOptions = (props) => {
       credentials: 'include',
     })
     const data = await res.json();
-    console.log(data);
-
   }
 
   return (  
@@ -64,16 +62,17 @@ const SellerOptions = (props) => {
         variant="contained"
         style={{width: '45%', marginRight: 24}}
         onClick={handleOpenConfirmModal}
+        disabled={props.isBartered}
       >
-        Barter IT
+        { props.isBartered ? 'Bartered' : 'Barter IT' }
       </Button>
-      <Button
+      {!props.isBartered && <Button
         color="primary"
         variant="outlined"
         style={{width: '45%'}}
       >
         See Post
-      </Button>
+      </Button>}
       <ConfirmBarteritModal 
         open={confirmModal} 
         setOpen={setConfirmModal} 
