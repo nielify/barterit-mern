@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -173,6 +173,22 @@ const PersonalInfo = () => {
   const [ showAvatarLoader, setShowAvatarLoader ] = useState(false);
   const [ showBackgroundLoader, setShowBackgroundLoader ] = useState(false);
 
+  useEffect(() => {
+    getRates();
+  }, [])
+
+  const getRates = () => {
+    setRates(user.ratings.length);
+    
+    let totalStars = 0;
+    let totalRatings = 0;
+    user.ratings.forEach((rating) => {
+      totalStars += rating.stars;
+      totalRatings++;
+    });
+    setRating(totalStars / totalRatings);
+  }
+
   const handlePictureFileChange = (e) => { 
     if (e.target.files[0]) { 
       const reader = new FileReader();
@@ -301,7 +317,7 @@ const PersonalInfo = () => {
               precision={0.5} 
               readOnly 
               size="small" 
-              style={{color:'#33ab9f', }}
+              //style={{color:'#33ab9f', }}
               emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
             />
             <span className={classes.number}>({ rates })</span>
