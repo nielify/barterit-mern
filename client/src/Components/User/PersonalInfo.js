@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -77,6 +77,33 @@ const useStyles = makeStyles((theme) => ({
 const PersonalInfo = ({ user }) => {
   const classes = useStyles();
 
+  const [rating, setRating] = useState(0);
+  const [rates, setRates] = useState(0);
+
+  const getRates = () => {
+    
+    let totalStars = 0;
+    let totalRatings = 0;
+
+    try {
+      user.ratings.forEach((rating) => {
+        totalStars += rating.stars;
+        totalRatings++;
+      }); 
+      setRating(totalStars / totalRatings);
+      setRates(totalRatings);
+    } catch (err) {
+      console.log(err)
+    }
+    
+
+    
+  }
+
+  useEffect(() => {
+    getRates();
+  }, [user]);
+  
   return ( 
     <>
       <div className={classes.bgContainer}>
@@ -96,14 +123,14 @@ const PersonalInfo = ({ user }) => {
             <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, position: 'relative'}}>
               <Rating 
                 name="half-rating-read"
-                value={user.rating ? user.rating : 0} 
+                value={rating} 
                 precision={0.5} 
                 readOnly 
                 size="small" 
-                style={{color:'#33ab9f', }}
+                //style={{color:'#33ab9f', }}
                 emptyIcon={<StarBorderIcon fontSize="inherit" style={{color:'#fff'}}/>}
               />
-              <span className={classes.number}>({user.numberOfRating})</span>
+              <span className={classes.number}>({rates})</span>
             </Box>
             <Typography
               className={classes.location}

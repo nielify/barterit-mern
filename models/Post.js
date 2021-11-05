@@ -36,8 +36,6 @@ const postSchema = mongoose.Schema({
   barteredTo: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'user', 
-    required: true,
-    default: 'none', 
   },
   createdAt: {
     type: Date,

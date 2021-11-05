@@ -178,15 +178,21 @@ const PersonalInfo = () => {
   }, [])
 
   const getRates = () => {
-    setRates(user.ratings.length);
     
     let totalStars = 0;
     let totalRatings = 0;
-    user.ratings.forEach((rating) => {
-      totalStars += rating.stars;
-      totalRatings++;
-    });
-    setRating(totalStars / totalRatings);
+
+    try {
+      user.ratings.forEach((rating) => {
+        totalStars += rating.stars;
+        totalRatings++;
+      }); 
+      setRating(totalStars / totalRatings);
+      setRates(totalRatings);
+    } catch (err) {
+      console.log(err)
+    }
+
   }
 
   const handlePictureFileChange = (e) => { 

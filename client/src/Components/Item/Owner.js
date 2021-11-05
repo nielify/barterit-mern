@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -44,6 +44,23 @@ const useStyles = makeStyles((theme) => ({
 const Owner = ({ post }) => {
   const classes = useStyles();
 
+  const [stars, setStars] = useState(0);
+
+  useEffect(() => {
+    let totalStars = 0;
+    let totalRatings = 0;
+
+    try {
+      post.userId.ratings.forEach((rating) => {
+        totalStars += rating.stars;
+        totalRatings++;
+      }); 
+      setStars(totalStars / totalRatings);
+    } catch (err) {
+      console.log(err)
+    }
+  }, [post]);
+
   return (  
     <>
       <div className={classes.root}>
@@ -63,7 +80,7 @@ const Owner = ({ post }) => {
             { post._id ? post.userId.firstName + ' ' + post.userId.middleName + ' ' + post.userId.lastName : null}
           </Typography>
           <Box component="fieldset" mb={2} borderColor="transparent" style={{padding: 0, margin: 0, }}>
-            <Rating name="half-rating-read" value={post._id ? post.userId.rating : 0} precision={0.5} readOnly size="small" style={{color:'#009688'}}/>
+            <Rating name="half-rating-read" value={stars} precision={0.5} readOnly size="small" /* style={{color:'#009688'}} *//>
           </Box>
         </div>
       </div>
