@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -59,6 +60,8 @@ const BuyerOptions = (props) => {
         color="primary"
         variant="outlined"
         style={{width: '45%'}}
+        component={Link}
+        to={`/item/${props.negotiation.post._id}`}
       >
         See Post
       </Button>}
