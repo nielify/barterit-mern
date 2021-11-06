@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   sellerOptionContainer: {
@@ -40,11 +41,14 @@ const useStyles = makeStyles((theme) => ({
 const SellerOptions = (props) => {
   const classes = useStyles();
 
-  //modal
+  //barterit modal
   const [confirmModal, setConfirmModal] = useState(false);
   const handleOpenConfirmModal = () => {
     setConfirmModal(true);
   }
+
+  //barter success modal
+  const [openBarterSucess, setOpenBarterSuccess] = useState(false);
 
   //barter item request
   const handleBarterItem = async () => {
@@ -52,8 +56,22 @@ const SellerOptions = (props) => {
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
     })
-    const data = await res.json();
+    const newPost = await res.json();
+
+    //update negotiation.post bartered fields
+    props.setNegotiation((prevNego) => ({...prevNego, post: {
+      ...prevNego.post,
+      status: newPost.status,
+      barteredTo: newPost.barteredTo
+    }}));
+
+    setConfirmModal(false);
+    setOpenBarterSuccess(true);
   }
+
+  useEffect(() => {
+    console.log(props.negotiation);
+  }, [props.negotiation])
 
   return (  
     <div className={classes.sellerOptionContainer}>
@@ -73,13 +91,14 @@ const SellerOptions = (props) => {
       >
         See Post
       </Button>}
-      <ConfirmBarteritModal 
+      {confirmModal && <ConfirmBarteritModal 
         open={confirmModal} 
         setOpen={setConfirmModal} 
         itemName={props.negotiation.name} 
         buyerName={props.negotiation.notOwner.firstName + ' ' + props.negotiation.notOwner.lastName}
         handleBarterItem={handleBarterItem}
-      />
+      />}
+      {openBarterSucess && <BarterSuccessModal open={openBarterSucess} setOpen={setOpenBarterSuccess} />}
     </div>
   );
 }
@@ -146,6 +165,27 @@ function ConfirmBarteritModal({ open, setOpen, itemName, buyerName, handleBarter
         </div>
         
       </div>
+    </Modal>
+  )
+}
+
+function BarterSuccessModal({ open, setOpen }) {
+  const classes = useStyles();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      disableEnforceFocus 
+    >
+      <Alert severity="success">
+        You bartered an item successfully. 
+      </Alert>
     </Modal>
   )
 }

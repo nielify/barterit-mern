@@ -144,5 +144,5 @@ module.exports.barterPost_get = async (req, res) => {
   post.status = 'bartered';
   post.barteredTo = user_id;
   const newPost = await post.save();
-  console.log(newPost);
+  res.send(newPost);
 }
