@@ -164,6 +164,7 @@ function ConfirmBarteritModal({ open, setOpen, itemName, buyerName, handleBarter
           { showLoader && <CircularProgress 
             color="primary" 
             style={{position: 'absolute'}}
+            size={25}
           />}
         </div>
         
