@@ -59,6 +59,18 @@ const MeetingPlace = ({ open, setOpen }) => {
     }
   }, []);
 
+  const handleSubmitMeetingPlace = async () => {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/meetingplace`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    
+    const data = await res.json();
+
+    console.log(data);
+  }
+
   return (
     <Modal
       className={classes.modal}
@@ -134,6 +146,7 @@ const MeetingPlace = ({ open, setOpen }) => {
           <Button
             variant="contained"
             color="primary"
+            onClick={handleSubmitMeetingPlace}
           >
             Submit
           </Button>

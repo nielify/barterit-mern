@@ -20,6 +20,30 @@ const negotiationSchema = mongoose.Schema({
     ref: 'user', 
     required: true
   },
+  meetingPlace: {
+    from: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'user',
+      required: true
+    },
+    type: {
+      type: String,
+      enum: ['suggestion', 'accepted'],
+      required: true
+    },
+    latlng: {
+      type: [Number],
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  },
   isRated: {
     type: Boolean,
     required: true,

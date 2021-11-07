@@ -11,5 +11,6 @@ const negotiationControllers = require('../../../controllers/negotiationControll
 //routes
 router.post('/', requireAuth, negotiationControllers.negotiation_post);
 router.get('/negotiations', requireAuth, negotiationControllers.negotiations_get);
+router.post('/meetingplace', requireAuth, negotiationControllers.meetingPlace_post)
 
 module.exports = router;

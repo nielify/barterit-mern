@@ -26,3 +26,7 @@ module.exports.negotiations_get = async (req, res) => {
     });
   }
 }
+
+module.exports.meetingPlace_post = async (req, res) => {
+  console.log('meetingplace post request received');
+}
