@@ -4,6 +4,7 @@ import useStyles from './ChatBoxCSS';
 
 import SellerOption from './SellerOption';
 import BuyerOption from './BuyerOption';
+import MeetingPlace from './MeetingPlace';
 
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,6 +21,8 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
   const classes = useStyles();
 
   const [text, setText] = useState('');
+
+  const [meetingModalOpen, setMeetingModalOpen] = useState(false);
 
   const handleTextChange = (e) => {
     setText(e.target.value);
@@ -93,8 +96,9 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
         <IconButton 
           size="small" 
           style={{marginRight: 8}} 
-          component={Link}
-          to={`/map/${negotiation._id}`}
+          /* component={Link}
+          to={`/map/${negotiation._id}`} */
+          onClick={() => setMeetingModalOpen(true)}
         >
           <StreetviewIcon color="primary" fontSize="large" />
         </IconButton>
@@ -115,6 +119,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
       </div>}
+      {meetingModalOpen && <MeetingPlace open={meetingModalOpen} setOpen={setMeetingModalOpen} />}
       {!negotiation && !messageLoader && <SelectConversationMessage />}
       {messageLoader && <Loader />}
     </div>
