@@ -16,6 +16,12 @@ module.exports.negotiation_post = async (req, res) => {
   }
 }
 
+module.exports.negotiation_get = async (req, res) => {
+  const negotiation_id = req.params.negotiation_id;
+  const negotiation = await Negotiation.findById(negotiation_id);
+  res.send(negotiation);
+}
+
 module.exports.negotiations_get = async (req, res) => {
   const token = req.cookies.jwt;
   if (token) {
@@ -41,8 +47,6 @@ module.exports.meetingPlace_post = async (req, res) => {
     latlng,
     location,
   }
-  console.log(negotiation);
-
-  res.send(negotiation);
-
+  const newNegotiation = await negotiation.save();
+  res.send(newNegotiation);
 }

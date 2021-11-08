@@ -25,10 +25,14 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     //padding: theme.spacing(4, 4,),
     borderRadius: 10,
-    maxWidth: 470,
+    width: 470,
     height: 'auto',
+    position: 'relative'
   },
   main: {
+    margin: theme.spacing(4, 4),
+  },
+  waiting: {
     margin: theme.spacing(4, 4),
   },
   mapContainer: {
@@ -42,6 +46,16 @@ const useStyles = makeStyles((theme) => ({
   },
   successMessage: {
     maxWidth: 300
+  },
+  loader: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }));
 
@@ -58,11 +72,42 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
   const [meetingPlacePosition, setMeetingPlacePosition] = useState([0, 0]);
   const [address, setAddress] = useState('');
 
+  //waiting map state
+  const [suggestedMeetingPos, setSuggestedMeetingPos] = useState([0,0]);
+  const [suggestedAddress, setSuggestedAddress] = useState('');
+
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [showMain, setShowMain] = useState(true);
+  const [showMain, setShowMain] = useState(false);
+  const [showWaiting, setShowWaiting] = useState(false);
+  const [showSuggested, setShowSuggested] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/${negotiation._id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setLoading(false);
+
+        if (!data.meetingPlace.type) {
+          setShowMain(true);
+        }
+        else if (data.meetingPlace.type === 'suggestion') {
+          if (data.meetingPlace.from === user._id) {
+            setSuggestedMeetingPos(data.meetingPlace.latlng);
+            setSuggestedAddress(data.meetingPlace.location);
+            setShowWaiting(true);
+          }
+          else {
+            setShowSuggested(true);
+          }
+        }
+      })
+      .catch(err => console.log(err));
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((pos) => {
         setMyPosition([pos.coords.latitude, pos.coords.longitude]);
@@ -106,6 +151,8 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
       disableEnforceFocus
     >
       <div className={classes.paper}>
+
+        {/* main meetingplace interface */}
         {showMain && <div className={classes.main}>
           <Typography variant="h6" gutterBottom style={{ textAlign: 'center' }}>
             Suggest a meeting location
@@ -117,12 +164,6 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
           >
             Tap a location on the map that you want to be your meeting place. After submitting, the location will be seen by user-firstname and will decide to accept it or suggest a different one.
           </Typography>
-          {/* <Typography
-          variant="subtitle1"
-          style={{ marginTop: 8, marginBottom: 8, fontSize: '.76rem', lineHeight: '1.2rem' }}
-        >
-          Tip: Zoom in first before tapping to accurately select the location of the meeting place.
-        </Typography> */}
 
           <div className={classes.mapContainer}>
             <MapContainer
@@ -182,11 +223,74 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
             </Button>
           </div>
         </div>}
+        {/* end of main meetingplace interface */}
+
+        {/* waiting meetingplace interface */}
+        {showWaiting && <div className={classes.waiting}>
+          <Typography variant="h6" gutterBottom style={{ textAlign: 'center' }}>
+            Meeting Place
+          </Typography>
+          <Divider />
+          <Typography
+            variant="subtitle1"
+            style={{ marginTop: 8, marginBottom: 8, fontSize: '.85rem', lineHeight: '1.2rem' }}
+          >
+            Waiting for response..<br/><br/>
+            <b style={{fontSize: '.8rem'}}>You suggested this location</b>
+          </Typography>
+
+          <div className={classes.mapContainer}>
+            <MapContainer
+              center={myPosition}
+              zoom={18}
+              minZoom={14}
+              maxZoom={18}
+              scrollWheelZoom={true}
+              style={{ cursor: 'pointer' }}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              <CircleMarker center={suggestedMeetingPos} radius={20} pathOptions={{ color: '#009688' }}>
+                <Popup>
+                  Selected meeting place
+                </Popup>
+              </CircleMarker>
+
+              {/* map reposition event */}
+              <MapView coords={suggestedMeetingPos} />
+            </MapContainer>
+          </div>
+
+          <Typography
+            variant="body1"
+            style={{ fontSize: '.8rem', lineHeight: '.9rem', marginTop: 8, height: 30, overflow: 'visible' }}
+          >
+            {suggestedAddress}
+          </Typography>
+
+          <div className={classes.buttons}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClose}
+              style={{minWidth: 100}}
+            >
+              Close
+            </Button>
+          </div>
+
+        </div>}
+        {/* end of waiting meetingplace interface */}
 
         {showSuccessMessage && <Alert severity="success" className={classes.successMessage}>
           Meeting Place location request has been submitted. Please wait for <b>{user._id != negotiation.owner._id ? negotiation.owner.firstName : negotiation.notOwner.firstName}</b> to respond.
-        </Alert> }
-
+        </Alert>}
+        {loading && <div className={classes.loader}>
+          <CircularProgress size={50} />
+        </div>}
       </div>
     </Modal>
   );
