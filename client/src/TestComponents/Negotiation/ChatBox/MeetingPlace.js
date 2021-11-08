@@ -26,18 +26,24 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     //padding: theme.spacing(4, 4,),
     borderRadius: 10,
-    width: 470,
+    width: 'auto',
     height: 'auto',
-    position: 'relative'
+    position: 'relative',
   },
   main: {
     margin: theme.spacing(2.5,4,4,4),
+    width: '90vw',
+    maxWidth: 500
   },
   waiting: {
     margin: theme.spacing(2.5,4,4,4),
+    width: '90vw',
+    maxWidth: 500
   },
   suggested: {
     margin: theme.spacing(2.5,4,4,4),
+    width: '90vw',
+    maxWidth: 500
   },
   mapContainer: {
     height: 250
@@ -49,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16
   },
   successMessage: {
-    width: '100%'
+    width: '90vw',
+    maxWidth: '350px'
   },
   loader: {
     height: '100%',
