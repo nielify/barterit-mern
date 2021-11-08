@@ -28,5 +28,21 @@ module.exports.negotiations_get = async (req, res) => {
 }
 
 module.exports.meetingPlace_post = async (req, res) => {
-  console.log('meetingplace post request received');
+  const negotiation_id = req.body.negotiation_id;
+  const from = req.body.from;
+  const latlng = req.body.latlng;
+  const location = req.body.location;
+
+  const negotiation = await Negotiation.findById(negotiation_id);
+
+  negotiation.meetingPlace = {
+    from,
+    type: 'suggestion',
+    latlng,
+    location,
+  }
+  console.log(negotiation);
+
+  res.send(negotiation);
+
 }

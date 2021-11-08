@@ -119,7 +119,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           <SendIcon color="primary" fontSize="large" />
         </IconButton>
       </div>}
-      {meetingModalOpen && <MeetingPlace open={meetingModalOpen} setOpen={setMeetingModalOpen} />}
+      {meetingModalOpen && <MeetingPlace open={meetingModalOpen} setOpen={setMeetingModalOpen} negotiation={negotiation} />}
       {!negotiation && !messageLoader && <SelectConversationMessage />}
       {messageLoader && <Loader />}
     </div>
