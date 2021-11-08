@@ -1,5 +1,6 @@
 const Negotiation = require('../models/Negotiation');
 const jwt = require('jsonwebtoken');
+const { async } = require('crypto-random-string');
 
 module.exports.negotiation_post = async (req, res) => {
   try {
@@ -48,5 +49,15 @@ module.exports.meetingPlace_post = async (req, res) => {
     location,
   }
   const newNegotiation = await negotiation.save();
+  res.send(newNegotiation);
+}
+
+module.exports.meetingPlaceAgree_post = async (req, res) => {
+  const negotiation_id = req.body.negotiation_id;
+
+  const negotiation = await Negotiation.findById(negotiation_id);
+  negotiation.meetingPlace.type = 'accepted';
+  const newNegotiation = await negotiation.save();
+
   res.send(newNegotiation);
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, useMapEvents, CircleMarker } from 'react-leaflet';
 
@@ -30,10 +31,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   main: {
-    margin: theme.spacing(4, 4),
+    margin: theme.spacing(2.5,4,4,4),
   },
   waiting: {
-    margin: theme.spacing(4, 4),
+    margin: theme.spacing(2.5,4,4,4),
+  },
+  suggested: {
+    margin: theme.spacing(2.5,4,4,4),
   },
   mapContainer: {
     height: 250
@@ -45,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16
   },
   successMessage: {
-    maxWidth: 300
+    width: '100%'
   },
   loader: {
     height: '100%',
@@ -61,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MeetingPlace = ({ open, setOpen, negotiation }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const handleClose = () => {
     setOpen(false);
@@ -82,6 +87,7 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
   const [showWaiting, setShowWaiting] = useState(false);
   const [showSuggested, setShowSuggested] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showAgreeMessage, setShowAgreeMessage] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/${negotiation._id}`, {
@@ -96,14 +102,17 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
           setShowMain(true);
         }
         else if (data.meetingPlace.type === 'suggestion') {
+          setSuggestedMeetingPos(data.meetingPlace.latlng);
+          setSuggestedAddress(data.meetingPlace.location);
           if (data.meetingPlace.from === user._id) {
-            setSuggestedMeetingPos(data.meetingPlace.latlng);
-            setSuggestedAddress(data.meetingPlace.location);
             setShowWaiting(true);
           }
           else {
             setShowSuggested(true);
           }
+        }
+        else if (data.meetingPlace.type === 'accepted') {
+          history.push(`/map/${negotiation._id}`);
         }
       })
       .catch(err => console.log(err));
@@ -143,6 +152,35 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
     setShowSuccessMessage(true);
   }
 
+  const handleSuggestAnotherLocation = () => {
+    setShowSuggested(false);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setShowMain(true);
+    }, 500);
+  }
+
+  const handleAgree = async () => {
+    setLoading(true);
+    setShowSuggested(false);
+
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/meetingplace/agree`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        negotiation_id: negotiation._id,
+      })
+    });
+    const data = await res.json();
+
+    if (data.meetingPlace.type === 'accepted') {
+      setLoading(false);
+      setShowAgreeMessage(true);
+    }
+  }
+
   return (
     <Modal
       className={classes.modal}
@@ -162,7 +200,7 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
             variant="subtitle1"
             style={{ marginTop: 8, marginBottom: 16, fontSize: '.85rem', lineHeight: '1.2rem' }}
           >
-            Tap a location on the map that you want to be your meeting place. After submitting, the location will be seen by user-firstname and will decide to accept it or suggest a different one.
+            Tap a location on the map that you want to be your meeting place. After submitting, the location will be seen by <b>{negotiation.owner._id !== user._id ? negotiation.owner.firstName : negotiation.notOwner.firstName}</b> and will decide to accept it or suggest a different one.
           </Typography>
 
           <div className={classes.mapContainer}>
@@ -236,7 +274,7 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
             style={{ marginTop: 8, marginBottom: 8, fontSize: '.85rem', lineHeight: '1.2rem' }}
           >
             Waiting for response..<br/><br/>
-            <b style={{fontSize: '.8rem'}}>You suggested this location</b>
+            <b style={{fontSize: '.8rem'}}>You suggested this meeting place</b>
           </Typography>
 
           <div className={classes.mapContainer}>
@@ -285,12 +323,83 @@ const MeetingPlace = ({ open, setOpen, negotiation }) => {
         </div>}
         {/* end of waiting meetingplace interface */}
 
+        {/* Suggested meetingplace interface */}
+        {showSuggested && <div className={classes.suggested}>
+          <Typography variant="h6" gutterBottom style={{ textAlign: 'center' }}>
+            Meeting Place
+          </Typography>
+          <Divider />
+          <Typography
+            variant="subtitle1"
+            style={{ marginTop: 8, marginBottom: 8, fontSize: '.85rem', lineHeight: '1.2rem' }}
+          >
+            <b>{negotiation.owner._id !== user._id ? negotiation.owner.firstName : negotiation.notOwner.firstName}</b> suggested a meeting place. You can agree or select a new one if you think you cannot go to this location. <br/><br/>
+            <b style={{fontSize: '.8rem'}}> Suggested meeting place</b>
+          </Typography>
+
+          <div className={classes.mapContainer}>
+            <MapContainer
+              center={myPosition}
+              zoom={18}
+              minZoom={14}
+              maxZoom={18}
+              scrollWheelZoom={true}
+              style={{ cursor: 'pointer' }}
+            >
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              <CircleMarker center={suggestedMeetingPos} radius={20} pathOptions={{ color: '#009688' }}>
+                <Popup>
+                  Selected meeting place
+                </Popup>
+              </CircleMarker>
+
+              {/* map reposition event */}
+              <MapView coords={suggestedMeetingPos} />
+            </MapContainer>
+          </div>
+
+          <Typography
+            variant="body1"
+            style={{ fontSize: '.8rem', lineHeight: '.9rem', marginTop: 8, height: 30, overflow: 'visible' }}
+          >
+            {suggestedAddress}
+          </Typography>
+          <div className={classes.buttons}>
+            <Button
+              variant="outlined"
+              color="primary"
+              style={{ marginRight: 16 }}
+              onClick={handleSuggestAnotherLocation}
+            >
+              Suggest another location
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAgree}
+              disabled={submitting}
+              endIcon={submitting ? <CircularProgress size={20} /> : null}
+            >
+              Agree
+            </Button>
+          </div>
+
+        </div>}
+        {/* End of Suggested meetingplace interface */}
+
         {showSuccessMessage && <Alert severity="success" className={classes.successMessage}>
           Meeting Place location request has been submitted. Please wait for <b>{user._id != negotiation.owner._id ? negotiation.owner.firstName : negotiation.notOwner.firstName}</b> to respond.
         </Alert>}
         {loading && <div className={classes.loader}>
           <CircularProgress size={50} />
         </div>}
+        {showAgreeMessage && <Alert severity="success" className={classes.successMessage}>
+          You have agreed to a meeting place suggested by <b>{user._id != negotiation.owner._id ? negotiation.owner.firstName : negotiation.notOwner.firstName}</b>. You can click the map icon again to enter the map.
+        </Alert>}
       </div>
     </Modal>
   );

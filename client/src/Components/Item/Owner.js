@@ -57,7 +57,7 @@ const Owner = ({ post }) => {
       }); 
       setStars(totalStars / totalRatings);
     } catch (err) {
-      console.log(err)
+      //console.log(err)
     }
   }, [post]);
 

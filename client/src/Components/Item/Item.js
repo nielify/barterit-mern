@@ -41,7 +41,6 @@ const Item = () => {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
       if (data.message === 'post does not exist') {
         history.push('/');
       } else {
