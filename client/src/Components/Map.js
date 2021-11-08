@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, Circle, useMapEvents, CircleMarker } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -80,6 +80,8 @@ const Map = (props) => {
   const classes = useStyles();
   const params = useParams();
 
+  const [negotiation, setNegotiation] = useState({});
+
   //socket
   const socketRef = useRef();
 
@@ -88,6 +90,15 @@ const Map = (props) => {
   const [height, setHeight] = useState(heightRef.current);
 
   useEffect(() => {
+    console.log(Boolean(negotiation.meetingPlace))
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/negotiation/${params.id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    })
+    .then(res => res.json())
+    .then(data => setNegotiation(data))
+    .catch(err => console.log(err));
+
     window.addEventListener('resize', () => {
       setHeight(window.innerHeight)
     });
@@ -257,7 +268,7 @@ const Map = (props) => {
   const handleMeetingPlaceClick = () => {
     currentViewEntRef.current = 'meeting';
     setShowCurrentView(true);
-    setCurrentView([13.9966, 121.9180]);
+    setCurrentView(negotiation.meetingPlace.latlng);
   }
 
   const handleOtherPersonLocationClick = () => {
@@ -272,7 +283,7 @@ const Map = (props) => {
       <MapContainer
         center={position}
         zoom={18}
-        minZoom={10}
+        minZoom={14}
         maxZoom={18}
         scrollWheelZoom={true}
       >
@@ -294,11 +305,11 @@ const Map = (props) => {
             </Popup>
           </Marker>
         ))}
-        <Circle center={[13.9966, 121.9180]} radius={50} pathOptions={{color:'#009688'}}>
+        {negotiation.meetingPlace && <Circle center={negotiation.meetingPlace.latlng} radius={20} pathOptions={{color:'#009688'}}>
           <Popup>
-            The Meeting Place
+            {negotiation.meetingPlace.location}
           </Popup>
-        </Circle>
+        </Circle>}
         
         <InfoNotification 
           infoNotifOpen={infoNotifOpen} 
@@ -346,6 +357,7 @@ const Map = (props) => {
           color='primary'
           style={{color: 'white', marginBottom: 5}}
           onClick={handleMeetingPlaceClick}
+          disabled={!negotiation.meetingPlace}
         >
           Meeting Place
         </Button>
