@@ -177,7 +177,7 @@ const PersonalInfo = () => {
 
   useEffect(() => {
     getRates();
-  }, [])
+  }, [user])
 
   const getRates = () => {
     
