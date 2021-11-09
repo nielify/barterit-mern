@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/User');
+const Negotiation = require('../models/Negotiation');
 const PasswordResetToken = require('../models/PasswordResetToken');
 
 const cloudinary = require('../utils/cloudinary');
-
 const { sendPasswordResetMail } = require('../utils/nodemailer');
-const Negotiation = require('../models/Negotiation');
+
 //const { async } = require('crypto-random-string');
 
 module.exports.user_get = async (req, res) => {   
@@ -31,6 +31,11 @@ module.exports.user_get = async (req, res) => {
       }
     });
   }  
+}
+
+module.exports.allUsers_get = async (req, res) => {
+  const users = await User.find();
+  res.send(users);
 }
 
 module.exports.viewUser_get = async (req, res) => {
