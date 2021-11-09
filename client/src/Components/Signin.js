@@ -15,7 +15,7 @@ import { UserContext } from '../Context/UserContext';
 
 import useRemoveCover from '../CustomHooks/useRemoveCover';
 
-import signinLogo from '../Images/logo3.svg'
+import signinLogo from '../Images/noletterlogogreen.svg'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     textAlign: 'center',
-    width: theme.spacing(10.5),
-    height: theme.spacing(10.5),
+    width: theme.spacing(13.5),
+    height: theme.spacing(13.5),
+    marginBottom: -6
   },
   typography: {
     textAlign: 'center',

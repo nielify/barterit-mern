@@ -32,6 +32,8 @@ import { ActiveChatContext } from '../../Context/ActiveChatContext';
 
 import { io } from "socket.io-client";
 
+import logo from '../../Images/logoreal.svg'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 64
@@ -41,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 64,
+  },
+  logoimage: {
+    height: theme.spacing(7.2),
+    width: theme.spacing(7.2),
+    marginTop: -5
   },
   barter: {
     fontSize: '1.5rem',
@@ -101,7 +108,7 @@ const Header = (props) => {
   const [activeChat, setActiveChat] = useContext(ActiveChatContext);
   
   //messageNotification
-  const socketRef = useRef(null);
+  const socketRef = useRef(null); 
 
   //onFirstRender
   useEffect(() => {
@@ -134,6 +141,27 @@ const Header = (props) => {
       if (socketRef.current) socketRef.current.disconnect(); 
     }
   }, [user, activeChat]);
+
+  //sizing
+  const [showLogoText, setShowLogoText] = useState(true);
+  useEffect(() => {
+    if (window.innerWidth <= 380) {
+      setShowLogoText(false);
+    } else {
+      setShowLogoText(true);
+    }
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 380) {
+        setShowLogoText(false);
+      } else {
+        setShowLogoText(true);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('resize', () => {});
+    }
+  }, []);
 
   const [accountAnchorEl, setAccountAnchorEl] = useState(null);
 
@@ -168,20 +196,23 @@ const Header = (props) => {
               className={classes.brand}
               //startIcon={<img href="qwe.jpg" alt="BIT" />}
             >
-              <Typography
-                className={classes.barter}
-                variant="h6"
-                style={{letterSpacing: 1}}
-              >
-                Barter
-              </Typography>
-              <Typography
-                className={classes.it}
-                variant="h6"
-                style={{letterSpacing: 1}}
-              >
-                IT
-              </Typography>   
+              <Avatar className={classes.logoimage} src={logo} />
+              {showLogoText && <div style={{display: 'flex'}}>
+                <Typography
+                  className={classes.barter}
+                  variant="h6"
+                  style={{letterSpacing: 1}}
+                >
+                  Barter
+                </Typography>
+                <Typography
+                  className={classes.it}
+                  variant="h6"
+                  style={{letterSpacing: 1}}
+                >
+                  IT
+                </Typography> 
+              </div>}
             </Button>
             <div className={classes.right}>
               <Avatar 

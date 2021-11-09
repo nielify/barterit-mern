@@ -7,6 +7,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+
+import logo from '../Images/noletterlogogreen.svg'
 
 const useStyles = makeStyles((theme) => ({
   decoy: {
@@ -27,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
   brand: {
     //height: '60px',
+  },
+  avatar: {
+    marginTop: -2,
+    marginRight: -5,
+    height: theme.spacing(7),
+    width: theme.spacing(7)
   },
   barter: {
     fontSize: '1.5rem',
@@ -79,12 +88,12 @@ const DefaultHeader = () => {
           <Grid item xs={12}> 
             <Toolbar className={classes.toolbar}>
               <Button
-                /* component={Link}
-                to="/" */
+                component={Link}
+                to="/signin"
                 tabIndex={-1}
                 className={classes.brand}
-                //startIcon={<img href="qwe.jpg" alt="BIT" />}
               >
+                <Avatar className={classes.avatar} src={logo} />
                 <Typography
                   className={classes.barter}
                   variant="h6"
