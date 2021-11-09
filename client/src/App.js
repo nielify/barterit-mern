@@ -28,13 +28,13 @@ import EmailSent from './Components/ForgotPassword/EmailSent';
 import Expired from './Components/ForgotPassword/Expired';
 import ResetPasswordSuccess from './Components/ForgotPassword/ResetPasswordSuccess';
 
-
 //test components
 import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
 import Report from './Components/Admin/Report/Report';
+import Users from './Components/Admin/Users/Users';
 import TermsAndConditions from './Components/TermsAndConditions';
 
 //Contexts
@@ -142,6 +142,9 @@ function App() {
         </Route>
         <Route exact path="/admin/27092021/reports">
           <Report />
+        </Route>
+        <Route exact path="/admin/11092021/users">
+          <Users />
         </Route>
         <Route exact path="/terms-and-conditions">
           <TermsAndConditions />
