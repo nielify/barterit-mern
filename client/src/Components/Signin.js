@@ -11,13 +11,11 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Container from '@material-ui/core/Container';
 
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
 import { UserContext } from '../Context/UserContext';
 
 import useRemoveCover from '../CustomHooks/useRemoveCover';
 
-import signinLogo from '../Images/signin-logo.png'
+import signinLogo from '../Images/logo3.svg'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     textAlign: 'center',
-    marginBottom: theme.spacing(1.5)
+    width: theme.spacing(10.5),
+    height: theme.spacing(10.5),
   },
   typography: {
     textAlign: 'center',
@@ -106,7 +105,7 @@ const Signin = ({ setShowProgress }) => {
 
   return (
     <Container className={classes.container} maxWidth="xs">
-      <Avatar className={classes.avatar} src={signinLogo}>
+      <Avatar className={classes.avatar} src={signinLogo} >
       </Avatar>
       <Typography className={classes.typography}
         component="h1" 
