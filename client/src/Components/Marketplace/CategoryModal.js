@@ -107,8 +107,12 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, cu
       
       if (!data.posts[0]) setShowNote(true);
       else setShowNote(false);
+
+      let sortedByDateData = data.posts.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
   
-      setPosts(data.posts); 
+      setPosts(sortedByDateData); 
       setShowLoader(false);
     } catch (err) {
       setShowLoader(false);
@@ -130,11 +134,15 @@ const CategoryModal = ({ open, setOpen, setPosts, setShowLoader, setShowNote, cu
       });
 
       const data = await res.json();
-      console.log(data);
+
       if (!data.availablePosts[0]) setShowNote(true);
       else setShowNote(false);
-  
-      setPosts(data.availablePosts); 
+      
+      let sortedByDateData = data.availablePosts.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      setPosts(sortedByDateData); 
       setShowLoader(false);
 
     } catch (err) {

@@ -71,6 +71,11 @@ const Marketplace = () => {
 
         if (!searchResult[0]) setShowNote(true);
 
+        /* //sorting search result by date
+        let sortedByDateData = searchResult.sort(function(a,b){
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        }); */
+
         setShowLoader(false);
         setPosts(searchResult);
         setShowPosts(true);

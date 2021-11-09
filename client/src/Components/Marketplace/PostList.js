@@ -41,7 +41,10 @@ const PostList = ({ posts, setPosts, showLoader, setShowLoader, showNote, setSho
     .then(res => res.json())
     .then(data => {
       if (!data.availablePosts[0]) setShowNote(true);
-      setPosts(data.availablePosts);
+      let sortedByDateData = data.availablePosts.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      setPosts(sortedByDateData);
       setShowLoader(false);
     })
     .catch(err => {
