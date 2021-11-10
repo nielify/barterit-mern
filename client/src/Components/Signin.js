@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Container from '@material-ui/core/Container';
+import Modal from '@material-ui/core/Modal';
 
 import { UserContext } from '../Context/UserContext';
 
@@ -50,6 +51,21 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
   },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: theme.spacing(2),
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    //padding: theme.spacing(3, 3,),
+    borderRadius: 10,
+    minWidth: 300,
+    maxWidth: 450,
+    position: 'relative',
+  },
 }));
 
 const Signin = ({ setShowProgress }) => {
@@ -69,6 +85,8 @@ const Signin = ({ setShowProgress }) => {
   const [ emailTextHelper, setEmailTextHelper ] = useState('');
   const [ passwordTextHelper, setPasswordTextHelper ] = useState('');
 
+  const [openBannedModal, setOpenBannedModal] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setEmailError(false);
@@ -85,7 +103,7 @@ const Signin = ({ setShowProgress }) => {
       body: JSON.stringify({ email, password })
     }); 
     const data = await res.json();
-    //console.log(data);
+    console.log(data);
     setShowProgress(false);
     if (data.email) {
       setEmailError(true);
@@ -95,12 +113,16 @@ const Signin = ({ setShowProgress }) => {
       setPasswordError(true);
       setPasswordTextHelper(data.password);
     }
-    if (data.user) {
-      setUser(data.user);
-      history.push('/');
-    }
     if (data.loginSuccess === false) {
       setShowAlert(true);
+    }
+    
+    if (data.user.isBanned) {
+      setOpenBannedModal(true);
+    }
+    else if (data.user) {
+      setUser(data.user);
+      history.push('/');
     }
   }
 
@@ -175,8 +197,42 @@ const Signin = ({ setShowProgress }) => {
           </Grid>
         </Grid>
       </form>
+      {openBannedModal && <BannedModal 
+        open={openBannedModal}
+        setOpen={setOpenBannedModal}
+        user={user}
+      />}
     </Container>
   );
 }
  
+const BannedModal = ({ open, setOpen, user }) =>{
+  const classes = useStyles();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      disableEnforceFocus
+    >
+      <div className={classes.paper} style={{padding: 0}}>
+        <Alert severity="error">
+          <Typography
+            variant="subtitle1"
+            style={{ marginTop: 16, marginBottom: 16, fontSize: '.95rem', lineHeight: '1.3rem'}}
+          >
+            This is user {user.email} is banned from using this platform.<br/> <br/>
+            Please contact <b style={{color: '#009688'}}>BarterIT</b> admins at <i>teamrealme333@gmail.com</i> for more information
+          </Typography>
+        </Alert>
+      </div>
+    </Modal>
+  )
+}
+
 export default Signin;
