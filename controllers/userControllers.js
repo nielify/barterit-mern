@@ -273,3 +273,21 @@ module.exports.rateUser_post = async (req, res) => {
     });
   }
 }
+
+module.exports.banUser_post = async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const user = await User.findById(user_id);
+  user.isBanned = true;
+  const newUser = await user.save();
+  res.send(newUser);
+}
+
+module.exports.verifyUser_post = async (req, res) => {
+  const user_id = req.params.user_id;
+
+  const user = await User.findById(user_id);
+  user.isVerified = true;
+  const newUser = await user.save();
+  res.send(newUser);
+}
