@@ -293,7 +293,7 @@ const Header = (props) => {
                       </List>
                       <Divider />
                       <List component="nav">
-                        <ListItem 
+                        {!user.isVerified && <ListItem 
                           onClick={toggleAccountPopper}
                           component={Link}
                           to="/user-verification/id-selection"
@@ -304,7 +304,7 @@ const Header = (props) => {
                             <VerifiedUserOutlinedIcon />
                           </ListItemIcon>
                           <ListItemText primary="Verify Account" />
-                        </ListItem>
+                        </ListItem>}
                         <ListItem 
                           button 
                           className={classes.listItem} 
