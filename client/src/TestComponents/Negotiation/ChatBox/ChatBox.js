@@ -71,7 +71,7 @@ const ChatBox = ({ matches, conversation, negotiation, setConversation, socketRe
           <Avatar src={negotiation.post.images[0] ? negotiation.post.images[0] : '' } />
         </AvatarGroup>
         <div className={classes.title}>
-          <Typography variant="body1" style={{fontWeight: 'bold', fontSize: '.95rem'}}>
+          <Typography component={Link} to={`/user/${user._id !== negotiation.owner._id ? negotiation.owner._id : negotiation.notOwner._id }`} variant="body1" style={{fontWeight: 'bold', fontSize: '.95rem', textDecoration: 'none', color: 'black'}}>
           { user._id !== negotiation.owner._id ? `${negotiation.owner.firstName} ${negotiation.owner.lastName}` : `${negotiation.notOwner.firstName} ${negotiation.notOwner.lastName}`}
           </Typography>
           <Typography variant="subtitle2" style={{fontWeight: 'normal', fontSize: '.8rem', lineHeight: '1rem'}}>
