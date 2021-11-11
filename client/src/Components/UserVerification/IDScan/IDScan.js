@@ -87,7 +87,7 @@ const IDScan = () => {
           style={{
             width: '100%',
             height: '75%',
-            marginBottom: 32,
+            marginBottom: 8,
             overflow: 'hidden',
             display: 'flex',
             justifyContent: 'center',
@@ -117,7 +117,7 @@ const IDScan = () => {
       }
 
       {image != '' && facingMode === 'environment' &&
-        <div style={{width: '100%', height: '75%', marginBottom: 32, backgroundColor: '#00695f'}}>
+        <div style={{width: '100%', height: '75%', marginBottom: 8, backgroundColor: '#00695f'}}>
           <img 
             src={image} 
             style={{
@@ -129,6 +129,15 @@ const IDScan = () => {
         </div>
       }
 
+      {facingMode === 'environment' && <div style={{textAlign:'center', marginBottom: 16}}>
+        <Typography variant="subtitle2">
+          Take a photo of your ID
+        </Typography>
+        <Typography variant="subtitle2" style={{fontWeight: 'normal'}}>
+          Make sure the picture on the ID is clear and the information can be read.
+        </Typography>
+      </div>}
+    
       {facingMode !== 'environment' && <div style={{height: '75%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 32}}>
         <Typography
           variant="subtitle2"
