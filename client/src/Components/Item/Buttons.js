@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
@@ -124,21 +124,21 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
 
   return (  
     <div className={classes.root}>
-      <Button
+      {post.status !== 'bartered' && <Button
         color="primary"
         variant="contained"
         startIcon={<ForumIcon />}
-        style={{marginRight: 8, width: '66%', minWidth: 130}}
+        style={{marginRight: 8, width: '60%', minWidth: 130}}
         onClick={handleNegotiateClick}
       >
         Negotiate
-      </Button>
+      </Button>}
       <Button
         color={ isSaved ? 'primary' : 'secondary'}
         variant="contained"
         startIcon={ isSaved ? <TurnedInIcon /> : <TurnedInNotIcon /> }
         onClick={ isSaved ? handleRemoveSaveClick : handleSaveClick }
-        style={{padding: '0 30px', marginRight: 8, width: '17%', minWidth: 100}}
+        style={{marginRight: 8, width: post.status === 'bartered' ? '50%':'20%', minWidth: 100}}
       >
         { isSaved ? 'Saved' : 'Save' }
       </Button>
@@ -146,7 +146,7 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
         color="primary"
         variant="contained"
         startIcon={<ReportProblemIcon />}
-        style={{padding: '0 30px', width: '17%', minWidth: 100}}
+        style={{width: post.status === 'bartered' ? '50%':'20%', minWidth: 100}}
         onClick={handleOpenReportModal}
       >
         Report

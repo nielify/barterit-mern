@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OwnerButtons = () => {
+const OwnerButtons = (props) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -40,6 +40,10 @@ const OwnerButtons = () => {
   const handleDeleteConfirmationOpen = () => {
     setOpen(true);
   }
+
+  useEffect(() => {
+    console.log(props.post);
+  }, [props.post]);
 
   return (  
     <div className={classes.root}>
@@ -52,7 +56,7 @@ const OwnerButtons = () => {
       >
         Edit Post
       </Button> */}
-      <Button
+      {props.post.status !== 'bartered' && <Button
         color="primary"
         variant="contained"
         fullWidth
@@ -61,7 +65,7 @@ const OwnerButtons = () => {
         //style={{padding: '0 30px'}}
       >
         Delete
-      </Button>
+      </Button>}
       <DeleteConfirmation open={open} setOpen={setOpen} />
     </div>
     

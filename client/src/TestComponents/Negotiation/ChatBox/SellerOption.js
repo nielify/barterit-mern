@@ -85,7 +85,7 @@ const SellerOptions = (props) => {
       >
         { props.isBartered ? 'Bartered' : 'Barter IT' }
       </Button>
-      {!props.isBartered && <Button
+      {/* !props.isBartered && */ <Button
         color="primary"
         variant="outlined"
         style={{width: '45%'}}

@@ -69,7 +69,7 @@ const Item = () => {
       <Description post={post} />
       <InReturn post={post} />
       { !isOwnPost && <Buttons post={post} isSaved={isSaved} setIsSaved={setIsSaved} user_id={user._id} /> }
-      { isOwnPost && <OwnerButtons /> }
+      { isOwnPost && <OwnerButtons post={post} /> }
     </Container>
   );
 }

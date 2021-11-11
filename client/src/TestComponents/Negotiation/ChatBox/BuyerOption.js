@@ -56,7 +56,7 @@ const BuyerOptions = (props) => {
       >
         {props.negotiation.isRated ? 'Rated' : 'Rate User'}
       </Button>
-      {props.negotiation.post.status !== 'bartered' && <Button
+      {/* props.negotiation.post.status !== 'bartered' &&  */<Button
         color="primary"
         variant="outlined"
         style={{width: '45%'}}
