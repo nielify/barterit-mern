@@ -119,7 +119,7 @@ const FaceScan = () => {
             maxWidth: 420,
             maxHeight: 420,
             marginTop: 32,
-            marginBottom: 150,
+            marginBottom: 50,
             overflow: 'hidden',
             border: 'solid 5px #009688',
             borderRadius: '50%',
@@ -170,6 +170,15 @@ const FaceScan = () => {
           /> 
         </div>
       }
+
+      {<div style={{textAlign:'center', marginBottom: 16}}>
+        <Typography variant="subtitle2">
+        Take a selfie 
+        </Typography>
+        <Typography variant="subtitle2" style={{fontWeight: 'normal'}}>
+          Make sure it visibly shows your face and the shot is clear and not blurred.
+        </Typography>
+      </div>}
 
       {image == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
         <CameraIcon fontSize="large" style={{color: '#009688'}} />      
@@ -260,9 +269,10 @@ function SuccessModal({ open, setOpen }) {
           <Divider /> 
           <Typography
             variant="subtitle1"
-            style={{marginTop: 16, marginBottom: 16}}
+            style={{marginTop: 16, marginBottom: 16, fontSize: '.9rem', lineHeight: '1.4rem'}}
           > 
-            You have sent a request for your the validation of your account. BarterIT admin is now reviewing your request.
+            You have sent a request for the validation of your account. BarterIT admin is now reviewing your request. <br/><br/>
+            Once your request is approved, you will have a green checkmark appear beside your name on your profile.
           </Typography>
           <div className={classes.buttonsContainer}>
             <Button

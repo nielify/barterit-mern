@@ -7,12 +7,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 'calc(100vh - 64px)',
     padding: 0,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    height: '90vh',
   },
   capturedImageContainer: {
     maxWidth: 420, 
     maxHeight: 420, 
-    marginBottom: 160, 
+    marginBottom: 50, 
     marginTop:32, 
     border: 'solid 5px #009688', 
     borderRadius: '50%', 
@@ -27,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(4, 4,),
-    borderRadius: 10
+    padding: theme.spacing(3,4),
+    borderRadius: 10,
+    maxWidth: 450,
   },
   buttonsContainer: {
     display: 'flex',
