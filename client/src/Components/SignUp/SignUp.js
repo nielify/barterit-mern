@@ -105,7 +105,7 @@ const Signup = ({ setShowProgress }) => {
   const [ firstName, setFirstName ] = useState('');
   const [ middleName, setMiddleName ] = useState('');
   const [ sex, setSex ] = useState(''); 
-  const [ dateOfBirth, setDate ] = useState(new Date(2010, 2, 21));
+  const [ dateOfBirth, setDate ] = useState(new Date(2005, 0, 1));
   const [ town, setTown ] = useState('');
   const [ brgy, setBrgy ] = useState('');
   const [ specificAddress, setSpecificAddress ] = useState('');
@@ -419,7 +419,7 @@ const Signup = ({ setShowProgress }) => {
                 fullWidth
                 required
                 disableToolbar
-                maxDate={new Date(2010, 11, 31)}
+                maxDate={new Date(2005, 10, 13)}
                 format="MM/DD/yyyy"
                 margin="normal"
                 label="Date of Birth"
