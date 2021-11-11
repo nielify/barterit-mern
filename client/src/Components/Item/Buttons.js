@@ -124,21 +124,22 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
 
   return (  
     <div className={classes.root}>
-      {post.status !== 'bartered' && <Button
+      {<Button
         color="primary"
         variant="contained"
         startIcon={<ForumIcon />}
         style={{marginRight: 8, width: '60%', minWidth: 130}}
         onClick={handleNegotiateClick}
+        disabled={post.status === 'bartered'}
       >
-        Negotiate
+        {post.status !== 'bartered' ? 'Negotiatiate' : 'Bartered' }
       </Button>}
       <Button
         color={ isSaved ? 'primary' : 'secondary'}
         variant="contained"
         startIcon={ isSaved ? <TurnedInIcon /> : <TurnedInNotIcon /> }
         onClick={ isSaved ? handleRemoveSaveClick : handleSaveClick }
-        style={{marginRight: 8, width: post.status === 'bartered' ? '50%':'20%', minWidth: 100}}
+        style={{marginRight: 8, width: /* post.status === 'bartered' ? '50%': */'20%', minWidth: 100}}
       >
         { isSaved ? 'Saved' : 'Save' }
       </Button>
@@ -146,7 +147,7 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
         color="primary"
         variant="contained"
         startIcon={<ReportProblemIcon />}
-        style={{width: post.status === 'bartered' ? '50%':'20%', minWidth: 100}}
+        style={{width:/*  post.status === 'bartered' ? '50%': */'20%', minWidth: 100}}
         onClick={handleOpenReportModal}
       >
         Report
