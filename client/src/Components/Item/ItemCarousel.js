@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 import Carousel from 'react-material-ui-carousel';
+import { Image, Transformation } from 'cloudinary-react';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {   
@@ -55,10 +57,23 @@ const ItemCarousel = ({ post }) => {
 function Item({ image }) {
   const classes = useStyles();
 
+  const url = image;
+  let extractedUrl = url.split("/")[7];
+
+  useEffect(() => {
+    console.log(extractedUrl);
+  }, []);
+
   return (
     <>
-      <img src={image} alt="main" className={classes.image}/>
-      <img src={image} alt="background" className={classes.imageBackground}/>
+      {/* <img src={image} alt="main" className={classes.image}/> */}
+      {/* <img src={image} alt="background" className={classes.imageBackground}/> */}
+      <Image cloudName="barter-it" publicId={extractedUrl} className={classes.image}>
+        <Transformation quality="auto" fetchFormat="auto" />
+      </Image>
+      <Image cloudName="barter-it" publicId={extractedUrl} className={classes.imageBackground}>
+        <Transformation quality="auto" fetchFormat="auto" />
+      </Image>
     </>
   )
 }

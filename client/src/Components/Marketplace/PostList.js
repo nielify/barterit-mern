@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import { Image, Transformation } from 'cloudinary-react';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -85,6 +86,13 @@ function PostCard({ title, location, image, id }) {
     console.log(data);*/
   }
 
+  const url = image;
+  let extractedUrl = url.split("/")[7];
+
+  useEffect(() => {
+    console.log(extractedUrl);
+  }, []);
+
   return (
     <Grid item xs={6} sm={4} lg={3} 
       component={Link}
@@ -92,14 +100,18 @@ function PostCard({ title, location, image, id }) {
       style={{textDecoration: 'none'}}
     >
       <Card className={classes.root} elevation={0} >
-        <CardActionArea>
+        <CardActionArea style={{objectFit: 'fill'}}>
           <CardMedia
-            component="img"
+            component={Image}
             alt={ title }
             height="180"
-            image={image}
-            style={{borderRadius: 7}}
-          />
+            //image={image}
+            cloudName="barter-it"
+            publicId={extractedUrl}
+            style={{borderRadius: 7, objectFit: 'cover', width: '100%'}}
+          > 
+            <Transformation quality="auto" fetchFormat="auto" />
+          </CardMedia>
           <CardContent className={classes.cardContent}>
             <Typography variant="h6" component="h3" style={{fontSize: '1rem', lineHeight: 1.1, marginBottom: 3 }}>
               { title }
