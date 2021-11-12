@@ -132,7 +132,7 @@ const Buttons = ({ post, isSaved, setIsSaved, user_id }) => {
         onClick={handleNegotiateClick}
         disabled={post.status === 'bartered'}
       >
-        {post.status !== 'bartered' ? 'Negotiatiate' : 'Bartered' }
+        {post.status !== 'bartered' ? 'Negotiate' : 'Bartered' }
       </Button>}
       <Button
         color={ isSaved ? 'primary' : 'secondary'}
