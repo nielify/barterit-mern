@@ -117,7 +117,7 @@ const Signin = ({ setShowProgress }) => {
       setShowAlert(true);
     }
     
-    if (data.user.isBanned) {
+    if (data.user && data.user.isBanned) {
       setOpenBannedModal(true);
     }
     else if (data.user) {
