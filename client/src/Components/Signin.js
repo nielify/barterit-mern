@@ -11,12 +11,22 @@ import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 import Container from '@material-ui/core/Container';
 import Modal from '@material-ui/core/Modal';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { UserContext } from '../Context/UserContext';
 
 import useRemoveCover from '../CustomHooks/useRemoveCover';
 
 import signinLogo from '../Images/noletterlogogreen.svg'
+
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -86,7 +96,7 @@ const Signin = ({ setShowProgress }) => {
   const [ passwordTextHelper, setPasswordTextHelper ] = useState('');
 
   const [openBannedModal, setOpenBannedModal] = useState(false);
-
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setEmailError(false);
@@ -126,6 +136,13 @@ const Signin = ({ setShowProgress }) => {
     }
   }
 
+  const [ showPassword, setShowPassword] = useState(false);
+  const [ showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  }
+
   return (
     <Container className={classes.container} maxWidth="xs">
       <Avatar className={classes.avatar} src={signinLogo} >
@@ -158,18 +175,26 @@ const Signin = ({ setShowProgress }) => {
           className={classes.textfield}
           onChange={e => setEmail(e.target.value)}
         />
-        <TextField
-          variant="outlined"
-          //margin="dense"
-          size="small"
-          fullWidth
-          label="Password"
-          type="password"
-          error={passwordError}
-          helperText={passwordTextHelper}
-          className={classes.textfield}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <FormControl variant="outlined" className={classes.textfield} size="small" helperText={passwordTextHelper} error={passwordError} fullWidth>
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            type={showConfirmPassword ? 'text' : 'password'}
+            onChange={e => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  tabIndex={-1}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  edge="end"
+                >
+                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
+          />
+          <FormHelperText>{passwordTextHelper}</FormHelperText>
+        </FormControl>
         <Button
           type="submit"
           fullWidth
