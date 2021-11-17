@@ -40,7 +40,12 @@ const negotiationSchema = mongoose.Schema({
       default: Date.now
     },
   },
-  isRated: {
+  isRatedByBuyer: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  isRatedBySeller: {
     type: Boolean,
     required: true,
     default: false

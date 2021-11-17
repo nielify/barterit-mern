@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,10 +50,10 @@ const BuyerOptions = (props) => {
         color="primary"
         variant="contained"
         style={{width: '45%', marginRight: 24}}
-        disabled={props.negotiation.isRated === true && props.negotiation.post.status === 'bartered' || props.negotiation.post.status !== 'bartered'}
+        disabled={props.negotiation.isRatedByBuyer === true && props.negotiation.post.status === 'bartered' || props.negotiation.post.status !== 'bartered'}
         onClick={() => setModalOpen(true)}
       >
-        {props.negotiation.isRated ? 'Rated' : 'Rate User'}
+        {props.negotiation.isRatedByBuyer ? 'Rated' : 'Rate Trader'}
       </Button>
       {/* props.negotiation.post.status !== 'bartered' &&  */<Button
         color="primary"

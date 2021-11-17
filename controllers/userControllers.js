@@ -252,7 +252,7 @@ module.exports.notification_delete = async (req, res) => {
 }
 
 module.exports.rateUser_post = async (req, res) => {
-  const owner_id = req.params.owner_id;
+  const owner_id = req.params.owner_id; //owner or not owner
   const token = req.cookies.jwt;
   const negotiation_id = req.body.negotiation_id;
   const stars = req.body.stars;
@@ -264,11 +264,15 @@ module.exports.rateUser_post = async (req, res) => {
       user.ratings.push({ from: owner_id, stars });
       await user.save();
 
-      //change negotiation field rated to true
+      //change negotiation field ratedByUser/ratedByOwner to true
       const negotiation = await Negotiation.findOne({ _id: negotiation_id }).populate('post').populate('owner').populate('notOwner').exec();;
-      negotiation.isRated = true;
+      if (verifiedToken.id == negotiation.owner._id) {
+        negotiation.isRatedBySeller = true;
+      }
+      else if (verifiedToken.id == negotiation.notOwner._id) {
+        negotiation.isRatedByBuyer = true;
+      }
       await negotiation.save();
-      
       res.send(negotiation);
     });
   }

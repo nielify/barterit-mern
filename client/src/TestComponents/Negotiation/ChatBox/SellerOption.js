@@ -9,6 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Alert from "@material-ui/lab/Alert";
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   sellerOptionContainer: {
@@ -41,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SellerOptions = (props) => {
   const classes = useStyles();
+
+  const [modalOpen, setModalOpen] = useState(false); //rate modal
+  const [submittedModalOpen, setSubmittedModalOpen] = useState(false); //submittedModal
 
   //barterit modal
   const [confirmModal, setConfirmModal] = useState(false);
@@ -76,7 +82,7 @@ const SellerOptions = (props) => {
 
   return (  
     <div className={classes.sellerOptionContainer}>
-      <Button
+      {!props.isBartered && <Button
         color="primary"
         variant="contained"
         style={{width: '45%', marginRight: 24}}
@@ -84,7 +90,16 @@ const SellerOptions = (props) => {
         disabled={props.isBartered}
       >
         { props.isBartered ? 'Bartered' : 'Barter IT' }
-      </Button>
+      </Button>}
+      {props.isBartered && <Button
+        color="primary"
+        variant="contained"
+        style={{width: '45%', marginRight: 24}}
+        onClick={() => setModalOpen(true)}
+        disabled={props.negotiation.isRatedBySeller}
+      >
+        { props.negotiation.isRatedBySeller ? 'Rated' : 'Rate Bidder' }
+      </Button>}
       {/* !props.isBartered && */ <Button
         color="primary"
         variant="outlined"
@@ -102,6 +117,17 @@ const SellerOptions = (props) => {
         handleBarterItem={handleBarterItem}
       />}
       {openBarterSucess && <BarterSuccessModal open={openBarterSucess} setOpen={setOpenBarterSuccess} />}
+
+      {modalOpen && 
+        <RateModal 
+          open={modalOpen} 
+          setOpen={setModalOpen} 
+          setSubmittedModalOpen={setSubmittedModalOpen} 
+          negotiation={props.negotiation}
+          setNegotiation={props.setNegotiation}
+        />}
+
+      {submittedModalOpen && <SubmittedModal open={submittedModalOpen} setOpen={setSubmittedModalOpen} />}
     </div>
   );
 }
@@ -189,6 +215,109 @@ function BarterSuccessModal({ open, setOpen }) {
     >
       <Alert severity="success">
         You bartered an item successfully. 
+      </Alert>
+    </Modal>
+  )
+}
+
+const labels = {
+  1: 'Useless',
+  2: 'Poor',
+  3: 'Ok',
+  4: 'Good',
+  5: 'Excellent',
+};
+
+function RateModal({ open, setOpen, setSubmittedModalOpen, negotiation, setNegotiation }) {
+  const classes = useStyles();
+
+  const [value, setValue] = useState(0);
+  const [hover, setHover] = useState(-1);
+
+  const [submitting, setSubmitting] = useState(false);
+  const handleSubmit = async () => {
+    setSubmitting(true);
+
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/rate/${negotiation.notOwner._id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ negotiation_id: negotiation._id, stars: value})
+    });
+    const data = await res.json();
+    console.log(data);
+
+    setOpen(false);
+    setSubmittedModalOpen(true);
+    setNegotiation(data);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      disableEnforceFocus 
+    >
+      <div className={classes.paper}>
+        <Typography gutterBottom style={{marginBottom: 16}}> 
+          How is your experience with this user?
+        </Typography>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <Rating
+            name="customized-empty"
+            defaultValue={0}
+            precision={1}
+            emptyIcon={<StarBorderIcon fontSize="inherit" />}
+            size="large"
+            style={{alignSelf: 'center'}}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            onChangeActive={(event, newHover) => {
+              setHover(newHover);
+            }}
+          />
+          <Box style={{height: 32}} ml={1}>{labels[hover !== -1 ? hover : value]}</Box>
+        </div>  
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: 16}}>
+          <Button variant="outlined" color="primary" style={{marginRight: 16}} onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            disabled={!value || submitting} 
+            onClick={handleSubmit}
+          >
+            { submitting ? 'Submitting...' : 'Submit' }
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
+function SubmittedModal({ open, setOpen }) {
+  const classes = useStyles();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      disableEnforceFocus 
+    >
+      <Alert severity="success">
+        Rating submitted!
       </Alert>
     </Modal>
   )
