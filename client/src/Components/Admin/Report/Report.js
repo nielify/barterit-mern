@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 import useStyles from './ReportCSS';
-import useRequireAuth from '../../../CustomHooks/useRequireAuth';
+import useRequireAdminAuth from '../../../CustomHooks/useRequireAdminAuth';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 
 const Report = () => {
-  useRequireAuth();
+  useRequireAdminAuth();
   const classes = useStyles();
 
   const [reports, setReports] = useState([]);

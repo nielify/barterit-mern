@@ -6,6 +6,7 @@ import LinearLoader from './Utilities/LinearLoader';
 import DefaultHeader from './Utilities/DefaultHeader';
 import Header from './Utilities/Header/Header';
 import LoadingCover from './Utilities/LoadingCover';
+import AdminHeader from './Utilities/AdminHeader';
 
 //Page Components
 import Marketplace from './Components/Marketplace/Marketplace';
@@ -69,7 +70,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <LinearLoader showProgress={showProgress} />
       { cover && <LoadingCover /> }
-      { user._id ? <Header /> : <DefaultHeader />}
+      { user.type === 'admin' ? <AdminHeader/> : user._id ? <Header /> : <DefaultHeader />}
       <Switch>
         <Route exact path="/">
           <Marketplace />
@@ -140,10 +141,10 @@ function App() {
         <Route exact path="/user/:userId/reset-password/:token">
           <ResetPassword setShowProgress={setShowProgress} />
         </Route>
-        <Route exact path="/admin/27092021/reports">
+        <Route exact path="/admin/reports">
           <Report />
         </Route>
-        <Route exact path="/admin/11092021/users">
+        <Route exact path="/admin/users">
           <Users />
         </Route>
         <Route exact path="/terms-and-conditions">

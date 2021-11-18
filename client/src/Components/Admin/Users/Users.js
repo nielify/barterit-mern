@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { DataGrid } from '@mui/x-data-grid';
@@ -8,7 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Alert from '@material-ui/lab/Alert';
 
-import useRequireAuth from '../../../CustomHooks/useRequireAuth';
+import useRequireAdminAuth from '../../../CustomHooks/useRequireAdminAuth';
+
+//admin cover
+import { AdminCoverContext } from '../../../Context/AdminCoverContext';
+import AdminCover from '../AdminCover';
 
 const useStyles = makeStyles((theme) => ({
   datagrid:{
@@ -102,7 +106,9 @@ const columns = [
 
 const Users = () => {
   const classes = useStyles();
-  useRequireAuth();
+  useRequireAdminAuth();
+
+  const [ adminCover ] = useContext(AdminCoverContext);
 
   //for data
   const [rows, setRows] = useState([]);
@@ -191,6 +197,7 @@ const Users = () => {
 
   return (  
     <>
+      <AdminCover/>
       <div className={classes.datagrid}>
         <DataGrid
           rows={rows}

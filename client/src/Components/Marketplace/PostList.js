@@ -90,7 +90,7 @@ function PostCard({ title, location, image, id }) {
   let extractedUrl = url.split("/")[7];
 
   useEffect(() => {
-    console.log(extractedUrl);
+    //console.log(extractedUrl);
   }, []);
 
   return (

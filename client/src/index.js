@@ -5,19 +5,22 @@ import App from './App';
 import { UserProvider } from './Context/UserContext';
 import { CoverProvider } from './Context/CoverContext';
 import { ActiveChatProvider } from './Context/ActiveChatContext';
+import { AdminCoverProvider } from './Context/AdminCoverContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ActiveChatProvider>
-    <CoverProvider>
-    <UserProvider>
-      <Router>
-        <App />
-      </Router>
-    </UserProvider>
-    </CoverProvider>
-    </ActiveChatProvider>
+    <AdminCoverProvider>
+      <ActiveChatProvider>
+        <CoverProvider>
+          <UserProvider>
+            <Router>
+              <App />
+            </Router>
+          </UserProvider>
+        </CoverProvider>
+      </ActiveChatProvider>
+    </AdminCoverProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

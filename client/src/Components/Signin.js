@@ -126,14 +126,20 @@ const Signin = ({ setShowProgress }) => {
     if (data.loginSuccess === false) {
       setShowAlert(true);
     }
-    
+
     if (data.user && data.user.isBanned) {
       setOpenBannedModal(true);
+    }
+    else if (data.user && data.user.type === 'admin') {
+      setUser(data.user);
+      history.push('/admin/users');
     }
     else if (data.user) {
       setUser(data.user);
       history.push('/');
     }
+
+
   }
 
   const [ showPassword, setShowPassword] = useState(false);
