@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
 
+import SearchBox from './SearchBox';
 import PersonalInfo from './PersonalInfo';
 import PostedItems from './PostedItems';
 
@@ -20,6 +21,7 @@ const MyProfile = ({ user, setUser }) => {
 
   return (  
     <Container maxWidth="md" className={classes.root}>
+      <SearchBox />
       <PersonalInfo user={user} setUser={setUser} />
       <PostedItems />
     </Container>
