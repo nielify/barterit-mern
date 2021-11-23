@@ -33,6 +33,31 @@ module.exports.user_get = async (req, res) => {
   }  
 }
 
+module.exports.userSearch_get = async (req, res) => {
+
+  const searchArray = req.params.name.split(' ');
+  const searchJoined = searchArray.join('|');
+
+  const results = await User.find({
+    $or: [
+      {
+        firstName: { 
+          $regex: searchJoined, 
+          $options: "i" 
+        },
+      },
+      {
+        lastName: {
+          $regex: searchJoined, 
+          $options: "i" 
+        }
+      },
+    ]
+  })
+  
+  res.send(results);
+}
+
 module.exports.allUsers_get = async (req, res) => {
   const users = await User.find();
   res.send(users);

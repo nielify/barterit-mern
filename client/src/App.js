@@ -13,6 +13,7 @@ import Marketplace from './Components/Marketplace/Marketplace';
 import CreatePost from './Components/CreatePost/CreatePost';
 import Item from './Components/Item/Item';
 import MyProfile from './Components/MyProfile/MyProfile';
+import ProfileSearchResults from './Components/ProfileSearchResults/ProfileSearchResults';
 import SavedItems from './Components/SavedItems/SavedItems';
 import User from './Components/User/User';
 import Map from './Components/Map';
@@ -44,6 +45,7 @@ import { CoverContext } from './Context/CoverContext';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+
 
 
 const theme = createMuiTheme({
@@ -83,6 +85,9 @@ function App() {
         </Route>
         <Route exact path="/profile">
           <MyProfile />
+        </Route>
+        <Route exact path="/profile/search/:name">
+          <ProfileSearchResults />
         </Route>
         <Route exact path="/saved-items">
           <SavedItems />
