@@ -59,7 +59,7 @@ const Report = () => {
               <Typography
                 className={classes.smallFont}
               >
-                Sender: <Link to={`/user/${report.sender._id}`} className={classes.hover + ' ' + classes.color}>{ `${report.sender.firstName} ${report.sender.lastName}` }</Link> 
+                Sender: <Link to={`/user/${report.sender._id}`} target="_blank" className={classes.hover + ' ' + classes.color}>{ `${report.sender.firstName} ${report.sender.lastName}` }</Link> 
               </Typography>
               <Typography
                 className={classes.smallFont}
@@ -69,6 +69,7 @@ const Report = () => {
               <Typography
                 component={Link}
                 to={`/item/${report.post._id}`}
+                target="_blank"
                 className={classes.smallFont + ' ' + classes.hover}
             
               >
