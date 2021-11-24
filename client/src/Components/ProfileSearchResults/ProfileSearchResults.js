@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     width: '90%',
-    backgroundColor: '#eed',
+    backgroundColor: '#eee',
     borderRadius: '15px',
     padding: theme.spacing(2, 2),
     marginBottom: theme.spacing(1)
@@ -55,14 +55,20 @@ const ProfileSearchResults = () => {
   const params = useParams();
 
   const [users, setUsers] = useState([]);
-
+  const [showLoader, setShowLoader] = useState(true);
+  const [showNotFound, setShowNotFound] = useState(false);
+  
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/search/${params.name}`, {
       headers: { 'Content-type': 'application/json' },
       credentials: 'include',
     })
       .then(res => res.json())
-      .then(data => setUsers(data))
+      .then(data => {
+        setUsers(data);
+        if (!data[0]) setShowNotFound(true);
+        setShowLoader(false);
+      })
       .catch(err => console.log(err));
   }, []);
 
@@ -80,7 +86,8 @@ const ProfileSearchResults = () => {
           <UserItem user={user} key={user._id} />
         ))}
       </List>
-      {/* <Loader /> */}
+      {showNotFound && <Typography variant="body2" style={{textAlign: 'center'}}>User not found</Typography>}
+      {showLoader && <Loader />}
      
     </Container>
   );
@@ -108,7 +115,7 @@ const Loader = () => {
   const classes = useStyles();
 
   return(
-    <div style={{textAlign: 'center', width: '100%', marginTop: '32px'}}>
+    <div style={{textAlign: 'center', width: '100%', marginTop: '16px'}}>
       <CircularProgress 
         style={{color: '#999'}}
       />
