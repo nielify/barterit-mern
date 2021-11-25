@@ -18,7 +18,6 @@ export default function useRequireAuth() {
     }) 
       .then(res => res.json())
       .then(data => {
-        console.log('from requiredadminquth',data);
         if (data.redirect) {
           history.push(data.url);
           setCover(false);

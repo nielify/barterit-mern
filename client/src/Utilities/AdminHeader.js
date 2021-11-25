@@ -89,6 +89,10 @@ const AdminHeader = () => {
                 Users
               </Button>
               |
+              <Button component={Link} to="/admin/posts" style={{color: 'white'}}>
+                Posts
+              </Button>
+              |
               <Button component={Link} to="/admin/reports" style={{color: 'white'}}>
                 Reports
               </Button>

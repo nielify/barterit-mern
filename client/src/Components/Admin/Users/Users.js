@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
+import useStyles from '../Users/UsersCSS';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@material-ui/core/Button';
@@ -13,38 +14,6 @@ import useRequireAdminAuth from '../../../CustomHooks/useRequireAdminAuth';
 //admin cover
 import { AdminCoverContext } from '../../../Context/AdminCoverContext';
 import AdminCover from '../AdminCover';
-
-const useStyles = makeStyles((theme) => ({
-  datagrid:{
-    height: '80vh',
-    width: '100vw',
-  },
-  buttons: {
-    marginTop: theme.spacing(3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing(2),
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    //padding: theme.spacing(3, 3,),
-    borderRadius: 10,
-    minWidth: 300,
-    maxWidth: 450,
-    position: 'relative',
-  },
-  mainDialog: {
-    padding: theme.spacing(3, 3,),
-  }
-  
-}));
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 230 },

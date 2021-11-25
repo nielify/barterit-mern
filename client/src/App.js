@@ -37,6 +37,7 @@ import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
 import Report from './Components/Admin/Report/Report';
 import Users from './Components/Admin/Users/Users';
+import Posts from './Components/Admin/Posts/Posts';
 import TermsAndConditions from './Components/TermsAndConditions';
 
 //Contexts
@@ -151,6 +152,9 @@ function App() {
         </Route>
         <Route exact path="/admin/users">
           <Users />
+        </Route>
+        <Route exact path="/admin/posts">
+          <Posts />
         </Route>
         <Route exact path="/terms-and-conditions">
           <TermsAndConditions />

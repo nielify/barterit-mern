@@ -7,7 +7,7 @@ const { async } = require('crypto-random-string');
 
 //all posts (marketplace)
 module.exports.allPost_get = async (req, res) => {
-  const allPosts = await Post.find();
+  const allPosts = await Post.find().populate('userId').exec();
   res.send({ allPosts });
 }
 
