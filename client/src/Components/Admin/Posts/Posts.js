@@ -9,15 +9,14 @@ import Button from '@material-ui/core/Button';
 import DeleteModal from './DeleteModal/DeleteModal';
 import useRequireAdminAuth from '../../../CustomHooks/useRequireAdminAuth';
 
-
-
-
 const Posts = () => {
   useRequireAdminAuth();
   const classes = useStyles();
 
   const [post, setPost] = useState([]);
   const [rows, setRows] = useState([]);
+  const [selectedRow, setSelectedRow] = useState({});
+
   const columns = [
     {
       field: 'image',
@@ -85,7 +84,7 @@ const Posts = () => {
     },
     {
       field: 'action',
-      headerName: 'Action',
+      headerName: 'Actions',
       width: 200,
       editable: false,
       renderCell: (params) => (
@@ -118,8 +117,7 @@ const Posts = () => {
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const handleDeletePost = async (post) => {
-    console.log('from delete functrion', post);
+  const handleDeletePost = async () => {
     setOpenDeleteModal(true);
   }
 
@@ -152,11 +150,11 @@ const Posts = () => {
           hideFooter
           //hideFooterRowCount
           //hideFooterSelectedRowCount
-          /* onRowClick={(e) => {
+          onRowClick={(e) => {
             setSelectedRow(e.row) 
-          }} */
+          }}
         />
-        {openDeleteModal && <DeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal} post={post} />}
+        {openDeleteModal && <DeleteModal open={openDeleteModal} setOpen={setOpenDeleteModal} post={selectedRow} setRows={setRows} />}
       </div>
     </>
   );

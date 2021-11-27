@@ -42,11 +42,11 @@ module.exports.post_delete = async (req, res) => {
   try { 
     const post = await Post.findByIdAndDelete(postId);
     const negotiations = await Negotiation.deleteMany({post: post._id});
-    console.log(negotiations);
     res.send({ message: 'Success' });
   } catch (err) {
     console.log(err);
   }
+
 }
 
 //own posts
