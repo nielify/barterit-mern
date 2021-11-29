@@ -9,6 +9,7 @@ const requireAuth = require('../../../middlewares/requireAuth');
 const userControllers = require('../../../controllers/userControllers');
 
 router.get('/', requireAuth, userControllers.user_get);
+router.post('/verify-account/:id', requireAuth, userControllers.verifyAccount_post);
 router.get('/search/:name', requireAuth, userControllers.userSearch_get);
 router.get('/all-users', requireAuth, userControllers.allUsers_get);
 router.get('/saved-items/', requireAuth, userControllers.savedItems_get);

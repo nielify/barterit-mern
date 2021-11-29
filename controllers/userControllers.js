@@ -33,6 +33,13 @@ module.exports.user_get = async (req, res) => {
   }  
 }
 
+module.exports.verifyAccount_post = async (req, res) => {
+  console.log('user', req.params.id);
+  console.log('body', req.body);
+
+  res.send({ message: 'request received' });
+}
+
 module.exports.userSearch_get = async (req, res) => {
 
   const searchArray = req.params.name.split(' ');

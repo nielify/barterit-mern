@@ -4,6 +4,7 @@ import useStyles from './FaceScanCSS';
 import Webcam from "react-webcam";
 import useRequireAuth from '../../../CustomHooks/useRequireAuth';
 
+import { UserContext } from "../../../Context/UserContext";
 import { IDImageContext } from "../../../Context/IDImageContext";
 import { FaceImageContext } from '../../../Context/FaceImageContext';
 
@@ -38,14 +39,24 @@ const FaceScan = () => {
   //loader
   const [loader, setLoader] = useState(false);
 
-  const handleProceed = () => {
-    console.log('ID:', idImage);
-    console.log('Selfie:', faceImage);
+  const handleProceed = async () => {
     setLoader(true);
-    setTimeout(() => {
-      setLoader(false);
-      setSuccessModal(true);
-    }, 2000)
+
+    const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/api/user/verify-account/${user._id}`, { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }, 
+      credentials: 'include', 
+      body: JSON.stringify({
+        idImage,
+        faceImage
+      })
+    })
+
+    const data = await res.json();
+    console.log(data);
+
+    setLoader(false);
+    setSuccessModal(true);
   }
 
   //modal
@@ -67,6 +78,7 @@ const FaceScan = () => {
 
   const webcamRef = useRef(null);
   //const [image, setImage] = useState('');
+  const [user] = useContext(UserContext);
   const [idImage, setIdImage] = useContext(IDImageContext);
   const [faceImage, setFaceImage] = useContext(FaceImageContext);
 
