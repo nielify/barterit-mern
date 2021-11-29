@@ -1,8 +1,11 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 import useStyles from './IDScanCSS';
 import Webcam from "react-webcam";
+
+import { IDImageContext } from "../../../Context/IDImageContext";
+
 import useRequireAuth from "../../../CustomHooks/useRequireAuth";
 
 import Container from "@material-ui/core/Container";
@@ -30,7 +33,8 @@ const IDScan = () => {
   const classes = useStyles();
 
   const webcamRef = useRef(null);
-  const [image, setImage] = useState('');
+  //const [image, setImage] = useState('');
+  const [idImage, setIdImage] = useContext(IDImageContext);
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
@@ -38,13 +42,13 @@ const IDScan = () => {
   const capture = useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot(/* {width: 1280, height: 720} */);
-      setImage(imageSrc);
+      setIdImage(imageSrc);
     },
     [webcamRef]
   );
 
   const handleRetake = () => {
-    setImage('');
+    setIdImage('');
   }
 
   const switchCamera = () => {
@@ -78,11 +82,9 @@ const IDScan = () => {
     );  
   }, []);
 
-
-
   return (  
     <Container maxWidth="md" className={classes.root}>  
-      {facingMode === 'environment' && image == '' &&
+      {facingMode === 'environment' && idImage == '' &&
         <div
           style={{
             width: '100%',
@@ -116,10 +118,10 @@ const IDScan = () => {
           
       }
 
-      {image != '' && facingMode === 'environment' &&
+      {idImage != '' && facingMode === 'environment' &&
         <div style={{width: '100%', height: '75%', marginBottom: 8, backgroundColor: '#00695f'}}>
           <img 
-            src={image} 
+            src={idImage} 
             style={{
               width: '100%',
               height: '100%',
@@ -146,11 +148,11 @@ const IDScan = () => {
         </Typography>  
       </div>}
 
-      {image == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
+      {idImage == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
         <CameraIcon fontSize="large" style={{color: '#009688'}} />      
       </IconButton>}
       
-      {image != '' && <div
+      {idImage != '' && <div
         style={{
           width:'100%', 
           display:'flex',

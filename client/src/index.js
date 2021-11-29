@@ -6,21 +6,27 @@ import { UserProvider } from './Context/UserContext';
 import { CoverProvider } from './Context/CoverContext';
 import { ActiveChatProvider } from './Context/ActiveChatContext';
 import { AdminCoverProvider } from './Context/AdminCoverContext';
+import { IDImageContextProvider } from './Context/IDImageContext';
+import { FaceImageContextProvider } from './Context/FaceImageContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AdminCoverProvider>
-      <ActiveChatProvider>
-        <CoverProvider>
-          <UserProvider>
-            <Router>
-              <App />
-            </Router>
-          </UserProvider>
-        </CoverProvider>
-      </ActiveChatProvider>
-    </AdminCoverProvider>
+    <FaceImageContextProvider>
+      <IDImageContextProvider>
+        <AdminCoverProvider>
+          <ActiveChatProvider>
+            <CoverProvider>
+              <UserProvider>
+                <Router>
+                  <App />
+                </Router>
+              </UserProvider>
+            </CoverProvider>
+          </ActiveChatProvider>
+        </AdminCoverProvider>
+      </IDImageContextProvider>
+    </FaceImageContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,8 +1,11 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useContext } from "react";
 import { Link } from 'react-router-dom';
 import useStyles from './FaceScanCSS';
 import Webcam from "react-webcam";
 import useRequireAuth from '../../../CustomHooks/useRequireAuth';
+
+import { IDImageContext } from "../../../Context/IDImageContext";
+import { FaceImageContext } from '../../../Context/FaceImageContext';
 
 import Container from "@material-ui/core/Container";
 import Button from '@material-ui/core/Button';
@@ -36,6 +39,8 @@ const FaceScan = () => {
   const [loader, setLoader] = useState(false);
 
   const handleProceed = () => {
+    console.log('ID:', idImage);
+    console.log('Selfie:', faceImage);
     setLoader(true);
     setTimeout(() => {
       setLoader(false);
@@ -61,7 +66,9 @@ const FaceScan = () => {
   },[width]);
 
   const webcamRef = useRef(null);
-  const [image, setImage] = useState('');
+  //const [image, setImage] = useState('');
+  const [idImage, setIdImage] = useContext(IDImageContext);
+  const [faceImage, setFaceImage] = useContext(FaceImageContext);
 
   const [noCameraModalOpen, setNoCameraModalOpen] = useState(false);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
@@ -69,13 +76,13 @@ const FaceScan = () => {
   const capture = useCallback(
     () => {
       const imageSrc = webcamRef.current.getScreenshot(/* {width: 1280, height: 720} */);
-      setImage(imageSrc);
+      setFaceImage(imageSrc);
     },
     [webcamRef]
   );
 
   const handleRetake = () => {
-    setImage('');
+    setFaceImage('');
   }
 
   const switchCamera = () => {
@@ -111,7 +118,7 @@ const FaceScan = () => {
 
   return (  
     <Container maxWidth="md" className={classes.root}> 
-      { facingMode == 'user' && image == '' &&
+      { facingMode == 'user' && faceImage == '' &&
         <div
           style={{
             width: width * .8,
@@ -154,13 +161,13 @@ const FaceScan = () => {
         </Typography>  
       </div>} */}
 
-      {image != '' && /* facingMode === 'environment' && */
+      {faceImage != '' && /* facingMode === 'environment' && */
         <div 
           className={classes.capturedImageContainer} 
           style={{ width: width * .8, height: width * .8, }}
         >
           <img 
-            src={image} 
+            src={faceImage} 
             style={{
               width: '100%',
               height: '100%',
@@ -180,11 +187,11 @@ const FaceScan = () => {
         </Typography>
       </div>}
 
-      {image == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
+      {faceImage == '' && <IconButton onClick={capture} style={{background: 'rgb(0, 0, 0, .15)'}}> 
         <CameraIcon fontSize="large" style={{color: '#009688'}} />      
       </IconButton>}
 
-      {image != '' && <div
+      {faceImage != '' && <div
         style={{
           width:'100%', 
           display:'flex',
