@@ -14,7 +14,7 @@ const columns = [
     sortable: false,
     width: 200,
     valueGetter: (params) => {
-      return `${params.row?.userId?.firstName} ${params.row?.userId?.lastName}`
+      return `${params.row?.user?.firstName} ${params.row?.user?.lastName}`
     }
   },
   {
@@ -24,7 +24,7 @@ const columns = [
     editable: false,
   },
   {
-    field: 'faceImage',
+    field: 'selfieImage',
     headerName: 'Selfie Image',
     width: 170,
     editable: false,
@@ -51,7 +51,7 @@ const Verifications = () => {
     })
     .then(res => res.json())
     .then(data => {
-      const renamedId = data.allPosts.map((row) => {
+      const renamedId = data.map((row) => {
         const { _id, ...rest } = row;
         return { id: _id, ...rest };
       });

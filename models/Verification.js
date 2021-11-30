@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const verificationRequestSchema = mongoose.Schema({
+const verificationSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'user',
@@ -20,6 +20,6 @@ const verificationRequestSchema = mongoose.Schema({
   }
 });
 
-const VerficationRequest = mongoose.model('VerificationRequest', verificationRequestSchema);
+const Verification = mongoose.model('verification', verificationSchema);
 
-module.exports = VerficationRequest;
+module.exports = Verification;
