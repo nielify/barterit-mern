@@ -89,6 +89,10 @@ const userSchema = mongoose.Schema({
     type:Boolean,
     default: false
   },
+  isVerificationPending: {
+    type: Boolean,
+    default: false
+  },
   isActive: {
     type: Boolean,
     default: false

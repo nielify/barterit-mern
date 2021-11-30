@@ -48,7 +48,12 @@ module.exports.verifyAccount_post = async (req, res) => {
     selfieImage: selfie_result.secure_url
   });
 
-  res.send(request);
+  //set user verification status to pending
+  const user = await User.findById(user_id);
+  user.isVerificationPending = true;
+  const newUser = await user.save();
+
+  res.send(newUser);
 }
 
 module.exports.userSearch_get = async (req, res) => {

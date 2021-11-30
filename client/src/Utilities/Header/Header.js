@@ -293,7 +293,7 @@ const Header = (props) => {
                       </List>
                       <Divider />
                       <List component="nav">
-                        {!user.isVerified && <ListItem 
+                        {(!user.isVerified && !user.isVerificationPending) && <ListItem 
                           onClick={toggleAccountPopper}
                           component={Link}
                           to="/user-verification/id-selection"

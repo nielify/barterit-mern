@@ -55,6 +55,7 @@ const FaceScan = () => {
     const data = await res.json();
     console.log(data);
 
+    setUser(data);
     setLoader(false);
     setSuccessModal(true);
   }
@@ -78,7 +79,7 @@ const FaceScan = () => {
 
   const webcamRef = useRef(null);
   //const [image, setImage] = useState('');
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
   const [idImage, setIdImage] = useContext(IDImageContext);
   const [faceImage, setFaceImage] = useContext(FaceImageContext);
 
