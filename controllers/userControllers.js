@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models/User');
 const Negotiation = require('../models/Negotiation');
 const PasswordResetToken = require('../models/PasswordResetToken');
+const VerificationRequest = require('../models/VerificationRequest');
 
 const cloudinary = require('../utils/cloudinary');
 const { sendPasswordResetMail } = require('../utils/nodemailer');
@@ -34,10 +35,20 @@ module.exports.user_get = async (req, res) => {
 }
 
 module.exports.verifyAccount_post = async (req, res) => {
-  console.log('user', req.params.id);
-  console.log('body', req.body);
+  const user_id = req.params.id;
+  const idImage = req.body.idImage;
+  const selfieImage = req.body.faceImage;
 
-  res.send({ message: 'request received' });
+  const id_result = await cloudinary.uploader.upload(idImage);
+  const selfie_result = await cloudinary.uploader.upload(selfieImage);
+
+  const request = await VerificationRequest.create({
+    user: user_id,
+    idImage: id_result.secure_url,
+    selfieImage: selfie_result.secure_url
+  });
+
+  res.send(request);
 }
 
 module.exports.userSearch_get = async (req, res) => {
