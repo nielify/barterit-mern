@@ -95,6 +95,10 @@ const AdminHeader = () => {
               |
               <Button component={Link} to="/admin/reports" style={{color: 'white'}}>
                 Reports
+              </Button> 
+              |
+              <Button component={Link} to="/admin/verifications" style={{color: 'white'}}>
+                Verifications
               </Button>
               |
               <Button onClick={handleLogout} style={{color: 'black'}}>

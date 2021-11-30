@@ -35,10 +35,13 @@ import Upload from './TestComponents/Upload';
 import Cloudinary from './TestComponents/Cloudinary';
 import SMSForm from './TestComponents/SMSForm';
 import Negotiations from './TestComponents/Negotiation/Negotiations';
+import TermsAndConditions from './Components/TermsAndConditions';
+
+//admin comnponents
 import Report from './Components/Admin/Report/Report';
 import Users from './Components/Admin/Users/Users';
 import Posts from './Components/Admin/Posts/Posts';
-import TermsAndConditions from './Components/TermsAndConditions';
+import Verifications from './Components/Admin/Verifications/Verifications';
 
 //Contexts
 import { UserContext } from './Context/UserContext';
@@ -46,6 +49,7 @@ import { CoverContext } from './Context/CoverContext';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+
 
 
 
@@ -155,6 +159,9 @@ function App() {
         </Route>
         <Route exact path="/admin/posts">
           <Posts />
+        </Route>
+        <Route exact path="/admin/verifications">
+          <Verifications />
         </Route>
         <Route exact path="/terms-and-conditions">
           <TermsAndConditions />

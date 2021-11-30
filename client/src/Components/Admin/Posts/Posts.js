@@ -48,12 +48,6 @@ const Posts = () => {
     },
     {
       field: 'title',
-      headerName: 'Title',
-      width: 200,
-      editable: false,
-    },
-    {
-      field: 'title',
       headerName: 'Post Title',
       width: 200,
       editable: false,
