@@ -337,9 +337,13 @@ module.exports.banUser_post = async (req, res) => {
 
 module.exports.verifyUser_post = async (req, res) => {
   const user_id = req.params.user_id;
+  const verification_id = req.body.verification_id;
 
   const user = await User.findById(user_id);
   user.isVerified = true;
   const newUser = await user.save();
+
+  await Verification.findOneAndDelete({ _id: verification_id });
+  
   res.send(newUser);
 }
