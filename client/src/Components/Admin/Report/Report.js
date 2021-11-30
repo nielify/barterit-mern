@@ -33,14 +33,7 @@ const Report = () => {
 
   return (  
     <Container maxWidth="md">
-      <Typography
-        component="h1" 
-        variant="h5" 
-        color="primary" 
-        style={{margin: '16px 0', fontWeight: 'bold',}}
-      >
-        Users' Reports
-      </Typography>
+      <Typography variant="body2" color="primary" style={{fontSize:'1.5rem', fontWeight: 'bold', margin: '8px 0 8px 10px'}}>Reports</Typography>
       <div className={classes.root}>
         { reports.map(report => (
           <div className={classes.report + ' ' + `${activeReport === report._id ? classes.activeReport : ''}`} onClick={() => handleReportClick(report._id)}>

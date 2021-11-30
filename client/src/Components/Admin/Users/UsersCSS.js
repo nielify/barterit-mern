@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   datagrid:{
-    height: '80vh',
+    height: '75vh',
     width: '100vw',
   },
   buttons: {

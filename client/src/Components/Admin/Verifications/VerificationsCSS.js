@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    flexDirection: 'column'
   },
   datagrid: {
-    height: '91vh',
+    height: '84vh',
     width: '1400px',
   },
   buttons: {

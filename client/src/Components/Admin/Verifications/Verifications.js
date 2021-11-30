@@ -142,6 +142,7 @@ const Verifications = () => {
 
   return (  
     <div className={classes.root}>  
+      <Typography variant="body2" color="primary" style={{fontSize:'1.5rem', fontWeight: 'bold', margin: '8px 0 8px 10px'}}>Verifications</Typography>
       <div className={classes.datagrid}>
         <DataGrid
           rows={rows}

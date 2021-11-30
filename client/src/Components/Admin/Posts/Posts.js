@@ -133,7 +133,7 @@ const Posts = () => {
 
   return (  
     <>
-      <Typography variant="body2" color="primary" style={{fontSize:'1.5rem', fontWeight: 'bold', margin: '8px 0 8px 10px'}}>Users'  Posts</Typography>
+      <Typography variant="body2" color="primary" style={{fontSize:'1.5rem', fontWeight: 'bold', margin: '8px 0 8px 10px'}}>Posts</Typography>
       <div className={classes.datagrid}/*  style={{marginLeft: 32}} */>
         <DataGrid
           rows={rows}
